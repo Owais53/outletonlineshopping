@@ -13,9 +13,18 @@ namespace ecommerceOutletShop
         {
             if (!IsPostBack)
             {
-                lblname.Text = Session["Username"].ToString();
+                if (Session["Username"] != null)
+                {
+                    lblname.Text = Session["Username"].ToString();
+                }
+               // else
+               // {
+               //     Response.Redirect("~/SignIn.aspx");
+               // }
+               
 
             }
         }
+
     }
 }

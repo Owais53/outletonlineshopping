@@ -53,6 +53,22 @@ namespace ecommerceOutletShop
             return dt;
 
         }
+        public DataTable GetAllProd()
+        {
+            OpenConection();
+            DataTable dt = GetallProducts("procBindAllProducts");
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable GetProductViewImages(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetProductImages("select * from tblProductImages where PID=@PID",Id);
+            CloseConnection();
+            return dt;
+
+        }
         public DataTable CheckCode(Ecomm obj)
         {
             OpenConection();

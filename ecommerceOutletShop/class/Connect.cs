@@ -89,6 +89,28 @@ namespace ecommerceOutletShop
             return dataum;
 
         }
+        public DataTable GetallProducts(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public DataTable GetProductImages(string Query_,int PID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID",PID);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
         public DataTable GetLoginId(string Query_, string email)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

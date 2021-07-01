@@ -66,30 +66,28 @@
                                                
                                                  <div class="form-group">
                                                     <asp:label runat="server">Size</asp:label>
-                                                    <asp:TextBox ID="txtDynamicsize" CssClass="form-control" placeholder="Enter Product Size" runat="server"></asp:TextBox>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator5" runat="server" ControlToValidate="txtDynamicsize"   
-                                                      ErrorMessage="Please enter Product Size" ForeColor="Red" />
+                                                  <asp:CheckBoxList ID="cblSize" CssClass="form-control" RepeatDirection="Horizontal" runat="server"></asp:CheckBoxList>
                                                      
+                                                  </div>
+                                                 <div class="form-group">
+                                                    <asp:label runat="server">Quantity</asp:label>
+                                                      <asp:TextBox ID="txtQty" CssClass="form-control" placeholder="Enter Product Quantity" runat="server"></asp:TextBox>
                                                   </div>
                                                  <div class="form-group">
                                                     <asp:label runat="server">Description</asp:label>
                                                     <asp:TextBox ID="txtdescription" CssClass="form-control" TextMode="MultiLine" placeholder="Enter Product Description" runat="server"></asp:TextBox>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator6" runat="server" ControlToValidate="txtdescription"   
-                                                      ErrorMessage="Please enter Product Description" ForeColor="Red" />
                                                      
                                                   </div>
                                                   <div class="form-group">
                                                     <asp:label runat="server">Product Details</asp:label>
                                                     <asp:TextBox ID="txtproductdetails" CssClass="form-control" TextMode="MultiLine" placeholder="Enter Product Details" runat="server"></asp:TextBox>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator7" runat="server" ControlToValidate="txtproductdetails"   
-                                                      ErrorMessage="Please enter Product Details" ForeColor="Red" />
+                                                     
                                                      
                                                   </div>
                                               <div class="form-group">
                                                     <asp:label runat="server">Materials and Care</asp:label>
                                                     <asp:TextBox ID="txtMatcare" CssClass="form-control" TextMode="MultiLine" placeholder="Enter Material and Care" runat="server"></asp:TextBox>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator8" runat="server" ControlToValidate="txtMatcare"   
-                                                      ErrorMessage="Please enter Materials and Care" ForeColor="Red" />
+                                                    
                                                      
                                                   </div>
                                              <div class="form-group">
@@ -117,48 +115,37 @@
                                             <div class="form-group">
                                                     <asp:label runat="server">Sales Price</asp:label>
                                                     <asp:TextBox ID="txtprice" CssClass="form-control" placeholder="Enter Product Price" runat="server"></asp:TextBox>
-                                                     <asp:RequiredFieldValidator  id="price" runat="server" ControlToValidate="txtprice"   
-                                                      ErrorMessage="Please enter a Sales Price" ForeColor="Red" />
-                                                     
+                                                    
                                                   </div>
                                               <div class="form-group">
                                                     <asp:label runat="server">Brand</asp:label>
                                                   <asp:DropDownList ID="ddlbrand" CssClass="form-control" runat="server"></asp:DropDownList>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator2" runat="server" ControlToValidate="ddlbrand"   
-                                                      ErrorMessage="Please enter a Sales Price" ForeColor="Red" InitialValue="0" />
                                                      
                                                   </div>
                                              <div class="form-group">
                                                     <asp:label runat="server">Category</asp:label>
-                                                  <asp:DropDownList ID="ddlcategory" CssClass="form-control" runat="server"></asp:DropDownList>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator3" runat="server" ControlToValidate="ddlcategory"   
-                                                      ErrorMessage="Please Select Category" ForeColor="Red" InitialValue="0" />
+                                                  <asp:DropDownList ID="ddlcategory" CssClass="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlcategory_SelectedIndexChanged"></asp:DropDownList>
                                                      
                                                   </div>
                                             <div class="form-group">
                                                     <asp:label runat="server">SubCategory</asp:label>
-                                                  <asp:DropDownList ID="ddlsubcategory" CssClass="form-control" runat="server"></asp:DropDownList>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator4" runat="server" ControlToValidate="ddlsubcategory"   
-                                                      ErrorMessage="Please Select Sub Category" ForeColor="Red" InitialValue="0"/>
+                                                  <asp:DropDownList ID="ddlsubcategory" CssClass="form-control" runat="server" OnSelectedIndexChanged="ddlsubcategory_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                     
                                                      
                                                   </div>
                                              <div class="form-group">
                                                     <asp:label runat="server">Gender</asp:label>
-                                                  <asp:DropDownList ID="ddlgender" CssClass="form-control" runat="server"></asp:DropDownList>
-                                                     <asp:RequiredFieldValidator  id="RequiredFieldValidator9" runat="server" ControlToValidate="ddlgender"   
-                                                      ErrorMessage="Please Select Sub Category" ForeColor="Red" InitialValue="0"/>
+                                                  <asp:DropDownList ID="ddlgender" CssClass="form-control" runat="server" OnSelectedIndexChanged="ddlgender_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                    
                                                      
                                                   </div>
                                              <div class="form-group">
                                                     <asp:label runat="server">Free Delivery</asp:label>
                                                     <asp:CheckBox ID="ChkFD" runat="server" />
                                                   </div>
-                                            <div class="form-group">
-                                                    <asp:label runat="server">30 Days Return</asp:label>
-                                                    <asp:CheckBox ID="Ch30Ret" runat="server" />
-                                                  </div>
+                                            
                                              <div class="form-group">
-                                                <asp:Button id="btnProdsave" type="submit" runat="server" Text="Save" class="btn btn-primary" onclick="btnProdsave_Click"/>
+                                                <asp:Button id="btnProdsave" type="submit" runat="server" Text="Save" class="btn btn-primary" OnClick="btnProdsave_Click" CausesValidation="false"/>
                                              </div>
                                             
                                         </div>

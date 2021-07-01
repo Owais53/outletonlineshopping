@@ -22,6 +22,58 @@
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
      <script src="js/sweetalert2.all.js"></script>
+    <style>
+        html{
+            background-color:silver;
+        }
+        .menu{
+            max-width:700px;
+            width:100%;
+            margin:40px auto;
+            background: #fff;
+            border-radius:5px;
+        }
+         .menu ul{
+           height:50px;
+           width:80px;
+           display:flex;
+           align-items:center;
+          
+        }
+         .menu ul li{
+          
+           display:block;
+           height:100%;
+           width:100%;
+           text-align:center;
+           line-height: 50px;
+           cursor:pointer;
+           color:#17a2b8;
+           font-size:17px;
+           
+        }
+        a.level1.selected.static{          
+            background:#17a2b8;
+           color:#fff;       
+        }
+        .tab{
+            
+        }
+        .selectedTab{
+            background-color:lightblue;
+            border-bottom:solid 1px white;
+        }
+        .tabContents
+        {
+            border:solid 1px black;
+            padding: 20px;
+            background-color:white;
+            right:50px;
+            bottom:150px;
+
+            
+        }
+    </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -148,7 +200,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="js/startmin.js"></script>
  <script src="js/jquery-ui.min.js"></script>
-
+ 
       
   </form>
 </body>
