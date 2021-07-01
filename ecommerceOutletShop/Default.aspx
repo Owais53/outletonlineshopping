@@ -37,11 +37,12 @@
                        <li class="dropdown">
                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products<b class="caret"></b></a>
                            <ul class="dropdown-menu">
+                               <li><a href="SignIn.aspx">All Products</a></li>
+                               <li role="separator" class="divider"></li>
                                 <li class="dropdown-header"><a href="#">Men</a></li>
                                  <li role="separator" class="divider"></li>
                                  <li><a href="#">Shirts</a></li>
                                  <li><a href="#">Pants</a></li>
-
                                 <li class="dropdown-header"><a href="#">Women</a></li>
                                  <li role="separator" class="divider"></li>
                                   <li><a href="#">Shirts</a></li>

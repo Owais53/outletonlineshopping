@@ -17,12 +17,28 @@ namespace ecommerceOutletShop
                 {
                     lblname.Text = Session["Username"].ToString();
                 }
-               // else
-               // {
-               //     Response.Redirect("~/SignIn.aspx");
-               // }
-               
+                // else
+                // {
+                //     Response.Redirect("~/SignIn.aspx");
+                // }
+                
 
+            }
+            BindCartNumber();
+        }
+        public void BindCartNumber()
+        {
+            if (Request.Cookies["CartPID"] != null)
+            {
+                string CookiePID = Request.Cookies["CartPID"].Value.Split('=')[1];
+                string[] ProductArray = CookiePID.Split(',');
+                int productCount = ProductArray.Length;
+                pCount.InnerText = productCount.ToString();
+                
+            }
+            else
+            {
+                pCount.InnerText = 0.ToString();
             }
         }
 

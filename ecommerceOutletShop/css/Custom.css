@@ -115,3 +115,48 @@
     border:1px solid #FF5722;
     color:#fff;
 }
+#btnCart{
+    margin-right:6px;
+}
+
+.RemoveButton{
+    border-radius:3px;
+    outline:0;
+    margin-top:10px;
+    font-size:13px;
+    min-height:22px;
+    min-width:90px;
+    font-weight:500;
+    background-color:#FF5722;
+    border:1px solid #FF5722;
+    color:#fff;
+}
+.priceGray{
+    font-size:15px;
+    font-family:sans-serif;
+    font-weight:400;
+    color:dimgray;
+}
+
+.proNameViewCart {
+    font-size: 15px;
+    line-height: 25px;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #696e80;
+}
+
+.buyNowbtn{
+    border-radius:3px;
+    outline:0;
+    margin-top:10px;
+    margin-bottom:20px;
+    font-size:13px;
+    min-height:22px;
+    padding:10px 15px;
+    font-weight:500;
+    background-color:#14cda8;
+    color:#fff;
+    border:1px solid #14cda8;
+    width:100%;
+}

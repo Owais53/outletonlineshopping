@@ -11,7 +11,20 @@ namespace ecommerceOutletShop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["Username"] != null)
+                {
+                    //lblname.Text = Session["Username"].ToString();
+                }
+                // else
+                // {
+                //     Response.Redirect("~/SignIn.aspx");
+                // }
+               // BindCartNumber();
 
+            }
         }
+        
     }
 }

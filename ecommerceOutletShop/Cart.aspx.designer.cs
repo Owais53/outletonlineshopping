@@ -10,24 +10,33 @@
 namespace ecommerceOutletShop {
     
     
-    public partial class ProductView {
+    public partial class Cart {
         
         /// <summary>
-        /// rptrImage control.
+        /// h4Noitems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrImage;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h4Noitems;
         
         /// <summary>
-        /// rptrProdInfo control.
+        /// rptrCartProducts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrProdInfo;
+        protected global::System.Web.UI.WebControls.Repeater rptrCartProducts;
+        
+        /// <summary>
+        /// btnBuy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuy;
     }
 }

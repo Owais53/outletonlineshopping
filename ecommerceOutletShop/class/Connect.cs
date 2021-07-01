@@ -100,7 +100,21 @@ namespace ecommerceOutletShop
             return dataum;
 
         }
-        public DataTable GetProductImages(string Query_,int PID)
+        public DataTable GetSize(string Query_,  int BrandId, int CatId, int SubCatId, int GenderId)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@BrandID", BrandId);
+            cmd.Parameters.AddWithValue("@CatID", CatId);
+            cmd.Parameters.AddWithValue("@SubCatID", SubCatId);
+            cmd.Parameters.AddWithValue("@GenderID", GenderId);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public DataTable GetProductImagesorInfo(string Query_,int PID)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@PID",PID);

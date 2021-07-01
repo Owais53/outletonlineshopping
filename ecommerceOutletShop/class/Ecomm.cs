@@ -16,6 +16,10 @@ namespace ecommerceOutletShop
         public bool isAdmin { get; set; }
         public string Code { get; set; }
         public string OldPass { get; set; }
+        public int BrandID { get; set; }
+        public int CatID { get; set; }
+        public int SubCatID { get; set; }
+        public int GenderID { get; set; }
 
         public void CreateSignUp(Ecomm obj)
         {
@@ -64,7 +68,31 @@ namespace ecommerceOutletShop
         public DataTable GetProductViewImages(int Id)
         {
             OpenConection();
-            DataTable dt = GetProductImages("select * from tblProductImages where PID=@PID",Id);
+            DataTable dt = GetProductImagesorInfo("select * from tblProductImages where PID=@PID",Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable GetProductViewInfo(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetProductImagesorInfo("select * from tblProduct where ProductId=@PID", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable GetProductInfoSize(int Id,int SizeId)
+        {
+            OpenConection();
+            DataTable dt = GetProductImagesorInfo("select A.*,getSizeName("+SizeId+") as SizeNamee,"+SizeId+" as SizeIDD,SizeData.Name,SizeData,Extension from tblProduct A cross apply(select top 1,B.Name,Extension from tblProductImages B where B.PID=A.ProductId)SizeData where ProductId=@PID", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable GetSizeView(Ecomm obj)
+        {
+            OpenConection();
+            DataTable dt = GetSize("select * from tblSizes where BrandID=@BrandID and CategoryID=@CatID and SubCategoryID=@SubCatID and GenderID=@GenderID", obj.BrandID,obj.CatID,obj.SubCatID,obj.GenderID);
             CloseConnection();
             return dt;
 

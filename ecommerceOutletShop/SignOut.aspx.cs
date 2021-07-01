@@ -14,7 +14,7 @@ namespace ecommerceOutletShop
             if (!IsPostBack)
             {
                 Session["Username"] = string.Empty;
-                Response.Redirect("~/SignIn.aspx");
+                Response.Redirect("~/Default.aspx");
             }
         }
     }
