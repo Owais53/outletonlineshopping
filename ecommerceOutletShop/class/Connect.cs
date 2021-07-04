@@ -229,5 +229,39 @@ namespace ecommerceOutletShop
             DataTable dataum = ds.Tables[0];
             return dataum;
         }
+        public int InsertSO(string Query_, string SONO, int UserID, DateTime Createdon, int POref, string Status, string CustType)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SONO", SONO);
+            cmd.Parameters.AddWithValue("@UserID",UserID);
+            cmd.Parameters.AddWithValue("@Createdon", Createdon);
+            cmd.Parameters.AddWithValue("@POref", POref);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.Parameters.AddWithValue("@CustomerType", CustType);
+            int pid = Convert.ToInt32(cmd.ExecuteScalar());
+            return pid;
+        }
+        public void InsertSODet(string Query_, int SOID,int PID,int Qty)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.ExecuteNonQuery();
+        }
+        public void InsertPay(string Query_, int SOID,decimal TotalAmount,string CrCdNo,string DtCdNo,string PayType,string DelAdd,string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@TotalAmt", TotalAmount);
+            cmd.Parameters.AddWithValue("@CrCdNo", CrCdNo);
+            cmd.Parameters.AddWithValue("@DtCdNo", DtCdNo);
+            cmd.Parameters.AddWithValue("@PayType", PayType);
+            cmd.Parameters.AddWithValue("@DelAdd", DelAdd);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }
