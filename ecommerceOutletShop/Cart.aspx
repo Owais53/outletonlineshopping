@@ -25,12 +25,12 @@
                   </ItemTemplate>
                 </asp:repeater>
         </div>
-        <div class="col-md-3">
+        <div id="divpriceDetail" class="col-md-3" runat="server">
             <div>
                 <h5>PRICE DETAILS</h5>
                 <div>
                     <label>Cart Total</label>
-                    <span class="pull-right priceGray"></span>
+                    <span id="spancartTotal" class="pull-right priceGray" runat="server"></span>
                 </div>
                 <div>
                     <asp:button ID="btnBuy" cssClass="buyNowbtn" runat="server" text="BUY NOW" OnClick="btnBuy_Click" />

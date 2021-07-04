@@ -125,6 +125,16 @@ namespace ecommerceOutletShop
             return dataum;
 
         }
+        public DataTable GetProductImagesorInfo1(string Query_, int PID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            dr.Fill(dt);
+            return dt;
+
+        }
         public DataTable GetLoginId(string Query_, string email)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

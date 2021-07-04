@@ -32,7 +32,26 @@ namespace ecommerceOutletShop
             {
                 string CookiePID = Request.Cookies["CartPID"].Value.Split('=')[1];
                 string[] ProductArray = CookiePID.Split(',');
-                int productCount = ProductArray.Length;
+                string currentSession = Session["Username"].ToString();
+                string SessionName = string.Empty;
+                int productCount = 0;
+                int Count = 0;
+                for(int i=0; i<ProductArray.Length; i++)
+                {
+                    SessionName = ProductArray[i].ToString().Split('-')[3];
+                    if (currentSession == SessionName)
+                    {
+                        Count++;
+                        productCount = Count;
+                    }
+                    else
+                    {
+                        
+                        productCount = productCount+0;
+                    }
+                   
+                }
+                
                 pCount.InnerText = productCount.ToString();
                 
             }

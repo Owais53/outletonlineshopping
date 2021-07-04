@@ -84,7 +84,7 @@ namespace ecommerceOutletShop
         public DataTable GetProductInfoSize(int Id,int SizeId)
         {
             OpenConection();
-            DataTable dt = GetProductImagesorInfo("select A.*,getSizeName("+SizeId+") as SizeNamee,"+SizeId+" as SizeIDD,SizeData.Name,SizeData,Extension from tblProduct A cross apply(select top 1,B.Name,Extension from tblProductImages B where B.PID=A.ProductId)SizeData where ProductId=@PID", Id);
+            DataTable dt = GetProductImagesorInfo1("select A.*,[dbo].getSizeName(" + SizeId+") as SizeNamee,"+SizeId+" as SizeIDD,SizeData.Name,SizeData.*,Extension from tblProduct A cross apply(select top 1 B.Name,Extension from tblProductImages B where B.PID=A.ProductId)SizeData where ProductId=@PID", Id);
             CloseConnection();
             return dt;
 

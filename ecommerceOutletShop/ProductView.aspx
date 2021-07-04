@@ -55,6 +55,11 @@
                     </asp:radiobuttonlist>
                 </div>
             </div>
+                 <div class="quantity buttons_added">
+	             <input type="button" value="-" class="minus">
+                 <asp:TextBox id="txtQty" TextMode="Number" step="1" min="1" max="" name="quantity" Text="1" title="Qty" CssClass="input-text qty text"  style="min-width:25px;" size="4" pattern="" inputmode="" runat="server"/>
+                  <input type="button" value="+" class="plus">
+                 </div>
             <div class="divDet1">
                 <asp:button ID="btnAddtoCart" CssClass="mainButton" runat="server" text="ADD TO CART" OnClick="btnAddtoCart_Click" />
                 <asp:Label ID="lblError" CssClass="text-danger" runat="server"></asp:Label>

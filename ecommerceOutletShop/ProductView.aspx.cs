@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace ecommerceOutletShop
 {
     public partial class ProductView : System.Web.UI.Page
@@ -80,6 +81,7 @@ namespace ecommerceOutletShop
         protected void btnAddtoCart_Click(object sender, EventArgs e)
         {
             string SelectedSize = string.Empty;
+            string SelectedQty = string.Empty;
             foreach(RepeaterItem item in rptrProdInfo.Items)
             {
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
@@ -88,28 +90,93 @@ namespace ecommerceOutletShop
                     SelectedSize = rbList.SelectedValue;
                     var lblError = item.FindControl("lblError") as Label;
                     lblError.Text = "";
+                    var txtQty = item.FindControl("txtQty") as TextBox;
+                    SelectedQty = txtQty.Text;
                 }
             }
+            string User = Session["Username"].ToString();
             if (SelectedSize != "")
             {
+                
+                int newQty = 0;
                 int PID = Convert.ToInt32(Request.QueryString["PID"]);               
-                if (Request.Cookies["CartPID"] != null)
+                if (Request.Cookies["CartP"] != null)
                 {
+                    
+                    string CookiePID = Request.Cookies["CartP"].Value.Split('=')[1];
+                    string CookiePIDWithQty = Request.Cookies["CartPID"].Value.Split('=')[1];
+                    string CookiePIDOld = string.Empty;
+                    string CookiePIDWithQtyOld = string.Empty;
+                    CookiePIDOld = CookiePID;
+                    CookiePIDWithQtyOld = CookiePIDWithQty;
 
-                    string CookieID = Request.Cookies["CartPID"].Value.Split('=')[1];
-                    CookieID = CookieID + "," + PID + "-" + SelectedSize;
-                    HttpCookie CartProducts = new HttpCookie("CartPID");
-                    CartProducts.Values["CartPID"] = PID.ToString();
-                    CartProducts.Expires = DateTime.Now.AddDays(30);
-                    Response.Cookies.Add(CartProducts);
+                    CookiePID = CookiePID + "," + PID + "-" + SelectedSize + "-" + User;
+                    CookiePIDWithQty =CookiePIDWithQty+","+ PID + "-" + SelectedSize + "-" + SelectedQty+"-"+User;
+                    
+
+                    List<string> CookiePIDList = CookiePIDOld.Split(',').Where(i => i != string.Empty).ToList();
+                    string currentProduct = PID + "-" + SelectedSize + "-" + User;
+                    string curProd = PID + "-" + SelectedSize;
+                    var checkduplicateProwithSize = CookiePIDList.Where(x => x == currentProduct).FirstOrDefault();
+                    if (checkduplicateProwithSize != null)
+                    {
+                        List<string> CookiePIDWithQtyList = CookiePIDWithQtyOld.Split(',').Select(i => i.Trim()).Where(i => i != string.Empty).ToList();
+                        var checkduplicatetoremoveupdate = CookiePIDWithQtyList.Where(i => i.Contains(curProd)).FirstOrDefault();
+                        if (checkduplicatetoremoveupdate == null)
+                        {
+
+                        }
+                        else
+                        {
+                            CookiePIDWithQtyList.Remove(checkduplicatetoremoveupdate.ToString());
+                             string CookiePIDWithQtyUpdated = String.Join(",", CookiePIDWithQtyList.ToArray());
+                            string OldQty = checkduplicatetoremoveupdate.Split('-')[2].ToString();
+                            int NewQty = int.Parse(OldQty) + int.Parse(SelectedQty);
+                            if (CookiePIDWithQtyUpdated == "")
+                            {
+                                CookiePIDWithQty = PID + "-" + SelectedSize + "-" + NewQty + "-" + User;
+                            }
+                            else
+                            {
+                                CookiePIDWithQty = CookiePIDWithQtyUpdated + "," + PID + "-" + SelectedSize + "-" + NewQty + "-" + User;
+                            }
+                            
+                           
+                            HttpCookie CartProductswithQty = new HttpCookie("CartPID");
+                            CartProductswithQty.Values["CartPID"] = CookiePIDWithQty.ToString();
+                            CartProductswithQty.Expires = DateTime.Now.AddDays(30);
+                            Response.Cookies.Add(CartProductswithQty);
+                        }
+                        
+
+                    }
+                    else
+                    {
+                        HttpCookie CartProductswithQty = new HttpCookie("CartPID");
+                        CartProductswithQty.Values["CartPID"] = CookiePIDWithQty.ToString();
+                        CartProductswithQty.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Add(CartProductswithQty);
+
+                        HttpCookie CartProducts = new HttpCookie("CartP");
+                        CartProducts.Values["CartP"] = CookiePID.ToString();
+                        CartProducts.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Add(CartProducts);
+                    }
+                   
 
                 }
                 else
                 {
-                    HttpCookie CartProducts = new HttpCookie("CartPID");
-                    CartProducts.Values["CartPID"] = PID.ToString()+"-"+SelectedSize;
+                    HttpCookie CartProductswithQty = new HttpCookie("CartPID");                
+                    CartProductswithQty.Values["CartPID"] = PID.ToString()+ "-" +SelectedSize + "-" + SelectedQty+"-"+User;           
+                    CartProductswithQty.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Add(CartProductswithQty);
+
+                    HttpCookie CartProducts = new HttpCookie("CartP");
+                    CartProducts.Values["CartP"] = PID.ToString() + "-" + SelectedSize + "-" + User;
                     CartProducts.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Add(CartProducts);
+
                 }
                 Response.Redirect("~/ProductView.aspx?PID="+PID);
             }

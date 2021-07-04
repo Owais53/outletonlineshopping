@@ -78,6 +78,7 @@
     <Content Include="Img\shop.png" />
     <Content Include="Img\T-shirtmain.jpg" />
     <Content Include="Img\womenshirt.jpg" />
+    <Content Include="js\Custom.js" />
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\sweetalert2.all.js" />
     <Content Include="packages.config" />
