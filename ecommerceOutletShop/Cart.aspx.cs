@@ -17,6 +17,7 @@ namespace ecommerceOutletShop
        
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             if (!IsPostBack)
             {
                 BindProductCart();
@@ -81,7 +82,8 @@ namespace ecommerceOutletShop
                 rptrCartProducts.DataSource = dt;
                 rptrCartProducts.DataBind();
                 divpriceDetail.Visible = true;
-                spancartTotal.InnerText = carttotal.ToString();
+                spancartTotal.InnerText = "Rs." +carttotal.ToString();
+                spanTotalAmt.InnerText = "Rs." + carttotal.ToString();
             }
             else
             {
@@ -139,9 +141,40 @@ namespace ecommerceOutletShop
         }
         protected void btnBuy_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "PayModal", "$('#PayModal').modal();", true);
+            upModalPay.Update();
         }
 
-       
+        protected void rblPayType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rblPayType.SelectedValue == "0")
+            {
+                txtCreditCard.Visible = true;
+                txtDebitCard.Visible = false;
+                lblCreditcd.Visible = true;
+                lblDebitcd.Visible = false;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "PayModal", "$('#PayModal').modal();", true);
+                upModalPay.Update();
+                
+            }
+            else if (rblPayType.SelectedValue == "1")
+            {
+                txtDebitCard.Visible = true;
+                txtCreditCard.Visible = false;
+                lblCreditcd.Visible = false;
+                lblDebitcd.Visible = true;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "PayModal", "$('#PayModal').modal();", true);
+                upModalPay.Update();
+            }
+            else
+            {
+                txtDebitCard.Visible = false;
+                txtCreditCard.Visible = false;
+                lblCreditcd.Visible = false;
+                lblDebitcd.Visible = false;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "PayModal", "$('#PayModal').modal();", true);
+                upModalPay.Update();
+            }
+        }
     }
 }
