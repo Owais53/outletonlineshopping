@@ -117,6 +117,11 @@
                                                     <asp:TextBox ID="txtprice" CssClass="form-control" placeholder="Enter Product Price" runat="server"></asp:TextBox>
                                                     
                                                   </div>
+                                            <div class="form-group">
+                                                    <asp:label runat="server">Vendor</asp:label>
+                                                  <asp:DropDownList ID="ddlvendor" CssClass="form-control" runat="server"></asp:DropDownList>
+                                                     
+                                                  </div>
                                               <div class="form-group">
                                                     <asp:label runat="server">Brand</asp:label>
                                                   <asp:DropDownList ID="ddlbrand" CssClass="form-control" runat="server"></asp:DropDownList>

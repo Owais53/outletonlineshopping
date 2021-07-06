@@ -22,6 +22,7 @@ namespace outletonlineshopping
         public int BrandId { get; set; }
         public string CatName { get; set; }
         public int CatID { get; set; }
+        public int VendorID { get; set; }
         public string SubCatName { get; set; }
         public int SubCatID { get; set; }
         public string Sizename { get; set; }
@@ -87,14 +88,14 @@ namespace outletonlineshopping
         public int CreateProducts(Products obj)
         {
             OpenConection();
-           int Pid= InsertProducts("Insert into tblProduct(ProductName,SalesPrice,Uom,Cost,BrandID,CategoryID,SubCatID,GenderID,Description,ProductDetails,MaterialCare,FreeDelivery) values(@Name,@price,@Uom,@cost,@brandid,@catid,@subcatid,@genderid,@desc,@productdetail,@matcare,@fd) SELECT SCOPE_IDENTITY()", obj.ProductName,obj.Uom,obj.SalesPrice,obj.Cost,obj.BrandId,obj.CatID,obj.SubCatID,obj.GenderID,obj.desc,obj.productdetail,obj.matcare,obj.Freedelivery);
+           int Pid= InsertProducts("Insert into tblProduct(ProductName,SalesPrice,Uom,Cost,BrandID,CategoryID,SubCatID,GenderID,Description,ProductDetails,MaterialCare,FreeDelivery,VendorID) values(@Name,@price,@Uom,@cost,@brandid,@catid,@subcatid,@genderid,@desc,@productdetail,@matcare,@fd,@VID) SELECT SCOPE_IDENTITY()", obj.ProductName,obj.Uom,obj.SalesPrice,obj.Cost,obj.BrandId,obj.CatID,obj.SubCatID,obj.GenderID,obj.desc,obj.productdetail,obj.matcare,obj.Freedelivery,obj.VendorID);
             CloseConnection();
             return Pid;
         }
         public void UpdateProduct(Products obj)
         {
             OpenConection();
-            UpdateProducts("Update tblProduct set ProductName=@Name,SalesPrice=@price,Uom=@Uom,Cost=@cost,BrandID=@brandid,CategoryID=@catid,SubCatID=@subcatid,GenderID=@genderid,Description=@desc,ProductDetails=@productdetail,MaterialCare=@matcare,FreeDelivery=@fd where ProductId=@ProductId", obj.ProductName, obj.Uom, obj.SalesPrice, obj.Cost,obj.ProductId, obj.BrandId, obj.CatID, obj.SubCatID, obj.GenderID, obj.desc, obj.productdetail, obj.matcare, obj.Freedelivery);
+            UpdateProducts("Update tblProduct set ProductName=@Name,SalesPrice=@price,Uom=@Uom,Cost=@cost,BrandID=@brandid,CategoryID=@catid,SubCatID=@subcatid,GenderID=@genderid,Description=@desc,ProductDetails=@productdetail,MaterialCare=@matcare,FreeDelivery=@fd,VendorID=@VID where ProductId=@ProductId", obj.ProductName, obj.Uom, obj.SalesPrice, obj.Cost,obj.ProductId, obj.BrandId, obj.CatID, obj.SubCatID, obj.GenderID, obj.desc, obj.productdetail, obj.matcare, obj.Freedelivery,obj.VendorID);
             CloseConnection();
         }
         public void UpdateProductSizeQty(Products obj)

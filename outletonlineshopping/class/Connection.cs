@@ -33,7 +33,7 @@ namespace outletonlineshopping
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.ExecuteNonQuery();
         }
-        public int InsertProducts(string Query_,string ProductName,int uom,decimal price,decimal cost,int brandid,int catid,int subcatid,int genderid,string desc,string prddetail,string matcare,int fd)
+        public int InsertProducts(string Query_,string ProductName,int uom,decimal price,decimal cost,int brandid,int catid,int subcatid,int genderid,string desc,string prddetail,string matcare,int fd,int VendorID)
         {
             
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -49,11 +49,13 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@productdetail", prddetail);
             cmd.Parameters.AddWithValue("@matcare", matcare);
             cmd.Parameters.AddWithValue("@fd", fd);
+            cmd.Parameters.AddWithValue("@VID", VendorID);
             int pid= Convert.ToInt32(cmd.ExecuteScalar());           
             return pid;
         }
+        
 
-        public void UpdateProducts(string Query_, string ProductName, int uom, decimal price, decimal cost,int Id, int brandid, int catid, int subcatid, int genderid, string desc, string prddetail, string matcare, int fd)
+        public void UpdateProducts(string Query_, string ProductName, int uom, decimal price, decimal cost,int Id, int brandid, int catid, int subcatid, int genderid, string desc, string prddetail, string matcare, int fd,int VendorID)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@ProductId", Id);
@@ -69,6 +71,7 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@productdetail", prddetail);
             cmd.Parameters.AddWithValue("@matcare", matcare);
             cmd.Parameters.AddWithValue("@fd", fd);
+            cmd.Parameters.AddWithValue("@VID", VendorID);
             cmd.ExecuteNonQuery();
         }
         public void UpdateQtySize(string Query_, int Id,int Qty,int reorder,int Cst)
@@ -106,6 +109,25 @@ namespace outletonlineshopping
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@BName", BName);
+            cmd.ExecuteNonQuery();
+        }
+        public void InsertVendors(string Query_,string VName,string Contact,string Address,string Email)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@VName", VName);
+            cmd.Parameters.AddWithValue("@Contact", Contact);
+            cmd.Parameters.AddWithValue("@Address", Address);
+            cmd.Parameters.AddWithValue("@Email", Email);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateVendors(string Query_, int VID,string VName, string Contact, string Address, string Email)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@VId", VID);
+            cmd.Parameters.AddWithValue("@VName", VName);
+            cmd.Parameters.AddWithValue("@Contact", Contact);
+            cmd.Parameters.AddWithValue("@Address", Address);
+            cmd.Parameters.AddWithValue("@Email", Email);
             cmd.ExecuteNonQuery();
         }
         public void InsertCat(string Query_, string CatName)
@@ -148,6 +170,7 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Name", UnitName);
             cmd.ExecuteNonQuery();
         }
+       
         public void UpdateBrands(string Query_, string BName, int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -171,6 +194,7 @@ namespace outletonlineshopping
 
             cmd.ExecuteNonQuery();
         }
+       
         public void UpdateSizes(string Query_, string SizeName,int BrandId ,int CatId, int SubCatID,int GenderId,int SizeID)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -235,6 +259,17 @@ namespace outletonlineshopping
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@Username", UserName);
             cmd.Parameters.AddWithValue("@pass", pass);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public DataTable CheckDuplicatVendor(string Query_, string Name)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@VName",Name);
             SqlDataAdapter dr = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             dr.Fill(ds);

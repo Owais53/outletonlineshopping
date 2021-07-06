@@ -96,6 +96,7 @@
     <Content Include="Product.aspx" />
     <Content Include="resetlink.aspx" />
     <Content Include="Settings.aspx" />
+    <Content Include="Vendor.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +109,7 @@
     </Compile>
     <Compile Include="class\Connection.cs" />
     <Compile Include="class\Products.cs" />
+    <Compile Include="class\Purchase.cs" />
     <Compile Include="class\User.cs" />
     <Compile Include="Crm.aspx.cs">
       <DependentUpon>Crm.aspx</DependentUpon>
@@ -179,6 +181,13 @@
     </Compile>
     <Compile Include="Settings.aspx.designer.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor.aspx.cs">
+      <DependentUpon>Vendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vendor.aspx.designer.cs">
+      <DependentUpon>Vendor.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

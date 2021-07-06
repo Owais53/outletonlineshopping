@@ -207,6 +207,39 @@ namespace ecommerceOutletShop
             return a;
 
         }
+        public string GenerateNoPO(string Pono)
+        {
+            Purchase objpur = new Purchase();
+            string a = "";
+            int PoID = objpur.GetLastPOId();
+            if (PoID > 0)
+            {
+                DataTable dt = objpur.GetLastPONo();
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        string lastNo = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            lastNo = row["PONo"].ToString();
+
+                        }
+                        string LastNo = lastNo.Split('-')[1].ToString();
+                        int No = Convert.ToInt32(LastNo);
+                        int Num = No + 1;
+                        a = Pono + "-000" + Num;
+
+                    }
+                }
+            }
+            else
+            {
+                a = Pono + "-0001";
+            }
+            return a;
+
+        }
         private bool isformvalidPay()
         {
             if (rblPayType.SelectedValue != "0" && rblPayType.SelectedValue != "1" && rblPayType.SelectedValue != "2")            
@@ -372,6 +405,7 @@ namespace ecommerceOutletShop
                         {
                             //PO Header
 
+                           
                             //for PO Items
                             string POCookiePID = Request.Cookies["POCartPID"].Value.Split('=')[1];
                             string[] POCookieDataArray = POCookiePID.Split(',');
@@ -386,6 +420,46 @@ namespace ecommerceOutletShop
                                 POQty = Convert.ToInt32(Quantity);
                                 string size = POCookieDataArray[i].ToString().Split('-')[1];
                                 POSize = Convert.ToInt32(size);
+                               
+                                Purchase objpur = new Purchase();
+                                objpur.PID = POPId;
+                                objpur.Quantity = POQty;
+
+                                int VID = objpur.GetVendorId(POPId);
+                                if (VID > 0)
+                                {
+                                    ViewState["FirstPO"] = "yes";
+                                    
+                                    int POID = 0;
+                                    if (ViewState["FirstPO"].ToString() == "yes")
+                                    {
+                                        objpur.PONo = GenerateNoPO("PO");
+                                        objpur.Createdon = DateTime.Now;
+                                        objpur.VendorId = VID;
+                                        objpur.PurchaseStatus = "To Receive";
+                                        POID = objpur.CreatePO(objpur);
+                                    }
+                                    
+                                    int VIDfromPO = objpur.GetVendorIdbyPO(POID);
+                                    if (VID == VIDfromPO)
+                                    {
+                                        ViewState["FirstPO"] = "no";
+                                        objpur.POID = POID;
+                                        objpur.CreatePODet(objpur);
+                                    }
+                                    else
+                                    {
+                                        ViewState["FirstPO"] = "no";
+                                        objpur.PONo = GenerateNoPO("PO");
+                                        objpur.Createdon = DateTime.Now;
+                                        objpur.VendorId = VID;
+                                        objpur.PurchaseStatus = "To Receive";
+                                        int POIDnew = objpur.CreatePO(objpur);
+                                        objpur.POID = POIDnew;
+                                        objpur.CreatePODet(objpur);
+                                    }
+                                }
+                                
                             }
                             ViewState["CreatePO"] = null;
                         }

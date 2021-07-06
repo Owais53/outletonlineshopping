@@ -25,6 +25,7 @@ namespace outletonlineshopping
                 ddlsubcategory.Enabled = false;
                 ddlgender.Enabled = false;
                 BindGender();
+                BindVendor();
 
                 if (Request.QueryString["Id"] != null)
                 {
@@ -62,6 +63,7 @@ namespace outletonlineshopping
                 txtproductdetails.Text = sdr["ProductDetails"].ToString();
                 txtMatcare.Text = sdr["MaterialCare"].ToString();
                 ChkFD.Checked = Convert.ToBoolean(sdr["FreeDelivery"]);
+                ddlvendor.SelectedValue = sdr["VendorID"].ToString();
              
             }
             obj.CloseConnection();
@@ -151,9 +153,19 @@ namespace outletonlineshopping
             this.ddlgender.Items.Insert(0, "Select Gender");
             obj.CloseConnection();
         }
-      
+        public void BindVendor()
+        {
+            obj.OpenConection();
+            ddlvendor.DataSource = obj.DataReader("select VendorID,VendorName from tblVendor");
+            ddlvendor.DataTextField = "VendorName";
+            ddlvendor.DataValueField = "VendorID";
+            ddlvendor.DataBind();
+            this.ddlvendor.Items.Insert(0, "Select Vendor");
+            obj.CloseConnection();
+        }
 
-       
+
+
 
         protected void btnopen_Click(object sender, EventArgs e)
         {
@@ -291,6 +303,12 @@ namespace outletonlineshopping
                 ddlgender.Focus();
                 return false;
             }
+            else if (ddlvendor.SelectedIndex == 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Vendor is not Valid');", true);
+                ddlvendor.Focus();
+                return false;
+            }
             else if (ddlbrand.SelectedIndex == 0)
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Brand is not Valid');", true);
@@ -370,7 +388,7 @@ namespace outletonlineshopping
                 pro.matcare = txtMatcare.Text;
                 pro.ReorderPoint = Convert.ToInt32(txtReorderPoint.Text);
                 pro.CustomerLeadTime = Convert.ToInt32(txtcstleadtime.Text);
-
+                pro.VendorID= Convert.ToInt32(ddlvendor.SelectedValue);
                 if (ChkFD.Checked)
                 {
                     pro.Freedelivery = 1;

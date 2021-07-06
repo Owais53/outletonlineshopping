@@ -290,10 +290,37 @@ namespace ecommerceOutletShop
             int pid = Convert.ToInt32(cmd.ExecuteScalar());
             return pid;
         }
+        public int InsertPO(string Query_, string PONO, DateTime Createdon, int VendorID, string Status)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PONO", PONO);
+            cmd.Parameters.AddWithValue("@Createdon", Createdon);
+            cmd.Parameters.AddWithValue("@VendorID", VendorID);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            int poid = Convert.ToInt32(cmd.ExecuteScalar());
+            return poid;
+        }
+        public int GetVendorIDbyProduct(string Query_, int PID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            int vid = Convert.ToInt32(cmd.ExecuteScalar());
+            return vid;
+        }
         public void InsertSODet(string Query_, int SOID,int PID,int Qty)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.ExecuteNonQuery();
+        }
+        public void InsertPODet(string Query_, int POID, int PID, int Qty)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
             cmd.Parameters.AddWithValue("@PID", PID);
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.ExecuteNonQuery();
