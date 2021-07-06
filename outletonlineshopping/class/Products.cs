@@ -33,6 +33,9 @@ namespace outletonlineshopping
         public int Freedelivery { get; set; }
         public string ImgName { get; set; }
         public string Extension { get; set; }
+        public int ReorderPoint { get; set; }
+        public int CustomerLeadTime { get; set; }
+
         public void DeleteProducts(int Id)
         {
             OpenConection();
@@ -94,6 +97,12 @@ namespace outletonlineshopping
             UpdateProducts("Update tblProduct set ProductName=@Name,SalesPrice=@price,Uom=@Uom,Cost=@cost,BrandID=@brandid,CategoryID=@catid,SubCatID=@subcatid,GenderID=@genderid,Description=@desc,ProductDetails=@productdetail,MaterialCare=@matcare,FreeDelivery=@fd where ProductId=@ProductId", obj.ProductName, obj.Uom, obj.SalesPrice, obj.Cost,obj.ProductId, obj.BrandId, obj.CatID, obj.SubCatID, obj.GenderID, obj.desc, obj.productdetail, obj.matcare, obj.Freedelivery);
             CloseConnection();
         }
+        public void UpdateProductSizeQty(Products obj)
+        {
+            OpenConection();
+            UpdateQtySize("Update tblProductSizeQuantity set Quantity=@Qty,ReorderPoint=@Reorder,CustomerLeadTime=@Cst where PID=@ProductId", obj.ProductId,obj.Quantity, obj.ReorderPoint,obj.CustomerLeadTime);
+            CloseConnection();
+        }
 
         public void CreateUnit(Products obj)
         {
@@ -134,7 +143,7 @@ namespace outletonlineshopping
         public void CreateSizeQty(Products obj)
         {
             OpenConection();
-            InsertSizeQty("Insert into tblProductSizeQuantity(PID,SizeID,Quantity) values(@Pid,@sizeid,@Qty)", obj.ProductId,obj.SizeID,obj.Quantity);
+            InsertSizeQty("Insert into tblProductSizeQuantity(PID,SizeID,Quantity,ReorderPoint,CustomerLeadTime) values(@Pid,@sizeid,@Qty,@Reorder,@Cst)", obj.ProductId,obj.SizeID,obj.Quantity,obj.ReorderPoint,obj.CustomerLeadTime);
             CloseConnection();
         }
         public void UpdateUnit(Products obj)

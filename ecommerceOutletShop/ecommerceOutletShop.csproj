@@ -141,6 +141,8 @@
     </Compile>
     <Compile Include="class\Connect.cs" />
     <Compile Include="class\Ecomm.cs" />
+    <Compile Include="class\Inventory.cs" />
+    <Compile Include="class\Purchase.cs" />
     <Compile Include="class\Sale.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

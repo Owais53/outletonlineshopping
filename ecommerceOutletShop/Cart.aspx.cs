@@ -74,9 +74,7 @@ namespace ecommerceOutletShop
                         }
                            
                            
-                    }
-                   
-                       
+                    }                
                     
                 }
                 rptrCartProducts.DataSource = dt;
@@ -174,6 +172,279 @@ namespace ecommerceOutletShop
                 lblDebitcd.Visible = false;
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "PayModal", "$('#PayModal').modal();", true);
                 upModalPay.Update();
+            }
+        }
+        public string GenerateNoSO(string Sono)
+        {
+            Sale objsale = new Sale();
+            string a = "";
+            int SoID = objsale.GetLastSOId();
+            if (SoID > 0)
+            {
+                DataTable dt = objsale.GetLastSONo();
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        string lastNo = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            lastNo = row["SONo"].ToString();
+
+                        }
+                        string LastNo = lastNo.Split('-')[1].ToString();
+                        int No = Convert.ToInt32(LastNo);
+                        int Num = No + 1;
+                        a = Sono + "-000" + Num;
+
+                    }
+                }
+            }
+            else
+            {
+                a = Sono + "-0001";
+            }            
+            return a;
+
+        }
+        private bool isformvalidPay()
+        {
+            if (rblPayType.SelectedValue != "0" && rblPayType.SelectedValue != "1" && rblPayType.SelectedValue != "2")            
+            {
+                lblerror.Text = "Please Select Payment Method";
+                upModalPay.Update();
+                return false;
+            }
+            else if (txtdeladdress.Text == "")
+            {
+                lblerror.Text = "Please Enter Delivery Address";
+                upModalPay.Update();
+                return false;
+            }
+         
+            return true;
+        }
+        public void SavePOItemsCookie(string SaleProduct)
+        {
+           string POCookiePID = String.Join(",", SaleProduct.ToArray());
+            if (POCookiePID == "")
+            {
+                HttpCookie CartProductsWithQtyPO = Request.Cookies["CartPID"];
+                CartProductsWithQtyPO.Values["POCartPID"] = null;
+                CartProductsWithQtyPO.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(CartProductsWithQtyPO);
+
+              
+
+            }
+            else
+            {
+                HttpCookie CartProductsWithQty = Request.Cookies["POCartPID"];
+                CartProductsWithQty.Values["POCartPID"] = POCookiePID;
+                CartProductsWithQty.Expires = DateTime.Now.AddDays(30);
+                Response.Cookies.Add(CartProductsWithQty);
+
+            }
+
+        }
+        protected void btnpay_Click(object sender, EventArgs e)
+        {
+            Sale objsale = new Sale();
+            if (Request.Cookies["CartPID"] != null)
+            {
+                string currentSession = Session["Username"].ToString();
+                string SessionName = string.Empty;
+                string Sessionname = string.Empty;
+                string CookiePIDWithQty = Request.Cookies["CartPID"].Value.Split('=')[1];
+                string CookiePID = Request.Cookies["CartP"].Value.Split('=')[1];
+
+                string[] CookieDataArray = CookiePIDWithQty.Split(',');
+                List<string> CookiePIDListCheck = CookiePID.Split(',').Select(i => i.Trim()).Where(i => i.Contains(currentSession)).ToList();
+
+                if (CookiePIDListCheck.Count >0)
+                {
+                    DataTable dt = objsale.GetUserId(currentSession);
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            objsale.UserID = Convert.ToInt32(row["LoginId"]);
+                        }
+
+                    }
+                    string SoNo = GenerateNoSO("SO");
+                    objsale.SONo = SoNo;
+                    objsale.Createdon = DateTime.Now;
+                    objsale.POref = 0;
+                    objsale.Status = "To Deliver";
+                    objsale.CustomerType = "New";
+                    int SOID = objsale.CreateSO(objsale);
+                    if (SOID > 0)
+                    {
+                        objsale.SOID = SOID;
+
+                        int PID = 0;
+                        int Qty = 0;
+                        int Size = 0;
+                        string CookiePIDWithQtyUpdated = string.Empty;
+                        string CookiePIDUpdated = string.Empty;
+                        for (int i = 0; i < CookieDataArray.Length; i++)
+                        {
+                            string CookiePIDWithQtynew = Request.Cookies["CartPID"].Value.Split('=')[1];
+                            string CookiePIDnew = Request.Cookies["CartP"].Value.Split('=')[1];
+
+                            SessionName = CookieDataArray[i].ToString().Split('-')[3];
+                            if (currentSession == SessionName)
+                            {
+                                string Product = CookieDataArray[i].ToString().Split('-')[0];
+                                PID = Convert.ToInt32(Product);
+                                string Quantity = CookieDataArray[i].ToString().Split('-')[2];
+                                Qty = Convert.ToInt32(Quantity);
+                                string size = CookieDataArray[i].ToString().Split('-')[1];
+                                Size = Convert.ToInt32(size);
+                                objsale.PID = PID;
+                                objsale.Quantity = Qty;
+                                objsale.CreateSODet(objsale);
+                                string PurchasedProductWithQty = PID + "-" + Size + "-" + Qty + "-" + SessionName;
+                                string PurchasedProduct = PID + "-" + Size + "-" + SessionName;
+                                List<string> CookiePIDWithQtyList = CookiePIDWithQtynew.Split(',').Select(x => x.Trim()).Where(x => x!= string.Empty).ToList();
+                                List<string> CookiePIDList = CookiePIDnew.Split(',').Select(x => x.Trim()).Where(x => x!= string.Empty).ToList();
+                                CookiePIDWithQtyList.Remove(PurchasedProductWithQty);
+                                CookiePIDList.Remove(PurchasedProduct);
+                                CookiePIDWithQtyUpdated = String.Join(",", CookiePIDWithQtyList.ToArray());
+                                CookiePIDUpdated = String.Join(",", CookiePIDList.ToArray());
+                                if (CookiePIDWithQtyUpdated == "" && CookiePIDUpdated == "")
+                                {
+                                    HttpCookie CartProductsWithQty = Request.Cookies["CartPID"];
+                                    CartProductsWithQty.Values["CartPID"] = null;
+                                    CartProductsWithQty.Expires = DateTime.Now.AddDays(-1);
+                                    Response.Cookies.Add(CartProductsWithQty);
+
+                                    HttpCookie CartProducts = Request.Cookies["CartP"];
+                                    CartProducts.Values["CartP"] = null;
+                                    CartProducts.Expires = DateTime.Now.AddDays(-1);
+                                    Response.Cookies.Add(CartProducts);
+
+                                }
+                                else
+                                {
+                                    HttpCookie CartProductsWithQty = Request.Cookies["CartPID"];
+                                    CartProductsWithQty.Values["CartPID"] = CookiePIDWithQtyUpdated;
+                                    CartProductsWithQty.Expires = DateTime.Now.AddDays(30);
+                                    Response.Cookies.Add(CartProductsWithQty);
+
+                                    HttpCookie CartProducts = Request.Cookies["CartP"];
+                                    CartProducts.Values["CartP"] = CookiePIDUpdated;
+                                    CartProducts.Expires = DateTime.Now.AddDays(30);
+                                    Response.Cookies.Add(CartProducts);
+                                }
+                                int PrdQtyID = objsale.CheckQuantity(PID,Size,Qty);
+
+                                if (PrdQtyID > 0)
+                                {                                 
+                                    SavePOItemsCookie(PurchasedProductWithQty);
+                                    ViewState["CreatePO"] = true;
+                                }
+                                else
+                                {
+                                    Inventory objinv = new Inventory();
+
+                                    objinv.StockMoveStatus = "Stock Picking";
+                                    objinv.MoveType = "Stock Out";
+                                    objinv.CreateStockMove(objinv);
+
+                                    objinv.PID = PID;
+                                    objinv.SizeID = Size;
+                                    objinv.Quantity = Qty;
+                                    objinv.ChangeQuantityMinus(objinv);
+
+
+                                }
+                            }
+                            
+
+
+
+                        }
+
+                        //PO Code
+                        if (ViewState["CreatePO"] != null)
+                        {
+                            //PO Header
+
+                            //for PO Items
+                            string POCookiePID = Request.Cookies["POCartPID"].Value.Split('=')[1];
+                            string[] POCookieDataArray = POCookiePID.Split(',');
+                            int POPId = 0;
+                            int POSize = 0;
+                            int POQty = 0;
+                            for (int i = 0; i < POCookieDataArray.Length; i++)
+                            {
+                                string Product = POCookieDataArray[i].ToString().Split('-')[0];
+                                POPId = Convert.ToInt32(Product);
+                                string Quantity = POCookieDataArray[i].ToString().Split('-')[2];
+                                POQty = Convert.ToInt32(Quantity);
+                                string size = POCookieDataArray[i].ToString().Split('-')[1];
+                                POSize = Convert.ToInt32(size);
+                            }
+                            ViewState["CreatePO"] = null;
+                        }
+                            //Payment Code
+                            if (isformvalidPay())
+                        {
+                            string TotalAmount = spanTotalAmt.InnerText;
+                            string TotalAmt = TotalAmount.Split('.')[1].ToString();
+                            objsale.TotalAmount = Convert.ToDecimal(TotalAmt);
+                            if (txtCreditCard.Text != "")
+                            {
+                                objsale.CreditCardNumber = txtCreditCard.Text;
+                                objsale.DebitCardNumber = DBNull.Value.ToString();
+                            }
+                            if (txtDebitCard.Text != "")
+                            {
+                                objsale.CreditCardNumber = DBNull.Value.ToString();
+                                objsale.DebitCardNumber = txtDebitCard.Text;
+                            }
+                            if (rblPayType.SelectedValue == "0" || rblPayType.SelectedValue == "1")
+                            {
+                                objsale.PaymentType = "Credit/Debit";
+                                lblerror.Text = "";
+                                upModalPay.Update();
+                            }
+                            else if (rblPayType.SelectedValue == "2")
+                            {
+                                objsale.PaymentType = "Cash on Delivery";
+                                lblerror.Text = "";
+                                upModalPay.Update();
+                            }
+
+                            if (txtdeladdress.Text != "")
+                            {
+                                objsale.DeliveryAddress = txtdeladdress.Text;
+                                lblerror.Text = "";
+                                upModalPay.Update();
+                            }
+
+
+                            objsale.PayStatus = "Paid";
+                            objsale.CreatePay(objsale);
+                        }
+                        ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertpaysave()", true);
+
+                        Response.Redirect("~/Cart.aspx");
+                       
+                    }
+
+                }
+                else
+                {
+                    lblerror.Text = "Your Shopping Cart is Empty";
+                    upModalPay.Update();
+                }
+            }
+            else
+            {
+
             }
         }
     }

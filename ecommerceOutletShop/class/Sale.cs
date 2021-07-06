@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +23,8 @@ namespace ecommerceOutletShop
         public string PaymentType { get; set; }
         public string DeliveryAddress { get; set; }
         public string PayStatus { get; set; }
+        public string MoveType  { get; set; }
+        public string StockMoveStatus { get; set; }
 
         public int CreateSO(Sale obj)
         {
@@ -42,6 +45,39 @@ namespace ecommerceOutletShop
             OpenConection();
             InsertPay("Insert into tblPay(SOID,TotalAmount,CreditCardNumber,DebitCardNumber,PaymentType,DeliveryAddress,Status) values(@SOID,@TotalAmt,@CrCdNo,@DtCdNo,@PayType,@DelAdd,@Status)", obj.SOID, obj.TotalAmount,obj.CreditCardNumber,obj.DebitCardNumber,obj.PaymentType,obj.DeliveryAddress,obj.PayStatus);
             CloseConnection();
+
+        }
+       
+        public DataTable GetUserId(string Username)
+        {
+            OpenConection();
+            DataTable dt = GetUserIdbyName("Select LoginId from tblecommLogin where UserName=@Username and isAdmin='False'", Username);
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable GetLastSONo()
+        {
+            OpenConection();
+            DataTable dt = GetLastNo("select SONo from tblSO where SOID=(select max(SOID) as LastSOID from tblSO)");
+            CloseConnection();
+            return dt;
+
+        }
+        public int GetLastSOId()
+        {
+            OpenConection();
+            int Soid = GetLastId("select ISNULL(max(SOID),0) as LastSOID from tblSO");
+            CloseConnection();
+            return Soid;
+
+        }
+        public int CheckQuantity(int PID,int SizeID,int Qty)
+        {
+            OpenConection();
+            int SoQtyid = CheckQty("select PrdSizeQuantID from tblProductSizeQuantity where Quantity-@Qty<=ReorderPoint and PID=@PID and SizeID=@SizeID",PID,SizeID,Qty);
+            CloseConnection();
+            return SoQtyid;
 
         }
     }

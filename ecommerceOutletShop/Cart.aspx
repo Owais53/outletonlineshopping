@@ -79,10 +79,10 @@
                            <asp:TextBox ID="txtDebitCard" class="form-control" runat="server" TextMode="Number" Visible="false" Placeholder="Debit Card Number"></asp:TextBox>
                                                                   
                          </div>
-                         
+                         <asp:Label ID="lblerror" runat="server" ForeColor="Red" CssClass="text-danger" Text=""/>
                     </div>
                     <div class="modal-footer">
-                        <asp:Button id="btnpay" type="submit" runat="server" Text="Pay" CausesValidation="false" class="btn btn-danger" />
+                        <asp:Button id="btnpay" type="submit" runat="server" Text="Pay" CausesValidation="false" class="btn btn-danger" OnClick="btnpay_Click"/>
                         <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
                 </div>
@@ -92,5 +92,16 @@
     </div>
 </div>
     </div>
+    <script>
+            function alertpaysave(obj,obj1) {
+                Swal.fire(
+                    'Success!',
+                    'Your Order has been Confirmed.Your Order Number is "'+obj+'" You will recieve your Order on "'+obj1+'"!',
+                     'success'
+                     )
+                
+            }
+           
+      </script>
 
 </asp:Content>

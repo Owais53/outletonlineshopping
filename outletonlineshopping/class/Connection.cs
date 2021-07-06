@@ -71,22 +71,13 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@fd", fd);
             cmd.ExecuteNonQuery();
         }
-        public void UpdateQtySize(string Query_, string ProductName, int uom, decimal price, decimal cost, int Id, int brandid, int catid, int subcatid, int genderid, string desc, string prddetail, string matcare, int fd)
+        public void UpdateQtySize(string Query_, int Id,int Qty,int reorder,int Cst)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
-            cmd.Parameters.AddWithValue("@PrdsizeqtyId", Id);
-            cmd.Parameters.AddWithValue("@Name", ProductName);
-            cmd.Parameters.AddWithValue("@Uom", uom);
-            cmd.Parameters.AddWithValue("@price", price);
-            cmd.Parameters.AddWithValue("@cost", cost);
-            cmd.Parameters.AddWithValue("@brandid", brandid);
-            cmd.Parameters.AddWithValue("@catid", catid);
-            cmd.Parameters.AddWithValue("@subcatid", subcatid);
-            cmd.Parameters.AddWithValue("@genderid", genderid);
-            cmd.Parameters.AddWithValue("@desc", desc);
-            cmd.Parameters.AddWithValue("@productdetail", prddetail);
-            cmd.Parameters.AddWithValue("@matcare", matcare);
-            cmd.Parameters.AddWithValue("@fd", fd);
+            cmd.Parameters.AddWithValue("@ProductId", Id);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.Parameters.AddWithValue("@Reorder", reorder);
+            cmd.Parameters.AddWithValue("@Cst", Cst);
             cmd.ExecuteNonQuery();
         }
         public void UpdateQuantity(string Query_,int Id,int Qty)
@@ -140,12 +131,14 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@GenderID", GenderId);
             cmd.ExecuteNonQuery();
         }
-        public void InsertSizeQty(string Query_, int Pid, int sizeid, int Qty)
+        public void InsertSizeQty(string Query_, int Pid, int sizeid, int Qty,int ReorderPoint,int CstLeadtime)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@Pid", Pid);
             cmd.Parameters.AddWithValue("@sizeid", sizeid);
             cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.Parameters.AddWithValue("@Reorder", ReorderPoint);
+            cmd.Parameters.AddWithValue("@Cst", CstLeadtime);
             cmd.ExecuteNonQuery();
         }
         public void UpdateUnits(string Query_, string UnitName,int Id)

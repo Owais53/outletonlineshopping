@@ -100,6 +100,46 @@ namespace ecommerceOutletShop
             return dataum;
 
         }
+        public DataTable GetUserIdbyName(string Query_,string Name)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Username", Name);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public DataTable GetLastNo(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public int GetLastId(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            var result = cmd.ExecuteScalar();
+            int SoId= result == DBNull.Value ? 0 : Convert.ToInt32(result);
+            return SoId;
+
+        }
+        public int CheckQty(string Query_,int PID,int SizeID,int Qty)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            var result = cmd.ExecuteScalar();
+            int SoQtyId = result == DBNull.Value ? 0 : Convert.ToInt32(result);
+            return SoQtyId;
+
+        }
         public DataTable GetSize(string Query_,  int BrandId, int CatId, int SubCatId, int GenderId)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -193,6 +233,14 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.ExecuteNonQuery();
         }
+        public void UpdateQuantityMinus(string Query_, int PID,int SizeID, int Qty)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PId", PID);
+            cmd.Parameters.AddWithValue("@Size", SizeID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.ExecuteNonQuery();
+        }
         public void InsertUnits(string Query_, string UnitName)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -259,6 +307,14 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@DtCdNo", DtCdNo);
             cmd.Parameters.AddWithValue("@PayType", PayType);
             cmd.Parameters.AddWithValue("@DelAdd", DelAdd);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.ExecuteNonQuery();
+        }
+        public void InsertStockMove(string Query_, int SOID, string MoveType, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@MoveType", MoveType);
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }

@@ -62,6 +62,7 @@ namespace outletonlineshopping
                 txtproductdetails.Text = sdr["ProductDetails"].ToString();
                 txtMatcare.Text = sdr["MaterialCare"].ToString();
                 ChkFD.Checked = Convert.ToBoolean(sdr["FreeDelivery"]);
+             
             }
             obj.CloseConnection();
 
@@ -266,7 +267,7 @@ namespace outletonlineshopping
                 txtProductname.Focus();
                 return false;
             }
-            else if (txtprice.Text=="")
+            else if (txtprice.Text == "")
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Price is not Valid');", true);
                 txtprice.Focus();
@@ -278,7 +279,7 @@ namespace outletonlineshopping
                 txtcost.Focus();
                 return false;
             }
-            else if (txtQty.Text =="")
+            else if (txtQty.Text == "")
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Quantity is not Valid');", true);
                 txtQty.Focus();
@@ -314,7 +315,7 @@ namespace outletonlineshopping
                 ddlgender.Focus();
                 return false;
             }
-            
+
             else if (txtdescription.Text == "")
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Description is not Valid');", true);
@@ -332,6 +333,21 @@ namespace outletonlineshopping
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Product Details is not Valid');", true);
                 txtproductdetails.Focus();
                 return false;
+
+            }
+            else if (txtReorderPoint.Text == "")
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Reorder Point is not Valid');", true);
+                txtReorderPoint.Focus();
+                return false;
+
+            }
+            else if (txtcstleadtime.Text == "")
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Customer Lead Time is not Valid');", true);
+                txtcstleadtime.Focus();
+                return false;
+
             }
             return true;
         }
@@ -352,6 +368,8 @@ namespace outletonlineshopping
                 pro.desc = txtdescription.Text;
                 pro.productdetail = txtproductdetails.Text;
                 pro.matcare = txtMatcare.Text;
+                pro.ReorderPoint = Convert.ToInt32(txtReorderPoint.Text);
+                pro.CustomerLeadTime = Convert.ToInt32(txtcstleadtime.Text);
 
                 if (ChkFD.Checked)
                 {
@@ -422,8 +440,10 @@ namespace outletonlineshopping
                 }
                 else
                 {
+                    pro.Quantity = Convert.ToInt32(txtQty.Text);
                     pro.ProductId = Convert.ToInt32(Request.QueryString["Id"]);
                     pro.UpdateProduct(pro);
+                    pro.UpdateProductSizeQty(pro);
                     ClientScript.RegisterStartupScript(GetType(), "randomtext", "alerteditproduct()", true);
 
                 }

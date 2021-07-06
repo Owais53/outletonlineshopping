@@ -143,6 +143,16 @@
                                                     <asp:label runat="server">Free Delivery</asp:label>
                                                     <asp:CheckBox ID="ChkFD" runat="server" />
                                                   </div>
+                                                <div class="form-group">
+                                                    <asp:label runat="server">Reorder Point</asp:label>
+                                                     <asp:TextBox ID="txtReorderPoint" CssClass="form-control" placeholder="Enter Reorder Point" runat="server"></asp:TextBox>
+                                                    
+                                                  </div>
+                                                <div class="form-group">
+                                                    <asp:label runat="server">Customer Lead Time</asp:label>
+                                                    <asp:TextBox ID="txtcstleadtime" CssClass="form-control" placeholder="Enter Customer Lead Time" runat="server"></asp:TextBox>
+                                                    
+                                                  </div>
                                             
                                              <div class="form-group">
                                                 <asp:Button id="btnProdsave" type="submit" runat="server" Text="Save" class="btn btn-primary" OnClick="btnProdsave_Click" CausesValidation="false"/>
