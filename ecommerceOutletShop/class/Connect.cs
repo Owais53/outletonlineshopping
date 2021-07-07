@@ -309,6 +309,15 @@ namespace ecommerceOutletShop
             int vid = Convert.ToInt32(cmd.ExecuteScalar());
             return vid;
         }
+        public int GetPOIDbyVendor(string Query_, int VID,string createddate)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@VID", VID);
+            cmd.Parameters.AddWithValue("@Createdon", createddate);
+            int POid = Convert.ToInt32(cmd.ExecuteScalar());
+            return POid;
+        }
         public void InsertSODet(string Query_, int SOID,int PID,int Qty)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

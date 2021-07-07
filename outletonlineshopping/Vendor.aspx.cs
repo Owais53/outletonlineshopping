@@ -89,7 +89,7 @@ namespace outletonlineshopping
             {
                 sdr.Read();
                 txtVendorname.Text = sdr["VendorName"].ToString();
-                txtContact.Text = sdr["Contact"].ToString();
+                txtContact.Text = sdr["ContactNo"].ToString();
                 txtemail.Text = sdr["Email"].ToString();
                 txtaddress.Text = sdr["Address"].ToString();
 

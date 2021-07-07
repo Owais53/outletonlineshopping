@@ -20,7 +20,7 @@ namespace ecommerceOutletShop
         public int CreatePO(Purchase obj)
         {
             OpenConection();
-            int Poid = InsertPO("Insert into tblPO(PONo,Createdon,VendorID,Status) values(@PONO,@UserID,@Createdon,@VendorID,@Status) SELECT SCOPE_IDENTITY()", obj.PONo, obj.Createdon, obj.VendorId, obj.PurchaseStatus);
+            int Poid = InsertPO("Insert into tblPO(PONo,Createdon,VendorID,Status) values(@PONO,@Createdon,@VendorID,@Status) SELECT SCOPE_IDENTITY()", obj.PONo, obj.Createdon, obj.VendorId, obj.PurchaseStatus);
             CloseConnection();
             return Poid;
         }
@@ -54,6 +54,14 @@ namespace ecommerceOutletShop
             int Vid = GetVendorIDbyProduct("select VendorID from tblPO where POID=@PID", PID);
             CloseConnection();
             return Vid;
+
+        }
+        public int GetPOIdbyVendor(int VID,string date)
+        {
+            OpenConection();
+            int POid = GetPOIDbyVendor("select Max(POID) as POID from tblPO where VendorID=@VID and convert(date,Createdon)=@Createdon", VID,date);
+            CloseConnection();
+            return POid;
 
         }
         public void CreatePODet(Purchase obj)
