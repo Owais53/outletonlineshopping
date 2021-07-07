@@ -64,6 +64,20 @@ namespace ecommerceOutletShop
             return dt;
 
         }
+        public int CountSOofUser(int UserID)
+        {
+            OpenConection();
+            int Poid = SelectSalesCount("select COUNT(*) as SalesCount from tblSO group by UserID Having UserID=@UserID", UserID);
+            CloseConnection();
+            return Poid;
+        }
+        public string GetCustomerTypebyuser(int UserID)
+        {
+            OpenConection();
+            string custtype = GetCustomerType("select CustomerType from tblSO where UserID=@UserID", UserID);
+            CloseConnection();
+            return custtype;
+        }
         public int GetLastSOId()
         {
             OpenConection();

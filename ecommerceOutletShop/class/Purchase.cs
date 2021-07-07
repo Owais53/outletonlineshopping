@@ -13,6 +13,7 @@ namespace ecommerceOutletShop
         public int PID { get; set; }
         public int SizeID { get; set; }
         public int Quantity { get; set; }
+        public int SOref { get; set; }
         public DateTime Createdon { get; set; }
         public int VendorId { get; set; }
         public string PurchaseStatus { get; set; }
@@ -20,10 +21,11 @@ namespace ecommerceOutletShop
         public int CreatePO(Purchase obj)
         {
             OpenConection();
-            int Poid = InsertPO("Insert into tblPO(PONo,Createdon,VendorID,Status) values(@PONO,@Createdon,@VendorID,@Status) SELECT SCOPE_IDENTITY()", obj.PONo, obj.Createdon, obj.VendorId, obj.PurchaseStatus);
+            int Poid = InsertPO("Insert into tblPO(SOref,PONo,Createdon,VendorID,Status) values(@SOref,@PONO,@Createdon,@VendorID,@Status) SELECT SCOPE_IDENTITY()",obj.SOref, obj.PONo, obj.Createdon, obj.VendorId, obj.PurchaseStatus);
             CloseConnection();
             return Poid;
         }
+       
         public DataTable GetLastPONo()
         {
             OpenConection();

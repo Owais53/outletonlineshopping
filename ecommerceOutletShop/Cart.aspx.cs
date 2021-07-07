@@ -14,10 +14,19 @@ namespace ecommerceOutletShop
         Ecomm obj = new Ecomm();
        // string ConnectionString = "Data source=.; initial catalog=outlet; integrated security=true;";
         SqlConnection con=  new SqlConnection("Data source=.; initial catalog=outlet; integrated security=true;");
-       
+        Sale objSale = new Sale();
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            int UserId = Convert.ToInt32(Session["UserId"]);
+           string CustType= objSale.GetCustomerTypebyuser(UserId);
+            if (CustType == "New")
+            {
+                rblPayType.Items[0].Attributes.CssStyle.Add("display", "none");
+            }
+            else
+            {
+                rblPayType.Items[0].Attributes.CssStyle.Add("display", "block");
+            }
             if (!IsPostBack)
             {
                 BindProductCart();
@@ -310,7 +319,19 @@ namespace ecommerceOutletShop
                     objsale.Createdon = DateTime.Now;
                     objsale.POref = 0;
                     objsale.Status = "To Deliver";
-                    objsale.CustomerType = "New";
+                   
+                    int UserId = Convert.ToInt32(Session["UserId"]);
+                   
+                    int Countpurofuser=objsale.CountSOofUser(UserId);
+                    if (Countpurofuser >= 3)
+                    {
+                        objsale.CustomerType = "Regular";
+                    }
+                    else
+                    {
+                        objsale.CustomerType = "New";
+                    }
+                    
                     int SOID = objsale.CreateSO(objsale);
                     if (SOID > 0)
                     {
@@ -436,6 +457,7 @@ namespace ecommerceOutletShop
                                     int POID = 0;
                                     if (ViewState["FirstPO"].ToString() == "yes")
                                     {
+                                        objpur.SOref = SOID;
                                         objpur.PONo = GenerateNoPO("PO");
                                         objpur.Createdon = DateTime.Now;
                                         objpur.VendorId = VID;
@@ -454,7 +476,7 @@ namespace ecommerceOutletShop
                                     {
                                         if (ViewState["FirstPO"].ToString() == "no"|| ViewState["CreatenewPO"].ToString()=="yes")
                                         {
-                                            
+                                            objpur.SOref = SOID;
                                             objpur.PONo = GenerateNoPO("PO");
                                             objpur.Createdon = DateTime.Now;
                                             objpur.VendorId = VID;

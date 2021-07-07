@@ -290,16 +290,34 @@ namespace ecommerceOutletShop
             int pid = Convert.ToInt32(cmd.ExecuteScalar());
             return pid;
         }
-        public int InsertPO(string Query_, string PONO, DateTime Createdon, int VendorID, string Status)
+        public int InsertPO(string Query_,int SOref, string PONO, DateTime Createdon, int VendorID, string Status)
         {
 
             SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOref", SOref);
             cmd.Parameters.AddWithValue("@PONO", PONO);
             cmd.Parameters.AddWithValue("@Createdon", Createdon);
             cmd.Parameters.AddWithValue("@VendorID", VendorID);
             cmd.Parameters.AddWithValue("@Status", Status);
             int poid = Convert.ToInt32(cmd.ExecuteScalar());
             return poid;
+        }
+        public int SelectSalesCount(string Query_, int UserID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
+        public string GetCustomerType(string Query_, int UserID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@UserID", UserID);          
+            var result = cmd.ExecuteScalar();
+            string custtype= result == null ? "New" :result.ToString();
+            return custtype;
         }
         public int GetVendorIDbyProduct(string Query_, int PID)
         {

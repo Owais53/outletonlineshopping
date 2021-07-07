@@ -36,6 +36,7 @@ namespace ecommerceOutletShop
             {
                 foreach(DataRow row in dt.Rows)
                 {
+                    Session["UserId"] = row["LoginId"].ToString();
                     Session["Username"] = row["UserName"].ToString();
                 }
                 if (chkrem.Checked)
