@@ -359,6 +359,8 @@ namespace ecommerceOutletShop
                                 Size = Convert.ToInt32(size);
                                 objsale.PID = PID;
                                 objsale.Quantity = Qty;
+                                objsale.SizeID = Size;
+                                objsale.DevStatus = "Not Delivered";
                                 objsale.CreateSODet(objsale);
                                 string PurchasedProductWithQty = PID + "-" + Size + "-" + Qty + "-" + SessionName;
                                 string PurchasedProduct = PID + "-" + Size + "-" + SessionName;
@@ -394,7 +396,7 @@ namespace ecommerceOutletShop
                                     Response.Cookies.Add(CartProducts);
                                 }
                                 int PrdQtyID = objsale.CheckQuantity(PID,Size,Qty);
-
+                                int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
                                 if (PrdQtyID > 0)
                                 {                                 
                                     SavePOItemsCookie(PurchasedProductWithQty);
@@ -412,7 +414,14 @@ namespace ecommerceOutletShop
                                     objinv.SizeID = Size;
                                     objinv.Quantity = Qty;
                                     objinv.ChangeQuantityMinus(objinv);
-
+                                    if (CustLeadTime > 0)
+                                    {
+                                        DateTime CurrentDate = DateTime.Now.Date;
+                                        DateTime ScheduledDeliveryDate = CurrentDate.AddDays(CustLeadTime);
+                                        objsale.SOID = SOID;
+                                        objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
+                                        objsale.AddScheduledDate(objsale);
+                                    }
 
                                 }
                             }
@@ -449,6 +458,7 @@ namespace ecommerceOutletShop
                                 Purchase objpur = new Purchase();
                                 objpur.PID = POPId;
                                 objpur.Quantity = POQty;
+                                objpur.SizeID = POSize;
 
                                 int VID = objpur.GetVendorId(POPId);
                                 if (VID > 0)
@@ -466,6 +476,15 @@ namespace ecommerceOutletShop
                                     }
                                     
                                     int VIDfromPO = objpur.GetVendorIdbyPO(POID);
+                                    objpur.VendorId = VIDfromPO;
+                                    int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
+                                    int DevLeadTime = objpur.GetDeliveryLeadTime(objpur);
+                                    int TotalTime = DevLeadTime + CustLeadTime;
+                                    DateTime CurrentDate = DateTime.Now.Date;
+                                    DateTime ScheduledDeliveryDate = CurrentDate.AddDays(TotalTime);
+                                    objsale.SOID = SOID;
+                                    objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
+                                    objsale.AddScheduledDate(objsale);
                                     if (VID == VIDfromPO)
                                     {
                                         ViewState["FirstPO"] = "no";

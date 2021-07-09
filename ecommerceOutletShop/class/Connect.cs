@@ -197,6 +197,7 @@ namespace ecommerceOutletShop
             return dataum;
 
         }
+
         public DataTable ResetPass(string Query_, string UserName, string pass)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -233,6 +234,12 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.ExecuteNonQuery();
         }
+        public void UpdateScheduledDeliveryStatus(string Query_, string Scheduleddevdate)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@schdevdate", Scheduleddevdate);
+            cmd.ExecuteNonQuery();
+        }
         public void UpdateQuantityMinus(string Query_, int PID,int SizeID, int Qty)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -254,6 +261,28 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Name", UnitName);
             cmd.ExecuteNonQuery();
         }
+        public void UpdateScheduledDate(string Query_, int PID, int SizeID,DateTime SDD,int SOID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
+            cmd.Parameters.AddWithValue("@SDD", SDD);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateStockSatusDev(string Query_, int SOID,string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateStockStatus(string Query_, string date)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@date", date);
+            cmd.ExecuteNonQuery();
+        }
 
         public SqlDataReader DataReaderwithparam(string Query_, int Id)
         {
@@ -268,7 +297,8 @@ namespace ecommerceOutletShop
             SqlDataReader dr = cmd.ExecuteReader();
             return dr;
         }
-    
+        
+
         public DataTable ShowDataInGridView(string Query_)
         {
             SqlDataAdapter dr = new SqlDataAdapter(Query_, ConnectionString);
@@ -336,19 +366,39 @@ namespace ecommerceOutletShop
             int POid = Convert.ToInt32(cmd.ExecuteScalar());
             return POid;
         }
-        public void InsertSODet(string Query_, int SOID,int PID,int Qty)
+        public int GetCustLeadTime(string Query_, int PID, int SizeId)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeId);
+            int POid = Convert.ToInt32(cmd.ExecuteScalar());
+            return POid;
+        }
+        public int GetDevLeadTime(string Query_, int VID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@VID", VID);
+            int POid = Convert.ToInt32(cmd.ExecuteScalar());
+            return POid;
+        }
+        public void InsertSODet(string Query_, int SOID,int PID,int SizeID,int Qty,string DevStatus)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@SOID", SOID);
             cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
             cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.Parameters.AddWithValue("@DevStatus", DevStatus);
             cmd.ExecuteNonQuery();
         }
-        public void InsertPODet(string Query_, int POID, int PID, int Qty)
+        public void InsertPODet(string Query_, int POID, int PID,int SizeID,int Qty)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@POID", POID);
             cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.ExecuteNonQuery();
         }

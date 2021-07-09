@@ -69,8 +69,16 @@ namespace ecommerceOutletShop
         public void CreatePODet(Purchase obj)
         {
             OpenConection();
-            InsertPODet("insert into tblPODetail(POID,PID,Quantity) values(@POID,@PID,@Qty)",obj.POID,obj.PID,obj.Quantity);
+            InsertPODet("insert into tblPODetail(POID,PID,SizeID,Quantity) values(@POID,@PID,@SizeID,@Qty)",obj.POID,obj.PID,obj.SizeID,obj.Quantity);
             CloseConnection();
+
+        }
+        public int GetDeliveryLeadTime(Purchase obj)
+        {
+            OpenConection();
+            int devleadtime = GetDevLeadTime("select DeliveryLeadTime from tblVendor where VID=@VID", obj.VendorId);
+            CloseConnection();
+            return devleadtime;
 
         }
     }

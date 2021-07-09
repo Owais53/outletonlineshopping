@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,7 @@ namespace ecommerceOutletShop
         public string Status { get; set; }
         public string CustomerType { get; set; }
         public int PID { get; set; }
+        public int SizeID { get; set; }
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
         public string CreditCardNumber { get; set; }
@@ -23,8 +25,10 @@ namespace ecommerceOutletShop
         public string PaymentType { get; set; }
         public string DeliveryAddress { get; set; }
         public string PayStatus { get; set; }
+        public string DevStatus { get; set; }
         public string MoveType  { get; set; }
         public string StockMoveStatus { get; set; }
+        public DateTime ScheduledDeliveryDate { get; set; }
 
         public int CreateSO(Sale obj)
         {
@@ -36,7 +40,7 @@ namespace ecommerceOutletShop
         public void CreateSODet(Sale obj)
         {
             OpenConection();
-            InsertSODet("Insert into tblSODetail(SOID,PID,Quantity) values(@SOID,@PID,@Qty)", obj.SOID, obj.PID, obj.Quantity);
+            InsertSODet("Insert into tblSODetail(SOID,PID,SizeID,Quantity) values(@SOID,@PID,@SizeID,@Qty)", obj.SOID, obj.PID,obj.SizeID ,obj.Quantity,obj.DevStatus);
             CloseConnection();
          
         }
@@ -62,8 +66,24 @@ namespace ecommerceOutletShop
             DataTable dt = GetLastNo("select SONo from tblSO where SOID=(select max(SOID) as LastSOID from tblSO)");
             CloseConnection();
             return dt;
+        }
+        public SqlDataReader GetSOCount()
+        {
+            OpenConection();
+            SqlDataReader dr = DataReader("select SOID,Count(SOID) as IDCount from tblSODetail  group by SOID");
+            CloseConnection();
+            return dr;
 
         }
+        public SqlDataReader GetDeliveredProCount()
+        {
+            OpenConection();
+            SqlDataReader dr = DataReader("select SOID,Count(SOID) as IDCount from tblSODetail where DeliveryStatus='Delivered' group by SOID");
+            CloseConnection();
+            return dr;
+
+        }
+
         public int CountSOofUser(int UserID)
         {
             OpenConection();
@@ -85,6 +105,50 @@ namespace ecommerceOutletShop
             CloseConnection();
             return Soid;
 
+        }
+        public int GetCustomerLeadTime(Sale obj)
+        {
+            OpenConection();
+            int custleadtime = GetCustLeadTime("select CustomerLeadTime from tblProductSizeQuantity where PID=@PID and SizeID=@SizeID",obj.PID,obj.SizeID);
+            CloseConnection();
+            return custleadtime;
+
+        }
+        public void AddScheduledDate(Sale obj)
+        {
+            OpenConection();
+            UpdateScheduledDate("Update tblSODetail set ScheduledDeliveryDate=@SDD where SOID=@SOID and PID=@PID and SizeID=@SizeID", obj.PID, obj.SizeID,obj.ScheduledDeliveryDate,obj.SOID);
+            CloseConnection();
+        }
+        public void UpdateStatusSOIfdev()
+        {
+            OpenConection();
+            ExecuteQueries("update tblSO set Status='Delivered' where SOID in(select SOID from tblStockMove where Status='Delivered')");
+            CloseConnection();
+        }
+        public void UpdateStatusSOIfpardev()
+        {
+            OpenConection();
+            ExecuteQueries("update tblSO set Status='Partially Delivered' where SOID in(select SOID from tblStockMove where Status='Partially Delivered')");
+            CloseConnection();
+        }
+        public void UpdateStatusStocktoship(string date)
+        {
+            OpenConection();
+            UpdateStockStatus("update tblStockMove set Status='Shipped' where SOID in(select SOID from tblSO where CONVERT(date,Createdon)< @date)",date);
+            CloseConnection();
+        }
+        public void ChangeStockMoveStatus(Sale obj)
+        {
+            OpenConection();
+             UpdateStockSatusDev("Update tblStockMove set Status=@Status where SOID=@SOID", obj.SOID, obj.Status);
+            CloseConnection();
+        }
+        public void UpdateStatusProductSale(string date)
+        {
+            OpenConection();
+            UpdateScheduledDeliveryStatus("update tblSODetail set DeliveryStatus='Delivered' where SOID IN(select SOID from tblSO) and Convert(date,ScheduledDeliveryDate)=@schdevdate", date);
+            CloseConnection();
         }
         public int CheckQuantity(int PID,int SizeID,int Qty)
         {
