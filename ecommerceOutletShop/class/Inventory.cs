@@ -8,7 +8,9 @@ namespace ecommerceOutletShop
     public class Inventory : Connect
     {
         public int SOID { get; set; }
+        public int POID { get; set; }
         public string SONo { get; set; }
+        public string DOCNo { get; set; }
         public int UserID { get; set; }
         public DateTime Createdon { get; set; }
         public int POref { get; set; }
@@ -23,7 +25,7 @@ namespace ecommerceOutletShop
         public void CreateStockMove(Inventory obj)
         {
             OpenConection();
-            InsertStockMove("Insert into tblStockMove(SOID,MoveType,Status) values(@SOID,@MoveType,@Status)", obj.SOID, obj.MoveType, obj.StockMoveStatus);
+            InsertStockMove("Insert into tblStockMove(DocNo,SOID,POID,MoveType,Status) values(@DocNO,@SOID,@POID,@MoveType,@Status)",obj.DOCNo,obj.SOID,obj.POID,obj.MoveType, obj.StockMoveStatus);
             CloseConnection();
 
         }

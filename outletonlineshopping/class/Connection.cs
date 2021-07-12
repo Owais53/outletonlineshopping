@@ -337,6 +337,26 @@ namespace outletonlineshopping
             return dataum;
 
         }
+        public int SelectDupProdSize(string Query_, int PID, int SizeID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
+        public DataTable GetSOLineItem(string Query_, int Id)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", Id);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
         public SqlDataReader DataReaderwithparam(string Query_,int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

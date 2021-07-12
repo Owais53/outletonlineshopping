@@ -22,10 +22,10 @@ namespace ecommerceOutletShop
                 SqlDataReader dr1=objsale.GetDeliveredProCount();
                 while(dr.Read() && dr1.Read())
                 {
-                    var SOID = dr.GetValue(0); 
-                    var Count = dr.GetValue(1);
-                    var SOIDforDelivered = dr.GetValue(0);
-                    var CountDelivered = dr.GetValue(1);
+                    int SOID = (int)dr.GetValue(0); 
+                    int Count = (int)dr.GetValue(1);
+                    int SOIDforDelivered = (int)dr1.GetValue(0);
+                    int CountDelivered = (int)dr1.GetValue(1);
                     if(SOID==SOIDforDelivered && Count == CountDelivered)
                     {
                         //All Products Delivered
@@ -33,7 +33,7 @@ namespace ecommerceOutletShop
                         objsale.Status = "Delivered";
                         objsale.ChangeStockMoveStatus(objsale);
                     }
-                    else if (SOID == SOIDforDelivered && CountDelivered==null)
+                    else if (SOID == SOIDforDelivered && CountDelivered==0)
                     {
                         //Products Not Delivered
                        
@@ -47,6 +47,7 @@ namespace ecommerceOutletShop
                     }
 
                 }
+                objsale.CloseConnection();
                 objsale.UpdateStatusSOIfdev();
                 objsale.UpdateStatusSOIfpardev();
 

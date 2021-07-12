@@ -6,6 +6,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using System.Text;
+using System.Net;
+using System.Net.Mail;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.html.simpleparser;
 
 namespace ecommerceOutletShop
 {
@@ -43,13 +50,14 @@ namespace ecommerceOutletShop
                 string currentSession = Session["Username"].ToString();
                 string CookieData = Request.Cookies["CartPID"].Value.Split('=')[1];
                 string[] CookieDataArray = CookieData.Split(',');
+                int ItemsCount = 0;
                 for (int i = 0; i < CookieDataArray.Length; i++)
                 {
                     SessionName = CookieDataArray[i].ToString().Split('-')[3];
 
                     if (CookieDataArray.Length > 0 && currentSession == SessionName)
                     {
-                        int ItemsCount = 0;
+                        
                         if (currentSession == SessionName)
                         {
                             ItemsCount++;
@@ -183,6 +191,72 @@ namespace ecommerceOutletShop
                 upModalPay.Update();
             }
         }
+        public string GenerateNoGI(string GIno)
+        {
+            Sale objsale = new Sale();
+            string a = "";
+            int SoID = objsale.GetLastSmoveSoId();
+            if (SoID > 0)
+            {
+                DataTable dt = objsale.GetLastGINo();
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        string lastNo = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            lastNo = row["DocNo"].ToString();
+
+                        }
+                        string LastNo = lastNo.Split('-')[1].ToString();
+                        int No = Convert.ToInt32(LastNo);
+                        int Num = No + 1;
+                        a = GIno + "-000" + Num;
+
+                    }
+                }
+            }
+            else
+            {
+                a = GIno + "-0001";
+            }
+            return a;
+
+        }
+        public string GenerateNoGR(string GRno)
+        {
+            Sale objsale = new Sale();
+            string a = "";
+            int SoID = objsale.GetLastSmovePoId();
+            if (SoID > 0)
+            {
+                DataTable dt = objsale.GetLastGRNo();
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        string lastNo = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            lastNo = row["DocNo"].ToString();
+
+                        }
+                        string LastNo = lastNo.Split('-')[1].ToString();
+                        int No = Convert.ToInt32(LastNo);
+                        int Num = No + 1;
+                        a = GRno + "-000" + Num;
+
+                    }
+                }
+            }
+            else
+            {
+                a = GRno + "-0001";
+            }
+            return a;
+
+        }
         public string GenerateNoSO(string Sono)
         {
             Sale objsale = new Sale();
@@ -289,261 +363,418 @@ namespace ecommerceOutletShop
                      
 
         }
+        public string GetVendorEmail(int Id)
+        {
+            Purchase obj = new Purchase();
+            string PONo = obj.GetPONOfromEmail(Id);
+            return PONo;
+        }
+        public string PONOforEmail(int Id)
+        {
+            Purchase obj = new Purchase();
+            string PONo = obj.GetPONOfromEmail(Id);
+            return PONo;
+        }
+        public DataTable POLineitemforEmail(int ID)
+        {
+            Purchase obj = new Purchase();
+            DataTable dt=obj.GetPOLineItemforEmail(ID);
+            if (dt.Rows.Count > 0)
+            {
+                return dt;
+            }
+            else
+            {
+                DataTable data = new DataTable();
+                return data;
+            }
+            
+        }
+        private void SendPDFEmail(DataTable dt,int POID)
+        {
+            using (StringWriter sw = new StringWriter())
+            {
+                using (HtmlTextWriter hw = new HtmlTextWriter(sw))
+                {
+                    string companyName = "OutLet Shopping";
+                    string orderNo = PONOforEmail(POID);
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<table width='100%' cellspacing='0' cellpadding='2'>");
+                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Order Sheet</b></td></tr>");
+                    sb.Append("<tr><td colspan = '2'></td></tr>");
+                    sb.Append("<tr><td><b>Order No:</b>");
+                    sb.Append(orderNo);
+                    sb.Append("</td><td><b>Date: </b>");
+                    sb.Append(DateTime.Now);
+                    sb.Append(" </td></tr>");
+                    sb.Append("<tr><td colspan = '2'><b>Company Name :</b> ");
+                    sb.Append(companyName);
+                    sb.Append("</td></tr>");
+                    sb.Append("</table>");
+                    sb.Append("<br />");
+                    sb.Append("<table border = '1'>");
+                    sb.Append("<tr>");
+                    foreach (DataColumn column in dt.Columns)
+                    {
+                        sb.Append("<th style = 'background-color: #D20B0C;color:#ffffff'>");
+                        sb.Append(column.ColumnName);
+                        sb.Append("</th>");
+                    }
+                    sb.Append("</tr>");
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        sb.Append("<tr>");
+                        foreach (DataColumn column in dt.Columns)
+                        {
+                            sb.Append("<td>");
+                            sb.Append(row[column]);
+                            sb.Append("</td>");
+                        }
+                        sb.Append("</tr>");
+                    }
+                    sb.Append("</table>");
+                    StringReader sr = new StringReader(sb.ToString());
+
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+                        pdfDoc.Open();
+                        htmlparser.Parse(sr);
+                        pdfDoc.Close();
+                        byte[] bytes = memoryStream.ToArray();
+                        memoryStream.Close();
+
+                        Purchase obj = new Purchase();
+                        string Email = obj.GetVendorEmailfromPO(POID);
+
+                        MailMessage mm = new MailMessage("onlineoutletshopping2021@gmail.com", Email);
+                        mm.Subject = "Order ";
+                        mm.Body = "Order Attachment";
+                        mm.Attachments.Add(new Attachment(new MemoryStream(bytes), "Order "+orderNo+".pdf"));
+                        mm.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential();
+                        NetworkCred.UserName = "onlineoutletshopping2021@gmail.com";
+                        NetworkCred.Password = "2262801abcxyz";
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
+            }
+        }
+        public void SavePOIDforEmail(int PurchID)
+        {
+            if (Request.Cookies["POIDEmail"] != null)
+            {
+                string POID = Request.Cookies["POIDEmail"].Value.Split('=')[1];
+                POID = POID + "," + PurchID;
+                HttpCookie PO = new HttpCookie("POIDEmail");
+                PO.Values["POIDEmail"] = POID.ToString();
+                PO.Expires = DateTime.Now.AddDays(30);
+                Response.Cookies.Add(PO);
+            }
+            else
+            {
+                HttpCookie PO = new HttpCookie("POIDEmail");
+                PO.Values["POIDEmail"] = PurchID.ToString();
+                PO.Expires = DateTime.Now.AddDays(30);
+                Response.Cookies.Add(PO);
+            }
+                
+
+        }
         protected void btnpay_Click(object sender, EventArgs e)
         {
             Sale objsale = new Sale();
             if (Request.Cookies["CartPID"] != null)
             {
-                string currentSession = Session["Username"].ToString();
-                string SessionName = string.Empty;
-                string Sessionname = string.Empty;
-                string CookiePIDWithQty = Request.Cookies["CartPID"].Value.Split('=')[1];
-                string CookiePID = Request.Cookies["CartP"].Value.Split('=')[1];
-
-                string[] CookieDataArray = CookiePIDWithQty.Split(',');
-                List<string> CookiePIDListCheck = CookiePID.Split(',').Select(i => i.Trim()).Where(i => i.Contains(currentSession)).ToList();
-
-                if (CookiePIDListCheck.Count >0)
+                if (isformvalidPay())
                 {
-                    DataTable dt = objsale.GetUserId(currentSession);
-                    if (dt.Rows.Count > 0)
+                    string currentSession = Session["Username"].ToString();
+                    string SessionName = string.Empty;
+                    string Sessionname = string.Empty;
+                    string CookiePIDWithQty = Request.Cookies["CartPID"].Value.Split('=')[1];
+                    string CookiePID = Request.Cookies["CartP"].Value.Split('=')[1];
+
+                    string[] CookieDataArray = CookiePIDWithQty.Split(',');
+                    List<string> CookiePIDListCheck = CookiePID.Split(',').Select(i => i.Trim()).Where(i => i.Contains(currentSession)).ToList();
+
+                    if (CookiePIDListCheck.Count > 0)
                     {
-                        foreach (DataRow row in dt.Rows)
+                        DataTable dt = objsale.GetUserId(currentSession);
+                        if (dt.Rows.Count > 0)
                         {
-                            objsale.UserID = Convert.ToInt32(row["LoginId"]);
-                        }
-
-                    }
-                    string SoNo = GenerateNoSO("SO");
-                    objsale.SONo = SoNo;
-                    objsale.Createdon = DateTime.Now;
-                    objsale.POref = 0;
-                    objsale.Status = "To Deliver";
-                   
-                    int UserId = Convert.ToInt32(Session["UserId"]);
-                   
-                    int Countpurofuser=objsale.CountSOofUser(UserId);
-                    if (Countpurofuser >= 3)
-                    {
-                        objsale.CustomerType = "Regular";
-                    }
-                    else
-                    {
-                        objsale.CustomerType = "New";
-                    }
-                    
-                    int SOID = objsale.CreateSO(objsale);
-                    if (SOID > 0)
-                    {
-                        objsale.SOID = SOID;
-
-                        int PID = 0;
-                        int Qty = 0;
-                        int Size = 0;
-                        string CookiePIDWithQtyUpdated = string.Empty;
-                        string CookiePIDUpdated = string.Empty;
-                        ViewState["EmptyCookiePO"] = "yes";
-                        for (int i = 0; i < CookieDataArray.Length; i++)
-                        {
-                            string CookiePIDWithQtynew = Request.Cookies["CartPID"].Value.Split('=')[1];
-                            string CookiePIDnew = Request.Cookies["CartP"].Value.Split('=')[1];
-
-                            SessionName = CookieDataArray[i].ToString().Split('-')[3];
-                            if (currentSession == SessionName)
+                            foreach (DataRow row in dt.Rows)
                             {
-                                string Product = CookieDataArray[i].ToString().Split('-')[0];
-                                PID = Convert.ToInt32(Product);
-                                string Quantity = CookieDataArray[i].ToString().Split('-')[2];
-                                Qty = Convert.ToInt32(Quantity);
-                                string size = CookieDataArray[i].ToString().Split('-')[1];
-                                Size = Convert.ToInt32(size);
-                                objsale.PID = PID;
-                                objsale.Quantity = Qty;
-                                objsale.SizeID = Size;
-                                objsale.DevStatus = "Not Delivered";
-                                objsale.CreateSODet(objsale);
-                                string PurchasedProductWithQty = PID + "-" + Size + "-" + Qty + "-" + SessionName;
-                                string PurchasedProduct = PID + "-" + Size + "-" + SessionName;
-                                List<string> CookiePIDWithQtyList = CookiePIDWithQtynew.Split(',').Select(x => x.Trim()).Where(x => x!= string.Empty).ToList();
-                                List<string> CookiePIDList = CookiePIDnew.Split(',').Select(x => x.Trim()).Where(x => x!= string.Empty).ToList();
-                                CookiePIDWithQtyList.Remove(PurchasedProductWithQty);
-                                CookiePIDList.Remove(PurchasedProduct);
-                                CookiePIDWithQtyUpdated = String.Join(",", CookiePIDWithQtyList.ToArray());
-                                CookiePIDUpdated = String.Join(",", CookiePIDList.ToArray());
-                                if (CookiePIDWithQtyUpdated == "" && CookiePIDUpdated == "")
-                                {
-                                    HttpCookie CartProductsWithQty = Request.Cookies["CartPID"];
-                                    CartProductsWithQty.Values["CartPID"] = null;
-                                    CartProductsWithQty.Expires = DateTime.Now.AddDays(-1);
-                                    Response.Cookies.Add(CartProductsWithQty);
-
-                                    HttpCookie CartProducts = Request.Cookies["CartP"];
-                                    CartProducts.Values["CartP"] = null;
-                                    CartProducts.Expires = DateTime.Now.AddDays(-1);
-                                    Response.Cookies.Add(CartProducts);
-
-                                }
-                                else
-                                {
-                                    HttpCookie CartProductsWithQty = Request.Cookies["CartPID"];
-                                    CartProductsWithQty.Values["CartPID"] = CookiePIDWithQtyUpdated;
-                                    CartProductsWithQty.Expires = DateTime.Now.AddDays(30);
-                                    Response.Cookies.Add(CartProductsWithQty);
-
-                                    HttpCookie CartProducts = Request.Cookies["CartP"];
-                                    CartProducts.Values["CartP"] = CookiePIDUpdated;
-                                    CartProducts.Expires = DateTime.Now.AddDays(30);
-                                    Response.Cookies.Add(CartProducts);
-                                }
-                                int PrdQtyID = objsale.CheckQuantity(PID,Size,Qty);
-                                int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
-                                if (PrdQtyID > 0)
-                                {                                 
-                                    SavePOItemsCookie(PurchasedProductWithQty);
-                                    ViewState["CreatePO"] = true;
-                                }
-                                else
-                                {
-                                    Inventory objinv = new Inventory();
-                                    objinv.SOID = SOID;
-                                    objinv.StockMoveStatus = "Stock Picking";
-                                    objinv.MoveType = "Stock Out";
-                                    objinv.CreateStockMove(objinv);
-
-                                    objinv.PID = PID;
-                                    objinv.SizeID = Size;
-                                    objinv.Quantity = Qty;
-                                    objinv.ChangeQuantityMinus(objinv);
-                                    if (CustLeadTime > 0)
-                                    {
-                                        DateTime CurrentDate = DateTime.Now.Date;
-                                        DateTime ScheduledDeliveryDate = CurrentDate.AddDays(CustLeadTime);
-                                        objsale.SOID = SOID;
-                                        objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
-                                        objsale.AddScheduledDate(objsale);
-                                    }
-
-                                }
+                                objsale.UserID = Convert.ToInt32(row["LoginId"]);
                             }
-                            
-
-
 
                         }
+                        string SoNo = GenerateNoSO("SO");
+                        objsale.SONo = SoNo;
+                        objsale.Createdon = DateTime.Now;
+                        objsale.POref = 0;
+                        objsale.Status = "To Deliver";
 
-                        //PO Code
-                        if (ViewState["CreatePO"] != null)
+                        int UserId = Convert.ToInt32(Session["UserId"]);
+
+                        int Countpurofuser = objsale.CountSOofUser(UserId);
+                        if (Countpurofuser >= 3)
                         {
-                            //PO Header
-                         
-                           
-                            string POCookiePID = Request.Cookies["POCartPID"].Value.Split('=')[1];
-                            string[] POCookieDataArray = POCookiePID.Split(',');
-                            int POPId = 0;
-                            int POSize = 0;
-                            int POQty = 0;
-                            ViewState["FirstPO"] = "yes";
-                            ViewState["CreatenewPO"] = "no";
-                            for (int i = 0; i < POCookieDataArray.Length; i++)
+                            objsale.CustomerType = "Regular";
+                        }
+                        else
+                        {
+                            objsale.CustomerType = "New";
+                        }
+
+                        int SOID = objsale.CreateSO(objsale);
+                        if (SOID > 0)
+                        {
+                            objsale.SOID = SOID;
+
+                            int PID = 0;
+                            int Qty = 0;
+                            int Size = 0;
+                            string CookiePIDWithQtyUpdated = string.Empty;
+                            string CookiePIDUpdated = string.Empty;
+                            ViewState["EmptyCookiePO"] = "yes";
+                            for (int i = 0; i < CookieDataArray.Length; i++)
                             {
-                                string Product = POCookieDataArray[i].ToString().Split('-')[0];
-                                POPId = Convert.ToInt32(Product);
-                                string Quantity = POCookieDataArray[i].ToString().Split('-')[2];
-                                POQty = Convert.ToInt32(Quantity);
-                                string size = POCookieDataArray[i].ToString().Split('-')[1];
-                                POSize = Convert.ToInt32(size);
-                                string SessionnameforPO = POCookieDataArray[i].ToString().Split('-')[3];
+                                string CookiePIDWithQtynew = Request.Cookies["CartPID"].Value.Split('=')[1];
+                                string CookiePIDnew = Request.Cookies["CartP"].Value.Split('=')[1];
 
-                               
-                                Purchase objpur = new Purchase();
-                                objpur.PID = POPId;
-                                objpur.Quantity = POQty;
-                                objpur.SizeID = POSize;
-
-                                int VID = objpur.GetVendorId(POPId);
-                                if (VID > 0)
+                                SessionName = CookieDataArray[i].ToString().Split('-')[3];
+                                if (currentSession == SessionName)
                                 {
-                                                                      
-                                    int POID = 0;
-                                    if (ViewState["FirstPO"].ToString() == "yes")
+                                    string Product = CookieDataArray[i].ToString().Split('-')[0];
+                                    PID = Convert.ToInt32(Product);
+                                    string Quantity = CookieDataArray[i].ToString().Split('-')[2];
+                                    Qty = Convert.ToInt32(Quantity);
+                                    string size = CookieDataArray[i].ToString().Split('-')[1];
+                                    Size = Convert.ToInt32(size);
+                                    objsale.PID = PID;
+                                    objsale.Quantity = Qty;
+                                    objsale.SizeID = Size;
+                                    objsale.DevStatus = "Not Delivered";
+                                    objsale.CreateSODet(objsale);
+                                    string PurchasedProductWithQty = PID + "-" + Size + "-" + Qty + "-" + SessionName;
+                                    string PurchasedProduct = PID + "-" + Size + "-" + SessionName;
+                                    List<string> CookiePIDWithQtyList = CookiePIDWithQtynew.Split(',').Select(x => x.Trim()).Where(x => x != string.Empty).ToList();
+                                    List<string> CookiePIDList = CookiePIDnew.Split(',').Select(x => x.Trim()).Where(x => x != string.Empty).ToList();
+                                    CookiePIDWithQtyList.Remove(PurchasedProductWithQty);
+                                    CookiePIDList.Remove(PurchasedProduct);
+                                    CookiePIDWithQtyUpdated = String.Join(",", CookiePIDWithQtyList.ToArray());
+                                    CookiePIDUpdated = String.Join(",", CookiePIDList.ToArray());
+                                    if (CookiePIDWithQtyUpdated == "" && CookiePIDUpdated == "")
                                     {
-                                        objpur.SOref = SOID;
-                                        objpur.PONo = GenerateNoPO("PO");
-                                        objpur.Createdon = DateTime.Now;
-                                        objpur.VendorId = VID;
-                                        objpur.PurchaseStatus = "To Receive";
-                                        POID = objpur.CreatePO(objpur);
-                                    }
-                                    
-                                    int VIDfromPO = objpur.GetVendorIdbyPO(POID);
-                                    objpur.VendorId = VIDfromPO;
-                                    int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
-                                    int DevLeadTime = objpur.GetDeliveryLeadTime(objpur);
-                                    int TotalTime = DevLeadTime + CustLeadTime;
-                                    DateTime CurrentDate = DateTime.Now.Date;
-                                    DateTime ScheduledDeliveryDate = CurrentDate.AddDays(TotalTime);
-                                    objsale.SOID = SOID;
-                                    objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
-                                    objsale.AddScheduledDate(objsale);
-                                    if (VID == VIDfromPO)
-                                    {
-                                        ViewState["FirstPO"] = "no";
-                                        //objpur.POID = POID;
-                                       // objpur.CreatePODet(objpur);
+                                        HttpCookie CartProductsWithQty = Request.Cookies["CartPID"];
+                                        CartProductsWithQty.Values["CartPID"] = null;
+                                        CartProductsWithQty.Expires = DateTime.Now.AddDays(-1);
+                                        Response.Cookies.Add(CartProductsWithQty);
+
+                                        HttpCookie CartProducts = Request.Cookies["CartP"];
+                                        CartProducts.Values["CartP"] = null;
+                                        CartProducts.Expires = DateTime.Now.AddDays(-1);
+                                        Response.Cookies.Add(CartProducts);
+
                                     }
                                     else
                                     {
-                                        if (ViewState["FirstPO"].ToString() == "no"|| ViewState["CreatenewPO"].ToString()=="yes")
+                                        HttpCookie CartProductsWithQty = Request.Cookies["CartPID"];
+                                        CartProductsWithQty.Values["CartPID"] = CookiePIDWithQtyUpdated;
+                                        CartProductsWithQty.Expires = DateTime.Now.AddDays(30);
+                                        Response.Cookies.Add(CartProductsWithQty);
+
+                                        HttpCookie CartProducts = Request.Cookies["CartP"];
+                                        CartProducts.Values["CartP"] = CookiePIDUpdated;
+                                        CartProducts.Expires = DateTime.Now.AddDays(30);
+                                        Response.Cookies.Add(CartProducts);
+                                    }
+                                    int PrdQtyID = objsale.CheckQuantity(PID, Size, Qty);
+                                    int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
+                                    if (PrdQtyID > 0)
+                                    {
+                                        SavePOItemsCookie(PurchasedProductWithQty);
+                                        ViewState["CreatePO"] = true;
+                                    }
+                                    else
+                                    {
+                                        Inventory objinv = new Inventory();
+                                        objinv.DOCNo = GenerateNoGI("GI");
+                                        objinv.SOID = SOID;
+                                        objinv.POID = 0;
+                                        objinv.StockMoveStatus = "Stock Picking";
+                                        objinv.MoveType = "Stock Out";
+                                        objinv.CreateStockMove(objinv);
+
+                                        objinv.PID = PID;
+                                        objinv.SizeID = Size;
+                                        objinv.Quantity = Qty;
+                                        objinv.ChangeQuantityMinus(objinv);
+                                        if (CustLeadTime > 0)
+                                        {
+                                            DateTime CurrentDate = DateTime.Now.Date;
+                                            DateTime ScheduledDeliveryDate = CurrentDate.AddDays(CustLeadTime);
+                                            objsale.SOID = SOID;
+                                            objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
+                                            objsale.AddScheduledDate(objsale);
+                                        }
+
+                                    }
+                                }
+
+
+
+
+                            }
+
+                            //PO Code
+                            if (ViewState["CreatePO"] != null)
+                            {
+                                //PO Header
+
+
+                                string POCookiePID = Request.Cookies["POCartPID"].Value.Split('=')[1];
+                                string[] POCookieDataArray = POCookiePID.Split(',');
+                                int POPId = 0;
+                                int POSize = 0;
+                                int POQty = 0;
+                                ViewState["FirstPO"] = "yes";
+                                ViewState["CreatenewPO"] = "no";
+                                int POID = 0;
+                                for (int i = 0; i < POCookieDataArray.Length; i++)
+                                {
+                                    string Product = POCookieDataArray[i].ToString().Split('-')[0];
+                                    POPId = Convert.ToInt32(Product);
+                                    string Quantity = POCookieDataArray[i].ToString().Split('-')[2];
+                                    POQty = Convert.ToInt32(Quantity);
+                                    string size = POCookieDataArray[i].ToString().Split('-')[1];
+                                    POSize = Convert.ToInt32(size);
+                                    string SessionnameforPO = POCookieDataArray[i].ToString().Split('-')[3];
+
+
+                                    Purchase objpur = new Purchase();
+                                    objpur.PID = POPId;
+                                    objpur.Quantity = POQty;
+                                    objpur.SizeID = POSize;
+                                    objsale.PID = POPId;
+                                    objsale.SizeID = POSize;
+
+                                    int VID = objpur.GetVendorId(POPId);
+                                    if (VID > 0)
+                                    {
+
+
+                                        if (ViewState["FirstPO"].ToString() == "yes")
                                         {
                                             objpur.SOref = SOID;
                                             objpur.PONo = GenerateNoPO("PO");
                                             objpur.Createdon = DateTime.Now;
                                             objpur.VendorId = VID;
                                             objpur.PurchaseStatus = "To Receive";
-                                            int POIDnew = objpur.CreatePO(objpur);
-                                            // objpur.POID = POIDnew;
-                                            //objpur.CreatePODet(objpur);
+                                            POID = objpur.CreatePO(objpur);
                                         }
-                                        ViewState["FirstPO"] = "no";
-                                        ViewState["CreatenewPO"] = "yes";
+
+                                        int VIDfromPO = objpur.GetVendorIdbyPO(POID);
+
+                                        if (VID == VIDfromPO)
+                                        {
+                                            ViewState["FirstPO"] = "no";
+                                            //objpur.POID = POID;
+                                            // objpur.CreatePODet(objpur);
+                                            objpur.VendorId = VIDfromPO;
+                                            int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
+                                            int DevLeadTime = objpur.GetDeliveryLeadTime(objpur);
+                                            int TotalTime = DevLeadTime + CustLeadTime;
+                                            DateTime CurrentDate = DateTime.Now.Date;
+                                            DateTime ScheduledDeliveryDate = CurrentDate.AddDays(TotalTime);
+                                            objsale.SOID = SOID;
+                                            objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
+                                            objsale.AddScheduledDate(objsale);
+                                        }
+                                        else
+                                        {
+                                            int POIDnew = 0;
+                                            if (ViewState["FirstPO"].ToString() == "no" || ViewState["CreatenewPO"].ToString() == "yes")
+                                            {
+                                                objpur.SOref = SOID;
+                                                objpur.PONo = GenerateNoPO("PO");
+                                                objpur.Createdon = DateTime.Now;
+                                                objpur.VendorId = VID;
+                                                objpur.PurchaseStatus = "To Receive";
+                                                POIDnew = objpur.CreatePO(objpur);
+                                                // objpur.POID = POIDnew;
+                                                //objpur.CreatePODet(objpur);
+                                            }
+                                            ViewState["FirstPO"] = "no";
+                                            ViewState["CreatenewPO"] = "yes";
+                                            int CustLeadTime = objsale.GetCustomerLeadTime(objsale);
+                                            int DevLeadTime = objpur.GetDeliveryLeadTime(objpur);
+                                            int TotalTime = DevLeadTime + CustLeadTime;
+                                            DateTime CurrentDate = DateTime.Now.Date;
+                                            DateTime ScheduledDeliveryDate = CurrentDate.AddDays(TotalTime);
+                                            objsale.SOID = SOID;
+                                            objsale.ScheduledDeliveryDate = ScheduledDeliveryDate;
+                                            objsale.AddScheduledDate(objsale);
+                                        }
+                                        //for PO Items
+                                        string currentdate = DateTime.Now.ToString("yyyy-MM-dd");
+                                        int POIDfromVendor = objpur.GetPOIdbyVendor(VID, currentdate);
+                                        if (POIDfromVendor > 0)
+                                        {
+                                            objpur.POID = POIDfromVendor;
+                                            objpur.CreatePODet(objpur);
+                                        }
+                                        SavePOIDforEmail(POIDfromVendor);
+                                        if (Request.Cookies["POIDEmail"] != null)
+                                        {
+                                            string POEID = Request.Cookies["POIDEmail"].Value.Split('=')[1];
+                                            string[] POIDDataArray = POEID.Split(',');
+                                            for (int x = 0; x < POIDDataArray.Length; x++)
+                                            {
+                                                string POIDforEmail = POIDDataArray[i].ToString();
+                                                int ID = Convert.ToInt32(POIDforEmail);
+                                                DataTable dataitem = POLineitemforEmail(ID);
+                                                SendPDFEmail(dataitem, ID);
+
+                                            }
+
+                                        }
                                     }
-                                    //for PO Items
-                                    string currentdate = DateTime.Now.ToString("yyyy-MM-dd");
-                                    int POIDfromVendor = objpur.GetPOIdbyVendor(VID, currentdate);
-                                    if (POIDfromVendor > 0)
+                                    string currentProduct = POPId + "-" + POSize + "-" + POQty + "-" + SessionnameforPO;
+                                    List<string> POCookiePIDWithQtyList = POCookiePID.Split(',').Select(x => x.Trim()).Where(x => x != string.Empty).ToList();
+                                    POCookiePIDWithQtyList.Remove(currentProduct);
+                                    string POCookiePIDWithQtyUpdated = String.Join(",", POCookiePIDWithQtyList.ToArray());
+
+                                    if (POCookiePIDWithQtyUpdated == "")
                                     {
-                                        objpur.POID = POIDfromVendor;
-                                        objpur.CreatePODet(objpur);
+                                        HttpCookie CartProductsWithQty = Request.Cookies["POCartPID"];
+                                        CartProductsWithQty.Values["POCartPID"] = null;
+                                        CartProductsWithQty.Expires = DateTime.Now.AddDays(-1);
+                                        Response.Cookies.Add(CartProductsWithQty);
+
                                     }
-                                }
-                                string currentProduct = POPId + "," + POSize + "," + POQty + "," + SessionnameforPO;
-                                List<string> POCookiePIDWithQtyList = POCookiePID.Split(',').Select(x => x.Trim()).Where(x => x != string.Empty).ToList();
-                                POCookiePIDWithQtyList.Remove(currentProduct);
-                                string POCookiePIDWithQtyUpdated = String.Join(",", POCookiePIDWithQtyList.ToArray());
-                              
-                                if (POCookiePIDWithQtyUpdated == "" )
-                                {
-                                    HttpCookie CartProductsWithQty = Request.Cookies["POCartPID"];
-                                    CartProductsWithQty.Values["POCartPID"] = null;
-                                    CartProductsWithQty.Expires = DateTime.Now.AddDays(-1);
-                                    Response.Cookies.Add(CartProductsWithQty);
+                                    else
+                                    {
+                                        HttpCookie CartProductsWithQty = Request.Cookies["POCartPID"];
+                                        CartProductsWithQty.Values["POCartPID"] = POCookiePIDWithQtyUpdated;
+                                        CartProductsWithQty.Expires = DateTime.Now.AddDays(30);
+                                        Response.Cookies.Add(CartProductsWithQty);
+
+                                    }
 
                                 }
-                                else
-                                {
-                                    HttpCookie CartProductsWithQty = Request.Cookies["POCartPID"];
-                                    CartProductsWithQty.Values["POCartPID"] = POCookiePIDWithQtyUpdated;
-                                    CartProductsWithQty.Expires = DateTime.Now.AddDays(30);
-                                    Response.Cookies.Add(CartProductsWithQty);
-
-                                }
-
+                                ViewState["CreatePO"] = null;
                             }
-                            ViewState["CreatePO"] = null;
-                        }
                             //Payment Code
-                            if (isformvalidPay())
-                        {
+
                             string TotalAmount = spanTotalAmt.InnerText;
                             string TotalAmt = TotalAmount.Split('.')[1].ToString();
                             objsale.TotalAmount = Convert.ToDecimal(TotalAmt);
@@ -557,11 +788,12 @@ namespace ecommerceOutletShop
                                 objsale.CreditCardNumber = DBNull.Value.ToString();
                                 objsale.DebitCardNumber = txtDebitCard.Text;
                             }
-                            if (txtDebitCard.Text != "" && txtCreditCard.Text != "")
+                            if (txtDebitCard.Text == "" && txtCreditCard.Text == "")
                             {
                                 objsale.CreditCardNumber = DBNull.Value.ToString();
                                 objsale.DebitCardNumber = DBNull.Value.ToString();
                             }
+                            
                             if (rblPayType.SelectedValue == "0" || rblPayType.SelectedValue == "1")
                             {
                                 objsale.PaymentType = "Credit/Debit";
@@ -585,23 +817,25 @@ namespace ecommerceOutletShop
 
                             objsale.PayStatus = "Paid";
                             objsale.CreatePay(objsale);
+                            
                         }
                         ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertpaysave()", true);
-
                         Response.Redirect("~/Cart.aspx");
-                       
-                    }
 
+
+                    }
+                   
                 }
                 else
                 {
-                    lblerror.Text = "Your Shopping Cart is Empty";
+                    
                     upModalPay.Update();
                 }
             }
             else
             {
-
+                lblerror.Text = "Your Shopping Cart is Empty";
+                upModalPay.Update();
             }
         }
     }

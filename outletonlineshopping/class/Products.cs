@@ -92,6 +92,13 @@ namespace outletonlineshopping
             CloseConnection();
             return Pid;
         }
+        public int CheckProdSize(Products obj)
+        {
+            OpenConection();
+            int Pid = SelectDupProdSize("Select PrdSizeQuantID from tblProductSizeQuantity where PID=@PID and SizeID=@SizeID", obj.ProductId,obj.SizeID);
+            CloseConnection();
+            return Pid;
+        }
         public void UpdateProduct(Products obj)
         {
             OpenConection();

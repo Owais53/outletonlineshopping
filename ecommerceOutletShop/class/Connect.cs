@@ -197,6 +197,17 @@ namespace ecommerceOutletShop
             return dataum;
 
         }
+        public DataTable SelectPOLineitemforEmail(string Query_, int POID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
 
         public DataTable ResetPass(string Query_, string UserName, string pass)
         {
@@ -340,6 +351,22 @@ namespace ecommerceOutletShop
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
+        public string SelectPONOforEmail(string Query_, int POID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            string Poid = cmd.ExecuteScalar().ToString();
+            return Poid;
+        }
+        public string SelectVendorEmail(string Query_, int POID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            string email = cmd.ExecuteScalar().ToString();
+            return email;
+        }
         public string GetCustomerType(string Query_, int UserID)
         {
 
@@ -414,10 +441,12 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }
-        public void InsertStockMove(string Query_, int SOID, string MoveType, string Status)
+        public void InsertStockMove(string Query_, string Docno,int SOID,int POID, string MoveType, string Status)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@DocNO", Docno);
             cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@POID", POID);
             cmd.Parameters.AddWithValue("@MoveType", MoveType);
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();

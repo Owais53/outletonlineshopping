@@ -30,6 +30,12 @@ namespace outletonlineshopping
                 if (Request.QueryString["Id"] != null)
                 {
                     GetDataToEdit(Convert.ToInt32(Request.QueryString["Id"]));
+                    obj.OpenConection();
+                    cblSize.DataSource = obj.DataReader("select SizeID,SizeName from tblSizes where BrandID=" + ddlbrand.SelectedItem.Value + " and CategoryID=" + ddlcategory.SelectedItem.Value + " and SubCategoryID=" + ddlsubcategory.SelectedItem.Value + " and GenderID=" + ddlgender.SelectedItem.Value + "");
+                    cblSize.DataTextField = "SizeName";
+                    cblSize.DataValueField = "SizeID";
+                    cblSize.DataBind();
+                    obj.CloseConnection();
                     ddlsubcategory.Enabled = true;
                     ddlgender.Enabled = true;
                 }
@@ -251,7 +257,7 @@ namespace outletonlineshopping
         {
             ddlgender.Enabled = true;
             obj.OpenConection();
-            cblSize.DataSource = obj.DataReader("select SizeID,SizeName from tblSizes where BrandID=" + ddlgender.SelectedItem.Value + " and CategoryID="+ddlcategory.SelectedItem.Value+" and SubCategoryID="+ddlsubcategory.SelectedItem.Value+" and GenderID="+ddlgender.SelectedItem.Value+"");
+            cblSize.DataSource = obj.DataReader("select SizeID,SizeName from tblSizes where BrandID=" + ddlbrand.SelectedItem.Value + " and CategoryID="+ddlcategory.SelectedItem.Value+" and SubCategoryID="+ddlsubcategory.SelectedItem.Value+" and GenderID="+ddlgender.SelectedItem.Value+"");
             cblSize.DataTextField = "SizeName";
             cblSize.DataValueField = "SizeID";
             cblSize.DataBind();
@@ -402,13 +408,15 @@ namespace outletonlineshopping
 
                     int ProductId = pro.CreateProducts(pro);
                     pro.ProductId = ProductId;
+                    int SizeID = 0;
                     for (int i = 0; i < cblSize.Items.Count; i++)
                     {
 
-                        int SizeID = Convert.ToInt32(cblSize.Items[i].Value);
+                         SizeID = Convert.ToInt32(cblSize.Items[i].Value);
                         int Quantity = Convert.ToInt32(txtQty.Text);
                         pro.SizeID = SizeID;
                         pro.Quantity = Quantity;
+                       
                         pro.CreateSizeQty(pro);
                     }
                     if (fuImg01.HasFile)
@@ -461,7 +469,26 @@ namespace outletonlineshopping
                     pro.Quantity = Convert.ToInt32(txtQty.Text);
                     pro.ProductId = Convert.ToInt32(Request.QueryString["Id"]);
                     pro.UpdateProduct(pro);
-                    pro.UpdateProductSizeQty(pro);
+                    int SizeID = 0;
+                    for (int i = 0; i < cblSize.Items.Count; i++)
+                    {
+
+                        SizeID = Convert.ToInt32(cblSize.Items[i].Value);
+                        int Quantity = Convert.ToInt32(txtQty.Text);
+                        pro.SizeID = SizeID;
+                        pro.Quantity = Quantity;
+                        int PrdSize = pro.CheckProdSize(pro);
+                        if (PrdSize > 0)
+                        {
+                            pro.UpdateProductSizeQty(pro);
+                        }
+                        else
+                        {
+                            pro.CreateSizeQty(pro);
+                        }
+                       
+                    }
+                   
                     ClientScript.RegisterStartupScript(GetType(), "randomtext", "alerteditproduct()", true);
 
                 }

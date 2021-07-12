@@ -40,7 +40,7 @@ namespace ecommerceOutletShop
         public void CreateSODet(Sale obj)
         {
             OpenConection();
-            InsertSODet("Insert into tblSODetail(SOID,PID,SizeID,Quantity) values(@SOID,@PID,@SizeID,@Qty)", obj.SOID, obj.PID,obj.SizeID ,obj.Quantity,obj.DevStatus);
+            InsertSODet("Insert into tblSODetail(SOID,PID,SizeID,Quantity,DeliveryStatus) values(@SOID,@PID,@SizeID,@Qty,@DevStatus)", obj.SOID, obj.PID,obj.SizeID ,obj.Quantity,obj.DevStatus);
             CloseConnection();
          
         }
@@ -67,19 +67,31 @@ namespace ecommerceOutletShop
             CloseConnection();
             return dt;
         }
+        public DataTable GetLastGINo()
+        {
+            OpenConection();
+            DataTable dt = GetLastNo("select DocNo from tblStockMove where StockMoveID=(select max(StockMoveID) as LastSOID from tblStockMove where SOID>0)");
+            CloseConnection();
+            return dt;
+        }
+        public DataTable GetLastGRNo()
+        {
+            OpenConection();
+            DataTable dt = GetLastNo("select DocNo from tblStockMove where StockMoveID=(select max(StockMoveID) as LastSOID from tblStockMove where POID>0)");
+            CloseConnection();
+            return dt;
+        }
         public SqlDataReader GetSOCount()
         {
             OpenConection();
             SqlDataReader dr = DataReader("select SOID,Count(SOID) as IDCount from tblSODetail  group by SOID");
-            CloseConnection();
             return dr;
 
         }
         public SqlDataReader GetDeliveredProCount()
         {
             OpenConection();
-            SqlDataReader dr = DataReader("select SOID,Count(SOID) as IDCount from tblSODetail where DeliveryStatus='Delivered' group by SOID");
-            CloseConnection();
+            SqlDataReader dr = DataReader("SELECT tblSODetail.SOID, COUNT(tblSO.SOID) AS IDCount FROM tblSODetail LEFT JOIN tblSO ON (tblSODetail.SOID = tblSO.SOID AND tblSODetail.DeliveryStatus='Delivered') GROUP BY tblSODetail.SOID");
             return dr;
 
         }
@@ -102,6 +114,22 @@ namespace ecommerceOutletShop
         {
             OpenConection();
             int Soid = GetLastId("select ISNULL(max(SOID),0) as LastSOID from tblSO");
+            CloseConnection();
+            return Soid;
+
+        }
+        public int GetLastSmoveSoId()
+        {
+            OpenConection();
+            int Soid = GetLastId("select ISNULL(max(StockMoveID),0) as LastSOID from tblStockMove where SOID >0");
+            CloseConnection();
+            return Soid;
+
+        }
+        public int GetLastSmovePoId()
+        {
+            OpenConection();
+            int Soid = GetLastId("select ISNULL(max(StockMoveID),0) as LastSOID from tblStockMove where POID >0");
             CloseConnection();
             return Soid;
 

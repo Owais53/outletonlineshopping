@@ -34,6 +34,14 @@ namespace ecommerceOutletShop
             return dt;
 
         }
+        public DataTable GetPOLineItemforEmail(int POID)
+        {
+            OpenConection();
+            DataTable dt = SelectPOLineitemforEmail("select p.ProductName,s.SizeName as Size from tblPODetail podet inner join tblProduct p on podet.PID=p.ProductId inner join tblSizes s on podet.SizeID=s.SizeID where POID=@POID",POID);
+            CloseConnection();
+            return dt;
+
+        }
         public int GetLastPOId()
         {
             OpenConection();
@@ -50,10 +58,26 @@ namespace ecommerceOutletShop
             return Vid;
 
         }
+        public string GetPONOfromEmail(int POID)
+        {
+            OpenConection();
+            string poid = SelectPONOforEmail("select PONo from tblPO where POID=@POID", POID);
+            CloseConnection();
+            return poid;
+
+        }
+        public string GetVendorEmailfromPO(int POID)
+        {
+            OpenConection();
+            string email = SelectVendorEmail("select v.Email from tblPO po inner join tblVendor v on po.VendorID=v.VendorID where POID=@POID", POID);
+            CloseConnection();
+            return email;
+
+        }
         public int GetVendorIdbyPO(int POID)
         {
             OpenConection();
-            int Vid = GetVendorIDbyProduct("select VendorID from tblPO where POID=@PID", PID);
+            int Vid = GetVendorIDbyProduct("select VendorID from tblPO where POID=@PID", POID);
             CloseConnection();
             return Vid;
 
@@ -76,7 +100,7 @@ namespace ecommerceOutletShop
         public int GetDeliveryLeadTime(Purchase obj)
         {
             OpenConection();
-            int devleadtime = GetDevLeadTime("select DeliveryLeadTime from tblVendor where VID=@VID", obj.VendorId);
+            int devleadtime = GetDevLeadTime("select DeliveryLeadTime from tblVendor where VendorID=@VID", obj.VendorId);
             CloseConnection();
             return devleadtime;
 

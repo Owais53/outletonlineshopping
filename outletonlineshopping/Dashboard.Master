@@ -169,6 +169,9 @@
                                      <li>
                                     <a href="ListProducts.aspx">Products</a>
                                    </li>
+                                     <li>
+                                    <a href="Manage.aspx">Manage</a>
+                                   </li>
                                 </ul>
                             </li>
                         </ul>
@@ -185,6 +188,21 @@
                                    </li>
                                 </ul>
                             </li>
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>Sales<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                           
+                            <li>
+                                <a href="#">Master Data<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                     <li>
+                                    <a href="Vendor.aspx">Customers</a>
+                                   </li>
+                                </ul>
+                            </li>
+                            <li><a href="ListSO.aspx"><i class="fa fa-sitemap fa-fw"></i>Sale Orders<span class="fa arrow"></span></a></li>
                         </ul>
                     </li>
                 </ul>
