@@ -74,6 +74,20 @@ namespace ecommerceOutletShop
             CloseConnection();
             return dt;
         }
+        public DataTable GetOrderHistorybyUser(int UserID)
+        {
+            OpenConection();
+            DataTable dt = GetProductOrderHistory("select so.SONo,sodet.DeliveryStatus,so.Createdon,sodet.PID,p.ProductName,sodet.Quantity,sodet.Quantity*p.SalesPrice as Price,B.Name,B.Extension from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId order by B.PID desc)B where so.UserID=@UserID", UserID);
+            CloseConnection();
+            return dt;
+        }
+        public DataTable GetOrderHistorybyUserStatus(int UserID,string Status)
+        {
+            OpenConection();
+            DataTable dt = GetProductOrderHistoryStatus("select so.SONo,sodet.DeliveryStatus,so.Createdon,sodet.PID,p.ProductName,sodet.Quantity,sodet.Quantity*p.SalesPrice as Price,B.Name,B.Extension from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId order by B.PID desc)B where so.UserID=@UserID and sodet.DeliveryStatus=@DevStatus", UserID,Status);
+            CloseConnection();
+            return dt;
+        }
         public DataTable GetLastGRNo()
         {
             OpenConection();

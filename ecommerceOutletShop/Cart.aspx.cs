@@ -414,12 +414,20 @@ namespace ecommerceOutletShop
                     sb.Append("<br />");
                     sb.Append("<table border = '1'>");
                     sb.Append("<tr>");
-                    foreach (DataColumn column in dt.Columns)
-                    {
-                        sb.Append("<th style = 'background-color: #D20B0C;color:#ffffff'>");
-                        sb.Append(column.ColumnName);
+                    
+                        sb.Append("<th>");
+                        sb.Append("Product Name");
                         sb.Append("</th>");
-                    }
+                        sb.Append("<th>");
+                        sb.Append("Size");
+                        sb.Append("</th>");
+                        sb.Append("<th>");
+                        sb.Append("Quantity");
+                        sb.Append("</th>");
+                        sb.Append("<th>");
+                        sb.Append("Price");
+                        sb.Append("</th>");
+
                     sb.Append("</tr>");
                     foreach (DataRow row in dt.Rows)
                     {
@@ -474,7 +482,7 @@ namespace ecommerceOutletShop
             {
                 string POID = Request.Cookies["POIDEmail"].Value.Split('=')[1];
                 POID = POID + "," + PurchID;
-                HttpCookie PO = new HttpCookie("POIDEmail");
+                HttpCookie PO = Request.Cookies["POIDEmail"];
                 PO.Values["POIDEmail"] = POID.ToString();
                 PO.Expires = DateTime.Now.AddDays(30);
                 Response.Cookies.Add(PO);
@@ -648,6 +656,7 @@ namespace ecommerceOutletShop
                                 int POQty = 0;
                                 ViewState["FirstPO"] = "yes";
                                 ViewState["CreatenewPO"] = "no";
+                               
                                 int POID = 0;
                                 for (int i = 0; i < POCookieDataArray.Length; i++)
                                 {
@@ -680,6 +689,7 @@ namespace ecommerceOutletShop
                                             objpur.VendorId = VID;
                                             objpur.PurchaseStatus = "To Receive";
                                             POID = objpur.CreatePO(objpur);
+                                            SavePOIDforEmail(POID);
                                         }
 
                                         int VIDfromPO = objpur.GetVendorIdbyPO(POID);
@@ -712,6 +722,7 @@ namespace ecommerceOutletShop
                                                 POIDnew = objpur.CreatePO(objpur);
                                                 // objpur.POID = POIDnew;
                                                 //objpur.CreatePODet(objpur);
+                                                SavePOIDforEmail(POIDnew);
                                             }
                                             ViewState["FirstPO"] = "no";
                                             ViewState["CreatenewPO"] = "yes";
@@ -732,22 +743,10 @@ namespace ecommerceOutletShop
                                             objpur.POID = POIDfromVendor;
                                             objpur.CreatePODet(objpur);
                                         }
-                                        SavePOIDforEmail(POIDfromVendor);
-                                        if (Request.Cookies["POIDEmail"] != null)
-                                        {
-                                            string POEID = Request.Cookies["POIDEmail"].Value.Split('=')[1];
-                                            string[] POIDDataArray = POEID.Split(',');
-                                            for (int x = 0; x < POIDDataArray.Length; x++)
-                                            {
-                                                string POIDforEmail = POIDDataArray[i].ToString();
-                                                int ID = Convert.ToInt32(POIDforEmail);
-                                                DataTable dataitem = POLineitemforEmail(ID);
-                                                SendPDFEmail(dataitem, ID);
-
-                                            }
-
-                                        }
+                                                                  
+                                       
                                     }
+                                    
                                     string currentProduct = POPId + "-" + POSize + "-" + POQty + "-" + SessionnameforPO;
                                     List<string> POCookiePIDWithQtyList = POCookiePID.Split(',').Select(x => x.Trim()).Where(x => x != string.Empty).ToList();
                                     POCookiePIDWithQtyList.Remove(currentProduct);
@@ -772,6 +771,20 @@ namespace ecommerceOutletShop
 
                                 }
                                 ViewState["CreatePO"] = null;
+                                if (Request.Cookies["POIDEmail"] != null)
+                                {
+                                    string POEID = Request.Cookies["POIDEmail"].Value.Split('=')[1];
+                                    string[] POIDDataArray = POEID.Split(',');
+                                    for (int x = 0; x < POIDDataArray.Length; x++)
+                                    {
+                                        string POIDforEmail = POIDDataArray[x].ToString();
+                                        int ID = Convert.ToInt32(POIDforEmail);
+                                        DataTable dataitem = POLineitemforEmail(ID);
+                                        SendPDFEmail(dataitem, ID);
+                                        RemovePOItemforEmail(ID);
+                                    }
+
+                                }
                             }
                             //Payment Code
 
@@ -836,6 +849,33 @@ namespace ecommerceOutletShop
             {
                 lblerror.Text = "Your Shopping Cart is Empty";
                 upModalPay.Update();
+            }
+        }
+        public void RemovePOItemforEmail(int ID)
+        {
+            if (Request.Cookies["POIDEmail"] != null)
+            {
+                string POEID = Request.Cookies["POIDEmail"].Value.Split('=')[1];
+                List<string> POPIDList = POEID.Split(',').Select(x => x.Trim()).Where(x => x != string.Empty).ToList();
+                POPIDList.Remove(ID.ToString());
+                string POPIDUpdated = String.Join(",", POPIDList.ToArray());
+
+                if (POPIDUpdated == "")
+                {
+                    HttpCookie ProductsWithQty = Request.Cookies["POIDEmail"];
+                    ProductsWithQty.Values["POIDEmail"] = null;
+                    ProductsWithQty.Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies.Add(ProductsWithQty);
+
+                }
+                else
+                {
+                    HttpCookie ProductsWithQty = Request.Cookies["POIDEmail"];
+                    ProductsWithQty.Values["POIDEmail"] = POPIDUpdated;
+                    ProductsWithQty.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Add(ProductsWithQty);
+
+                }
             }
         }
     }

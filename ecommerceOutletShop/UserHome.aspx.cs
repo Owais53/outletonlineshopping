@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -11,9 +12,11 @@ namespace ecommerceOutletShop
     public partial class UserHome : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {  
             if (!IsPostBack)
             {
+                BindProductsRepeater();
+                
                 Sale objsale = new Sale();
                 string date = DateTime.Now.Date.ToString("yyyy-MM-dd");
                 objsale.UpdateStatusProductSale(date);
@@ -60,9 +63,135 @@ namespace ecommerceOutletShop
                 //     Response.Redirect("~/SignIn.aspx");
                 // }
                // BindCartNumber();
+               
+            }
 
+        }
+        public void BindProductsRepeater()
+        {
+            int ID = Convert.ToInt32(Session["UserId"]);
+            Sale obj = new Sale();
+            DataTable dt = obj.GetOrderHistorybyUser(ID);
+            if (dt.Rows.Count > 0)
+            {
+                rptrOrderHistory.DataSource = dt;
+                rptrOrderHistory.DataBind();
+                foreach (RepeaterItem item in rptrOrderHistory.Items)
+                {
+                    
+                    Label lblStatus = item.FindControl("lblstatus") as Label;
+                    
+                    if (lblStatus != null)
+                    {
+                        if(lblStatus.Text=="Not Delivered")
+                        {
+                            lblStatus.CssClass = "label label-danger";
+                        }
+                        else if(lblStatus.Text=="Delivered")
+                        {
+                            lblStatus.CssClass = "label label-success";
+                        }
+                        else
+                        {
+                            lblStatus.CssClass = "label label-info";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                h4Noitems.InnerText = "Your Order History is Empty";
+            }
+           
+        }
+
+        protected void btndelivered_ServerClick(object sender, EventArgs e)
+        {
+            h4Noitems.InnerText = "";
+            DataTable dataempty = new DataTable();
+            rptrOrderHistory.DataSource = dataempty;
+            rptrOrderHistory.DataBind();
+            int ID = Convert.ToInt32(Session["UserId"]);
+            Sale obj = new Sale();
+            DataTable dt = obj.GetOrderHistorybyUserStatus(ID,"Delivered");
+            if (dt.Rows.Count > 0)
+            {
+                rptrOrderHistory.DataSource = dt;
+                rptrOrderHistory.DataBind();
+                foreach (RepeaterItem item in rptrOrderHistory.Items)
+                {
+
+                    Label lblStatus = item.FindControl("lblstatus") as Label;
+
+                    if (lblStatus != null)
+                    {
+                        if (lblStatus.Text == "Not Delivered")
+                        {
+                            lblStatus.CssClass = "label label-danger";
+                        }
+                        else if (lblStatus.Text == "Delivered")
+                        {
+                            lblStatus.CssClass = "label label-success";
+                        }
+                        else
+                        {
+                            lblStatus.CssClass = "label label-info";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                h4Noitems.InnerText = "Your Order History is Empty";
+            }
+            
+        }
+
+        protected void btnnotdelivered_ServerClick(object sender, EventArgs e)
+        {
+            h4Noitems.InnerText = "";
+            DataTable dataempty = new DataTable();
+            rptrOrderHistory.DataSource = dataempty;
+            rptrOrderHistory.DataBind();
+            int ID = Convert.ToInt32(Session["UserId"]);
+            Sale obj = new Sale();
+            DataTable dt = obj.GetOrderHistorybyUserStatus(ID, "Not Delivered");
+            if (dt.Rows.Count > 0)
+            {
+                rptrOrderHistory.DataSource = dt;
+                rptrOrderHistory.DataBind();
+                foreach (RepeaterItem item in rptrOrderHistory.Items)
+                {
+
+                    Label lblStatus = item.FindControl("lblstatus") as Label;
+
+                    if (lblStatus != null)
+                    {
+                        if (lblStatus.Text == "Not Delivered")
+                        {
+                            lblStatus.CssClass = "label label-danger";
+                        }
+                        else if (lblStatus.Text == "Delivered")
+                        {
+                            lblStatus.CssClass = "label label-success";
+                        }
+                        else
+                        {
+                            lblStatus.CssClass = "label label-info";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                h4Noitems.InnerText = "Your Order History is Empty";
             }
         }
-        
+
+        protected void btnAll_ServerClick(object sender, EventArgs e)
+        {
+            h4Noitems.InnerText = "";
+            BindProductsRepeater();
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace ecommerceOutletShop
         public DataTable GetPOLineItemforEmail(int POID)
         {
             OpenConection();
-            DataTable dt = SelectPOLineitemforEmail("select p.ProductName,s.SizeName as Size from tblPODetail podet inner join tblProduct p on podet.PID=p.ProductId inner join tblSizes s on podet.SizeID=s.SizeID where POID=@POID",POID);
+            DataTable dt = SelectPOLineitemforEmail("select p.ProductName,s.SizeName as Size,podet.Quantity,podet.Quantity*p.SalesPrice as Price from tblPODetail podet inner join tblProduct p on podet.PID=p.ProductId inner join tblSizes s on podet.SizeID=s.SizeID where POID=@POID", POID);
             CloseConnection();
             return dt;
 

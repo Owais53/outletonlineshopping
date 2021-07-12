@@ -175,6 +175,27 @@ namespace ecommerceOutletShop
             return dt;
 
         }
+        public DataTable GetProductOrderHistory(string Query_, int UserID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            dr.Fill(dt);
+            return dt;
+
+        }
+        public DataTable GetProductOrderHistoryStatus(string Query_, int UserID,string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.Parameters.AddWithValue("@DevStatus", Status);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            dr.Fill(dt);
+            return dt;
+
+        }
         public DataTable GetLoginId(string Query_, string email)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
