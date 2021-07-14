@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
    <div class="row" style="margin-top:120px; margin-right:70px;">
        <div class="container bootdey">
     <div class="panel panel-default panel-order">
@@ -36,9 +37,7 @@
                             <span><strong>Item</strong></span>  <span><strong><%# Eval("ProductName") %></strong></span>
                             <br />
                             Quantity : <%# Eval("Quantity") %>, Price: Rs <%# Eval("Price") %><br />
-                            <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-                            <a data-placement="top" class="btn btn-danger btn-xs glyphicon glyphicon-trash" href="#" title="Danger"></a>
-                            <a data-placement="top" class="btn btn-info btn-xs glyphicon glyphicon-usd" href="#" title="Danger"></a>
+                            <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-road" href="OrderTrack.aspx?SOID=<%# Eval("SOID") %>&PID=<%# Eval("PID") %>&SizeID=<%# Eval("SizeID") %>" title="View"></a>
                         </div>
                         <div class="col-md-12">order made on: <%# Eval("Createdon") %></div>
                     </div>
@@ -51,4 +50,10 @@
 </div>
    </div>
        </div>
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"></script> 
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+     <script src="https://use.fontawesome.com/releases/v5.8.1/css/all.css"></script>
+     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
+        
 </asp:Content>

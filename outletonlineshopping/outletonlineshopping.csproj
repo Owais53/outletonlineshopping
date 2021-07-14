@@ -80,6 +80,8 @@
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\sweetalert2.all.js" />
     <Content Include="ListGoodsIssue.aspx" />
+    <Content Include="ListGR.aspx" />
+    <Content Include="ListPO.aspx" />
     <Content Include="ListProducts.aspx" />
     <Content Include="ListSO.aspx" />
     <Content Include="Login.aspx" />
@@ -95,6 +97,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PO.aspx" />
     <Content Include="Product.aspx" />
     <Content Include="resetlink.aspx" />
     <Content Include="Settings.aspx" />
@@ -144,6 +147,20 @@
     <Compile Include="ListGoodsIssue.aspx.designer.cs">
       <DependentUpon>ListGoodsIssue.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ListGR.aspx.cs">
+      <DependentUpon>ListGR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListGR.aspx.designer.cs">
+      <DependentUpon>ListGR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListPO.aspx.cs">
+      <DependentUpon>ListPO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListPO.aspx.designer.cs">
+      <DependentUpon>ListPO.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ListProducts.aspx.cs">
       <DependentUpon>ListProducts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,6 +195,13 @@
     </Compile>
     <Compile Include="Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PO.aspx.cs">
+      <DependentUpon>PO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PO.aspx.designer.cs">
+      <DependentUpon>PO.aspx</DependentUpon>
     </Compile>
     <Compile Include="Product.aspx.cs">
       <DependentUpon>Product.aspx</DependentUpon>

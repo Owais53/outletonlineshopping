@@ -17,7 +17,16 @@
                                 <div class="panel-heading">
                                       View Sale Order
                                 </div>
-                                <div class="panel-body">
+                                <div class="panel-body" style="position:relative;">
+                                    <div class="buttonPO">
+                                                <button id="btnpotrack" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnpotrack_ServerClick">
+                                                    <i class="fas fa-money-bill-alt" aria-hidden="true">
+                                                        <span id="spanCountpo" runat="server"></span>
+                                                        <br />
+                                                        <span>Purchase Order</span>
+                                                    </i>
+                                                </button>
+                                            </div>
                                     <div class="row">
                                         <div class="col-lg-9">
                                             
@@ -28,7 +37,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <asp:label runat="server">Order Date</asp:label>
-                                                    <asp:TextBox ID="txtorderdate" class="form-control" placeholder="Enter Cost" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtorderdate" CssClass="form-control" placeholder="Enter Cost" runat="server"></asp:TextBox>
                                                      
                                                 </div>
                                             

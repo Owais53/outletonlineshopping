@@ -74,17 +74,31 @@ namespace ecommerceOutletShop
             CloseConnection();
             return dt;
         }
+        public DataTable GetOrderTrackbyUser(int SOID,int PID,int SizeID)
+        {
+            OpenConection();
+            DataTable dt = GetProductOrderTrackingStatus("select so.SONo,convert(date,sodet.ScheduledDeliveryDate) as Datee,sodet.Quantity*p.SalesPrice as Price,sodet.SOID,sodet.PID,sodet.SizeID,sm.DocNo,sm.Status,B.Name,B.Extension,p.ProductName from tblSODetail sodet inner join tblStockMove sm on sodet.SOID=sm.SOID inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId)B where sodet.SOID=@SOID and sodet.PID=@PID and sodet.SizeID=@SID", SOID,PID,SizeID);
+            CloseConnection();
+            return dt;
+        }
+        public DataTable GetOrderTrack(int SOID, int PID, int SizeID)
+        {
+            OpenConection();
+            DataTable dt = GetProductOrderTrackingStatus("select so.SONo,convert(date,sodet.ScheduledDeliveryDate) as Datee,sodet.Quantity*p.SalesPrice as Price,sodet.SOID,sodet.PID,sodet.SizeID,'' as DocNo,'Order Confirmed' as Status,B.Name,B.Extension,p.ProductName from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId)B where sodet.SOID=@SOID and sodet.PID=@PID and sodet.SizeID=@SID", SOID, PID, SizeID);
+            CloseConnection();
+            return dt;
+        }
         public DataTable GetOrderHistorybyUser(int UserID)
         {
             OpenConection();
-            DataTable dt = GetProductOrderHistory("select so.SONo,sodet.DeliveryStatus,so.Createdon,sodet.PID,p.ProductName,sodet.Quantity,sodet.Quantity*p.SalesPrice as Price,B.Name,B.Extension from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId order by B.PID desc)B where so.UserID=@UserID", UserID);
+            DataTable dt = GetProductOrderHistory("select so.SONo,sodet.DeliveryStatus,so.Createdon,sodet.SOID,sodet.PID,sodet.SizeID,p.ProductName,sodet.Quantity,sodet.Quantity*p.SalesPrice as Price,B.Name,B.Extension from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId order by B.PID desc)B where so.UserID=@UserID", UserID);
             CloseConnection();
             return dt;
         }
         public DataTable GetOrderHistorybyUserStatus(int UserID,string Status)
         {
             OpenConection();
-            DataTable dt = GetProductOrderHistoryStatus("select so.SONo,sodet.DeliveryStatus,so.Createdon,sodet.PID,p.ProductName,sodet.Quantity,sodet.Quantity*p.SalesPrice as Price,B.Name,B.Extension from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId order by B.PID desc)B where so.UserID=@UserID and sodet.DeliveryStatus=@DevStatus", UserID,Status);
+            DataTable dt = GetProductOrderHistoryStatus("select so.SONo,sodet.DeliveryStatus,so.Createdon,sodet.SOID,sodet.PID,sodet.SizeID,p.ProductName,sodet.Quantity,sodet.Quantity*p.SalesPrice as Price,B.Name,B.Extension from tblSODetail sodet inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId order by B.PID desc)B where so.UserID=@UserID and sodet.DeliveryStatus=@DevStatus", UserID,Status);
             CloseConnection();
             return dt;
         }

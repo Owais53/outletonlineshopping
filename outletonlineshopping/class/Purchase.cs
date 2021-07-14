@@ -34,6 +34,21 @@ namespace outletonlineshopping
             UpdateVendors("Update tblVendor set VendorName=@VName,Email=@Email,ContactNo=@Contact,Address=@Address where VendorID=@VId",obj.VendorID,obj.VendorName, obj.Contact, obj.Address, obj.Email);
             CloseConnection();
         }
+        public DataTable GetPOItem(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetPOLineItem("select pod.PODetID,p.ProductName,s.SizeName,pod.Quantity from tblPODetail pod inner join tblProduct p on pod.PID=p.ProductId inner join tblSizes s on pod.SizeID=s.SizeID where POID=@POID", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public int GetPOCount(int SOID)
+        {
+            OpenConection();
+            int ID = SelectPoCount("select COUNT(*) as POCount from tblPO where SOref=@SOID", SOID);
+            CloseConnection();
+            return ID;
+        }
 
     }
 }

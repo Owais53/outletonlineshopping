@@ -15,8 +15,9 @@ namespace outletonlineshopping
 		protected void Page_Load(object sender, EventArgs e)
 		{
             if (Request.QueryString["Id"] != null)
-            {
-                GetDataToEdit(Convert.ToInt32(Request.QueryString["Id"]));
+            {   int ID = Convert.ToInt32(Request.QueryString["Id"]);
+                GetDataToEdit(ID);
+                GetCountPO(ID);
                 DisableControls(Page, false);
             }
         }
@@ -24,9 +25,9 @@ namespace outletonlineshopping
         {
             foreach (Control c in parent.Controls)
             {
-                if (c is DropDownList)
+                if (c is TextBox)
                 {
-                    ((DropDownList)(c)).Enabled = State;
+                    ((TextBox)(c)).Enabled = State;
                 }
 
                 DisableControls(c, State);
@@ -60,6 +61,17 @@ namespace outletonlineshopping
                 dgvSODet.DataBind();
                 
             }
+        }
+        public void GetCountPO(int Id)
+        {
+            Purchase objpo = new Purchase();
+            int Count=objpo.GetPOCount(Id);
+            spanCountpo.InnerText = Count.ToString();
+        }
+        protected void btnpotrack_ServerClick(object sender, EventArgs e)
+        {
+            int ID = Convert.ToInt32(Request.QueryString["Id"]);
+            Response.Redirect("ListPO.aspx?Id="+ID+"");
         }
     }
 }

@@ -346,10 +346,29 @@ namespace outletonlineshopping
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
+        public int SelectPoCount(string Query_, int SOID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
         public DataTable GetSOLineItem(string Query_, int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@SOID", Id);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public DataTable GetPOLineItem(string Query_, int Id)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", Id);
             SqlDataAdapter dr = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             dr.Fill(ds);

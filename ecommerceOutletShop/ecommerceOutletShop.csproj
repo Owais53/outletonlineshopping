@@ -85,6 +85,7 @@
     <Content Include="Cart.aspx" />
     <Content Include="ChangePassword.aspx" />
     <Content Include="css\Custom.css" />
+    <Content Include="css\Custom1.css" />
     <Content Include="ImgSlider\Main-Banner.jpg" />
     <Content Include="ImgSlider\Printed T-Shirts Banner.png" />
     <Content Include="ImgSlider\shopimg.gif" />
@@ -97,6 +98,7 @@
     <Content Include="js\Custom.js" />
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\sweetalert2.all.js" />
+    <Content Include="OrderTrack.aspx" />
     <Content Include="packages.config" />
     <Content Include="bootstrap-grid.css.map" />
     <Content Include="css\bootstrap-grid.min.css.map" />
@@ -166,6 +168,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OrderTrack.aspx.cs">
+      <DependentUpon>OrderTrack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderTrack.aspx.designer.cs">
+      <DependentUpon>OrderTrack.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductsAll.aspx.cs">
       <DependentUpon>ProductsAll.aspx</DependentUpon>

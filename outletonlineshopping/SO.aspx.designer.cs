@@ -13,6 +13,24 @@ namespace outletonlineshopping {
     public partial class SO {
         
         /// <summary>
+        /// btnpotrack control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnpotrack;
+        
+        /// <summary>
+        /// spanCountpo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanCountpo;
+        
+        /// <summary>
         /// txtSONo control.
         /// </summary>
         /// <remarks>

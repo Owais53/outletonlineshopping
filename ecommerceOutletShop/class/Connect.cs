@@ -196,6 +196,18 @@ namespace ecommerceOutletShop
             return dt;
 
         }
+        public DataTable GetProductOrderTrackingStatus(string Query_, int SOID,int PID,int SizeID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SID", SizeID);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            dr.Fill(dt);
+            return dt;
+
+        }
         public DataTable GetLoginId(string Query_, string email)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
