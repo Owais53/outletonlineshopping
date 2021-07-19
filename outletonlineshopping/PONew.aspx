@@ -27,16 +27,16 @@
                                                    <asp:DropDownList ID="ddlvendor" CssClass="form-control" runat="server" OnSelectedIndexChanged="ddlvendor_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                                 </div>
                                                  <div class="form-group">
-                                                    <asp:label runat="server">Product</asp:label>
+                                                    <asp:label ID="lblProd" runat="server">Product</asp:label>
                                                    <asp:DropDownList ID="ddlproduct" CssClass="form-control" runat="server" OnSelectedIndexChanged="ddlproduct_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                                 </div>
                                              
                                                 <div class="form-group">
-                                                    <asp:label runat="server">Size</asp:label>
+                                                    <asp:label ID="lblSize" runat="server">Size</asp:label>
                                                       <asp:DropDownList ID="ddlsize" CssClass="form-control" runat="server"></asp:DropDownList>
                                                 </div>
                                                 <div class="form-group">
-                                                    <asp:label runat="server">Quantity</asp:label>
+                                                    <asp:label ID="lblQty" runat="server">Quantity</asp:label>
                                                      <asp:TextBox ID="txtqty" CssClass="form-control" runat="server"></asp:TextBox> 
                                                 </div>
                                                 

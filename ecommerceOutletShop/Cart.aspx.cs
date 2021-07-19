@@ -569,6 +569,8 @@ namespace ecommerceOutletShop
                                     Size = Convert.ToInt32(size);
                                     objsale.PID = PID;
                                     objsale.Quantity = Qty;
+                                    decimal price = objsale.GetPriceProduct(objsale);
+                                    objsale.salePrice = price;
                                     objsale.SizeID = Size;
                                     objsale.DevStatus = "Not Delivered";
                                     objsale.CreateSODet(objsale);

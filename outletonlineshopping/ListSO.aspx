@@ -22,7 +22,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         
-                                           <asp:GridView ID="dgvSO" runat="server" CssClass="display compact"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="SOID" OnRowEditing="dgvSO_RowEditing" OnRowUpdating="dgvSO_RowUpdating" OnRowCommand="dgvSO_RowCommand">
+                                           <asp:GridView ID="dgvSO" runat="server" CssClass="display compact" Width="100%"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="SOID" OnRowEditing="dgvSO_RowEditing" OnRowUpdating="dgvSO_RowUpdating" OnRowCommand="dgvSO_RowCommand">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="SONo">
                                                        <ItemTemplate>

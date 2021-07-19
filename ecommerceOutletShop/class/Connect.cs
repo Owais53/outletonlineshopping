@@ -443,7 +443,7 @@ namespace ecommerceOutletShop
             int POid = Convert.ToInt32(cmd.ExecuteScalar());
             return POid;
         }
-        public void InsertSODet(string Query_, int SOID,int PID,int SizeID,int Qty,string DevStatus)
+        public void InsertSODet(string Query_, int SOID,int PID,int SizeID,int Qty,string DevStatus,decimal price)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@SOID", SOID);
@@ -451,6 +451,7 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@SizeID", SizeID);
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.Parameters.AddWithValue("@DevStatus", DevStatus);
+            cmd.Parameters.AddWithValue("@Price", price);
             cmd.ExecuteNonQuery();
         }
         public void InsertPODet(string Query_, int POID, int PID,int SizeID,int Qty,decimal Price)

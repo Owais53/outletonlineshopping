@@ -19,6 +19,7 @@ namespace ecommerceOutletShop
         public int PID { get; set; }
         public int SizeID { get; set; }
         public int Quantity { get; set; }
+        public decimal salePrice { get; set; }
         public decimal TotalAmount { get; set; }
         public string CreditCardNumber { get; set; }
         public string DebitCardNumber { get; set; }
@@ -40,9 +41,16 @@ namespace ecommerceOutletShop
         public void CreateSODet(Sale obj)
         {
             OpenConection();
-            InsertSODet("Insert into tblSODetail(SOID,PID,SizeID,Quantity,DeliveryStatus) values(@SOID,@PID,@SizeID,@Qty,@DevStatus)", obj.SOID, obj.PID,obj.SizeID ,obj.Quantity,obj.DevStatus);
+            InsertSODet("Insert into tblSODetail(SOID,PID,SizeID,Quantity,DeliveryStatus,Price) values(@SOID,@PID,@SizeID,@Qty,@DevStatus,@Price)", obj.SOID, obj.PID,obj.SizeID ,obj.Quantity,obj.DevStatus,obj.salePrice);
             CloseConnection();
          
+        }
+        public decimal GetPriceProduct(Sale obj)
+        {
+            OpenConection();
+            decimal price = SelectCostProd("select SalesPrice*@Qty as Price from tblProduct where ProductId=@PId", obj.PID, obj.Quantity);
+            CloseConnection();
+            return price;
         }
         public void CreatePay(Sale obj)
         {

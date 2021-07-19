@@ -22,7 +22,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         
-                                           <asp:GridView ID="dgvPO" runat="server" CssClass="display compact"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="POID" OnRowEditing="dgvPO_RowEditing">
+                                           <asp:GridView ID="dgvPOHeader" runat="server" CssClass="table table-striped table-bordered table-hover"  AutoGenerateColumns="false" Width="100%" ShowHeaderWhenEmpty="true" DataKeyNames="POID" OnRowEditing="dgvPO_RowEditing">
                                                <Columns>
                                                     <asp:TemplateField HeaderText="PONo">
                                                        <ItemTemplate>
@@ -31,7 +31,7 @@
                                                    </asp:TemplateField>
                                                    <asp:TemplateField HeaderText="SO Reference">
                                                        <ItemTemplate>
-                                                           <asp:Label Text='<%# Eval("SONo") %>' runat="server" />
+                                                           <asp:Label  Text='<%# Eval("SONo") %>' runat="server" />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="Order Date">
@@ -80,7 +80,7 @@
 
     <script type="text/javascript">
     $(function () {
-        $("[id*=dgvPO]").DataTable(
+        $("[id*=dgvPOHeader]").DataTable(
         {
             bLengthChange: true,
             lengthMenu: [[5, 10, -1], [5, 10, "All"]],

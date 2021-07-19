@@ -22,6 +22,15 @@ namespace outletonlineshopping {
         protected global::System.Web.UI.WebControls.DropDownList ddlvendor;
         
         /// <summary>
+        /// lblProd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProd;
+        
+        /// <summary>
         /// ddlproduct control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace outletonlineshopping {
         protected global::System.Web.UI.WebControls.DropDownList ddlproduct;
         
         /// <summary>
+        /// lblSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSize;
+        
+        /// <summary>
         /// ddlsize control.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,15 @@ namespace outletonlineshopping {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlsize;
+        
+        /// <summary>
+        /// lblQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblQty;
         
         /// <summary>
         /// txtqty control.
