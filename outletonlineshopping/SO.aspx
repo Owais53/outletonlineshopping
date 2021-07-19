@@ -1,5 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dashboard.Master" AutoEventWireup="true" CodeBehind="SO.aspx.cs" Inherits="outletonlineshopping.SO" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+     <style type="text/css">
+        .buttonPO{
+            position: absolute;
+           top: 0px;
+          right: 0px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
        <div id="page-wrapper">
@@ -20,7 +27,7 @@
                                 <div class="panel-body" style="position:relative;">
                                     <div class="buttonPO">
                                                 <button id="btnpotrack" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnpotrack_ServerClick">
-                                                    <i class="fas fa-money-bill-alt" aria-hidden="true">
+                                                    <i class="fa fa-money-bill-alt" aria-hidden="true">
                                                         <span id="spanCountpo" runat="server"></span>
                                                         <br />
                                                         <span>Purchase Order</span>

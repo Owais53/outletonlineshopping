@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dashboard.Master" AutoEventWireup="true" CodeBehind="PO.aspx.cs" Inherits="outletonlineshopping.PO" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dashboard.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="PO.aspx.cs" Inherits="outletonlineshopping.PO" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .buttonGr{
@@ -27,7 +27,7 @@
                                 <div class="panel-body" style="position:relative;">
                                      <div class="buttonGr">
                                                 <button id="btnsaletrack" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnsaletrack_ServerClick">
-                                                    <i class="fa fa-shopping-cart" aria-hidden="true">
+                                                    <i class="fas fa-shopping-cart" aria-hidden="true">
                                                         <span>1</span>
                                                         <br />
                                                         <span>Sales Order</span>
@@ -62,9 +62,11 @@
                                                     <asp:label runat="server">Status</asp:label>
                                                     <asp:TextBox ID="txtStatus" CssClass="form-control" placeholder="Enter Product Quantity" runat="server"></asp:TextBox>   
                                                   </div>
-                                                
-                                                                                                
-                                          <div class="form-group">
+                                                  <div class="form-group">
+                                                    <asp:Button ID="btnSavePo" CssClass="btn btn-primary" runat="server" Text="Save"></asp:Button>   
+                                                  </div>
+                                                                                            
+                              <div class="form-group">
                               <asp:GridView ID="dgvPODet" runat="server"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="PODetID" Width="100%" CssClass="table table-striped table-bordered table-hover">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="Product Name">
@@ -82,7 +84,11 @@
                                                            <asp:Label Text='<%# Eval("Quantity") %>' runat="server" />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
-                                                  
+                                                   <asp:TemplateField HeaderText="Price">
+                                                       <ItemTemplate>
+                                                           <asp:Label Text='<%# Eval("Price") %>' runat="server" />
+                                                       </ItemTemplate>
+                                                   </asp:TemplateField>
                                                                                                        
                                                </Columns>
                                                   <EmptyDataTemplate>No Record Available</EmptyDataTemplate> 

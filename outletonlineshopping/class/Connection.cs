@@ -346,6 +346,81 @@ namespace outletonlineshopping
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
+        public decimal SelectCostProd(string Query_, int PId,int qty)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PId", PId);
+            cmd.Parameters.AddWithValue("@Qty", qty);
+            decimal price = Convert.ToDecimal(cmd.ExecuteScalar());
+            return price;
+        }
+        public int InsertPO(string Query_, int SOref, string PONO, DateTime Createdon, int VendorID, string Status)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOref", SOref);
+            cmd.Parameters.AddWithValue("@PONO", PONO);
+            cmd.Parameters.AddWithValue("@Createdon", Createdon);
+            cmd.Parameters.AddWithValue("@VendorID", VendorID);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            int poid = Convert.ToInt32(cmd.ExecuteScalar());
+            return poid;
+        }
+        public int GetLastId(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            var result = cmd.ExecuteScalar();
+            int SoId = result == DBNull.Value ? 0 : Convert.ToInt32(result);
+            return SoId;
+
+        }
+        public DataTable GetLastNo(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public void InsertPODet(string Query_, int POID, int PID, int SizeID, int Qty,decimal price)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.Parameters.AddWithValue("@Price", price);
+            cmd.ExecuteNonQuery();
+        }
+        public int GetVendorPro(string Query_, string Pname)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Pname", Pname);
+            int id = Convert.ToInt32(cmd.ExecuteScalar());
+            return id;
+        }
+        public int GetProductID(string Query_, string Pname)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Pname", Pname);
+            string pid = cmd.ExecuteScalar().ToString();
+            int id = Convert.ToInt32(pid);
+            return id;
+        }
+        public int GetSizeID(string Query_, string Sname)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Sname", Sname);
+            string sid = cmd.ExecuteScalar().ToString();
+            int id = Convert.ToInt32(sid);
+            return id;
+        }
         public int SelectPoCount(string Query_, int SOID)
         {
 

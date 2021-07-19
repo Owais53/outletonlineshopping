@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PO.aspx" />
+    <Content Include="PONew.aspx" />
     <Content Include="Product.aspx" />
     <Content Include="resetlink.aspx" />
     <Content Include="Settings.aspx" />
@@ -202,6 +203,13 @@
     </Compile>
     <Compile Include="PO.aspx.designer.cs">
       <DependentUpon>PO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PONew.aspx.cs">
+      <DependentUpon>PONew.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PONew.aspx.designer.cs">
+      <DependentUpon>PONew.aspx</DependentUpon>
     </Compile>
     <Compile Include="Product.aspx.cs">
       <DependentUpon>Product.aspx</DependentUpon>

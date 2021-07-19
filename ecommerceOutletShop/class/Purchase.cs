@@ -17,6 +17,7 @@ namespace ecommerceOutletShop
         public DateTime Createdon { get; set; }
         public int VendorId { get; set; }
         public string PurchaseStatus { get; set; }
+        public decimal Price { get; set; }
 
         public int CreatePO(Purchase obj)
         {
@@ -37,7 +38,7 @@ namespace ecommerceOutletShop
         public DataTable GetPOLineItemforEmail(int POID)
         {
             OpenConection();
-            DataTable dt = SelectPOLineitemforEmail("select p.ProductName,s.SizeName as Size,podet.Quantity,podet.Quantity*p.SalesPrice as Price from tblPODetail podet inner join tblProduct p on podet.PID=p.ProductId inner join tblSizes s on podet.SizeID=s.SizeID where POID=@POID", POID);
+            DataTable dt = SelectPOLineitemforEmail("select p.ProductName,s.SizeName as Size,podet.Quantity,podet.Price from tblPODetail podet inner join tblProduct p on podet.PID=p.ProductId inner join tblSizes s on podet.SizeID=s.SizeID where POID=@POID", POID);
             CloseConnection();
             return dt;
 
@@ -90,10 +91,17 @@ namespace ecommerceOutletShop
             return POid;
 
         }
+        public decimal GetPriceProduct(Purchase obj)
+        {
+            OpenConection();
+            decimal price = SelectCostProd("select Cost*@Qty as Price from tblProduct where ProductId=@PId", obj.PID, obj.Quantity);
+            CloseConnection();
+            return price;
+        }
         public void CreatePODet(Purchase obj)
         {
             OpenConection();
-            InsertPODet("insert into tblPODetail(POID,PID,SizeID,Quantity) values(@POID,@PID,@SizeID,@Qty)",obj.POID,obj.PID,obj.SizeID,obj.Quantity);
+            InsertPODet("insert into tblPODetail(POID,PID,SizeID,Quantity,Price) values(@POID,@PID,@SizeID,@Qty,@Price)",obj.POID,obj.PID,obj.SizeID,obj.Quantity,obj.Price);
             CloseConnection();
 
         }

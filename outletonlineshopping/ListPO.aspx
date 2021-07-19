@@ -13,7 +13,7 @@
                     <!-- /.row -->
                     <div class="row">
                         <div class="col-lg-12">
-                           
+                            <a class="btn btn-primary" href="PONew.aspx">Add New</a>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     Purchase Order List

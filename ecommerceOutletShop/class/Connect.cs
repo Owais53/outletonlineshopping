@@ -453,14 +453,24 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@DevStatus", DevStatus);
             cmd.ExecuteNonQuery();
         }
-        public void InsertPODet(string Query_, int POID, int PID,int SizeID,int Qty)
+        public void InsertPODet(string Query_, int POID, int PID,int SizeID,int Qty,decimal Price)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@POID", POID);
             cmd.Parameters.AddWithValue("@PID", PID);
             cmd.Parameters.AddWithValue("@SizeID", SizeID);
             cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.Parameters.AddWithValue("@Price", Price);
             cmd.ExecuteNonQuery();
+        }
+        public decimal SelectCostProd(string Query_, int PId, int qty)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PId", PId);
+            cmd.Parameters.AddWithValue("@Qty", qty);
+            decimal price = Convert.ToDecimal(cmd.ExecuteScalar());
+            return price;
         }
         public void InsertPay(string Query_, int SOID,decimal TotalAmount,string CrCdNo,string DtCdNo,string PayType,string DelAdd,string Status)
         {

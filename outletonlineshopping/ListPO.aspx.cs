@@ -53,7 +53,7 @@ namespace outletonlineshopping
         public void BindPOList()
         {
             Purchase obj = new Purchase();
-            DataTable data = obj.ShowDataInGridView("select po.POID,po.PONo,so.SONo,po.Createdon,v.VendorName,po.Status from tblPO po inner join tblSO so on po.SOref=so.SOID inner join tblVendor v on po.VendorID=v.VendorID");
+            DataTable data = obj.ShowDataInGridView("select po.POID,po.PONo,so.SONo,po.Createdon,v.VendorName,po.Status from tblPO po left join tblSO so on po.SOref=so.SOID inner join tblVendor v on po.VendorID=v.VendorID");
 
 
             if (data.Rows.Count > 0)
@@ -77,7 +77,17 @@ namespace outletonlineshopping
         {
             dgvPO.EditIndex = e.NewEditIndex;
             int id = Convert.ToInt32(dgvPO.DataKeys[e.NewEditIndex].Value.ToString());
-            Response.Redirect("PO.aspx?Id=" + id + "");
+           
+                if (dgvPO.Rows[dgvPO.EditIndex].Cells[1].Text == DBNull.Value.ToString())
+                {
+                  Response.Redirect("PONew.aspx?Id=" + id + "");
+                }
+                else
+                {
+                  Response.Redirect("PO.aspx?Id=" + id + "");
+                }
+
+            
         }
     }
 }

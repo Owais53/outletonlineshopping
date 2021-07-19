@@ -10,79 +10,52 @@
 namespace outletonlineshopping {
     
     
-    public partial class PO {
+    public partial class PONew {
         
         /// <summary>
-        /// btnsaletrack control.
+        /// ddlvendor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnsaletrack;
+        protected global::System.Web.UI.WebControls.DropDownList ddlvendor;
         
         /// <summary>
-        /// hdsoid control.
+        /// ddlproduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdsoid;
+        protected global::System.Web.UI.WebControls.DropDownList ddlproduct;
         
         /// <summary>
-        /// txtPONo control.
+        /// ddlsize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPONo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlsize;
         
         /// <summary>
-        /// txtSoref control.
+        /// txtqty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSoref;
+        protected global::System.Web.UI.WebControls.TextBox txtqty;
         
         /// <summary>
-        /// txtorderdate control.
+        /// btnAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtorderdate;
-        
-        /// <summary>
-        /// txtVendor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVendor;
-        
-        /// <summary>
-        /// txtStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStatus;
-        
-        /// <summary>
-        /// btnSavePo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSavePo;
+        protected global::System.Web.UI.WebControls.Button btnAdd;
         
         /// <summary>
         /// dgvPODet control.
@@ -92,5 +65,14 @@ namespace outletonlineshopping {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvPODet;
+        
+        /// <summary>
+        /// btnsave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnsave;
     }
 }

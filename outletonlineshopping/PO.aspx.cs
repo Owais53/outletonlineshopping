@@ -19,6 +19,7 @@ namespace outletonlineshopping
                 GetDataToEdit(Convert.ToInt32(Request.QueryString["Id"]));
                 DisableControls(Page, false);
             }
+            
         }
         protected void DisableControls(Control parent, bool State)
         {
@@ -62,11 +63,15 @@ namespace outletonlineshopping
 
             }
         }
-
+      
         protected void btnsaletrack_ServerClick(object sender, EventArgs e)
         {
             int ID = Convert.ToInt32(hdsoid.Value);
             Response.Redirect("SO.aspx?Id=" + ID + "");
         }
+        
+
+       
+       
     }
 }

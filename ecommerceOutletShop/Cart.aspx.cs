@@ -675,7 +675,7 @@ namespace ecommerceOutletShop
                                     objpur.SizeID = POSize;
                                     objsale.PID = POPId;
                                     objsale.SizeID = POSize;
-
+                                    decimal price = objpur.GetPriceProduct(objpur);
                                     int VID = objpur.GetVendorId(POPId);
                                     if (VID > 0)
                                     {
@@ -741,6 +741,7 @@ namespace ecommerceOutletShop
                                         if (POIDfromVendor > 0)
                                         {
                                             objpur.POID = POIDfromVendor;
+                                            objpur.Price = price;
                                             objpur.CreatePODet(objpur);
                                         }
                                                                   
