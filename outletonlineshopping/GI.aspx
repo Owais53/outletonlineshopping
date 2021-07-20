@@ -1,5 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dashboard.Master" AutoEventWireup="true" CodeBehind="GI.aspx.cs" Inherits="outletonlineshopping.GI" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        .buttonPOinGI{
+            position: absolute;
+           top: 0px;
+          right: 0px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div id="page-wrapper">
@@ -18,8 +25,8 @@
                                       View  Goods Issue
                                 </div>
                                 <div class="panel-body" style="position:relative;">
-                                     <div class="buttonPOinGR">
-                                                <button id="btnsaletrack" type="button" class="btn btn-light" runat="server" >
+                                     <div class="buttonPOinGI">
+                                                <button id="btnsaletrack" type="button" class="btn btn-light" runat="server" onserverclick="btnsaletrack_ServerClick">
                                                     <i class="fa fa-money fa-fw" aria-hidden="true">
                                                         <span>1</span>
                                                         <br />

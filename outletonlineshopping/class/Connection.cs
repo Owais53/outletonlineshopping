@@ -337,6 +337,17 @@ namespace outletonlineshopping
             return dataum;
 
         }
+        public DataTable GetPOIfSoExists(string Query_, int Id)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", Id);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
         public int SelectDupProdSize(string Query_, int PID, int SizeID)
         {
 
@@ -454,6 +465,14 @@ namespace outletonlineshopping
 
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@POID", POID);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
+        public int SelectGIId(string Query_, int POID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", POID);
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }

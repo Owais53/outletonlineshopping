@@ -12,12 +12,14 @@ namespace outletonlineshopping
     public partial class GI : System.Web.UI.Page
     {
         Purchase obj = new Purchase();
+        Inventory objinv = new Inventory();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["SOID"] != null && Request.QueryString["GI"] != null)
             {
                 GetData(Convert.ToInt32(Request.QueryString["SOID"]), Convert.ToInt32(Request.QueryString["GI"]));
                 dgvGIDet.Enabled = false;
+              
             }
         }
         public void GetData(int SOId, int GIId)
@@ -46,6 +48,12 @@ namespace outletonlineshopping
                 dgvGIDet.DataBind();
 
             }
+        }
+
+        protected void btnsaletrack_ServerClick(object sender, EventArgs e)
+        {
+            int ID = Convert.ToInt32(Request.QueryString["SOID"]);
+            Response.Redirect("SO.aspx?Id=" + ID + "");
         }
     }
 }

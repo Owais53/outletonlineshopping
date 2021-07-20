@@ -69,6 +69,14 @@ namespace outletonlineshopping
             return Grid;
 
         }
+        public int GetGIIdfromSOId(int SOID)
+        {
+            OpenConection();
+            int Grid = SelectGIId("select StockMoveID from tblStockMove where SOID>0 and SOID=@SOID", SOID);
+            CloseConnection();
+            return Grid;
+
+        }
         public DataTable GetLastGINo()
         {
             OpenConection();
@@ -86,6 +94,20 @@ namespace outletonlineshopping
         {
             OpenConection();
             DataTable dt = GetSOLineItem("select podet.PID,podet.SizeID,podet.Quantity from tblSO so inner join tblPO po on so.SOID=po.SOref inner join tblPODetail podet on po.POID=podet.POID where so.SOID=@SOID", SOID);
+            CloseConnection();
+            return dt;
+        }
+        public DataTable GetPOIfSorefExist(int SOID)
+        {
+            OpenConection();
+            DataTable dt =GetPOIfSoExists("select * from tblPO where SOref=@SOID", SOID);
+            CloseConnection();
+            return dt;
+        }
+        public DataTable GetDuplicateGI(int SOID)
+        {
+            OpenConection();
+            DataTable dt = GetPOIfSoExists("select * from tblStockMove where SOID>0 and SOID=@SOID", SOID);
             CloseConnection();
             return dt;
         }

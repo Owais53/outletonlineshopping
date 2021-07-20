@@ -73,6 +73,7 @@
     <Content Include="css\gridstyle.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="GI.aspx" />
+    <Content Include="GR.aspx" />
     <Content Include="img\delete.png" />
     <Content Include="img\edit.png" />
     <Content Include="img\Quantity.png" />
@@ -148,6 +149,13 @@
     </Compile>
     <Compile Include="GI.aspx.designer.cs">
       <DependentUpon>GI.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GR.aspx.cs">
+      <DependentUpon>GR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GR.aspx.designer.cs">
+      <DependentUpon>GR.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListGoodsIssue.aspx.cs">
       <DependentUpon>ListGoodsIssue.aspx</DependentUpon>

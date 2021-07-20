@@ -46,9 +46,11 @@ namespace outletonlineshopping
 
         protected void dgvGI_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            Inventory objinv = new Inventory();
             dgvGI.EditIndex = e.NewEditIndex;
             int id = Convert.ToInt32(dgvGI.DataKeys[e.NewEditIndex].Value.ToString());
-            Response.Redirect("SO.aspx?Id=" + id + "");
+            int GIid = objinv.GetGIIdfromSOId(id);
+            Response.Redirect("GI.aspx?SOID=" + id + "&GI=" + GIid + "");
         }
     }
 }

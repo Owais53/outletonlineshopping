@@ -12,6 +12,7 @@ namespace outletonlineshopping
 	public partial class SO : System.Web.UI.Page
 	{
         Sale obj = new Sale();
+        Inventory objinv = new Inventory();
 		protected void Page_Load(object sender, EventArgs e)
 		{
             if (Request.QueryString["Id"] != null)
@@ -19,6 +20,12 @@ namespace outletonlineshopping
                 GetDataToEdit(ID);
                 GetCountPO(ID);
                 DisableControls(Page, false);
+                DataTable dt = objinv.GetPOIfSorefExist(ID);
+                DataTable dt1 = objinv.GetDuplicateGI(ID);
+                if (dt.Rows.Count == 0 || dt1.Rows.Count >= 2)
+                {
+                    btngi.Visible = false;
+                }
             }
         }
         protected void DisableControls(Control parent, bool State)
