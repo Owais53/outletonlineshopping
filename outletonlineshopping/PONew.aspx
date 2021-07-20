@@ -18,7 +18,13 @@
                                       View Purchase Order
                                 </div>
                                 <div class="panel-body" style="position:relative;">
-                                     
+                                      <div class="buttonGr">
+                                                <button id="btnGrinPonew" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnGrinPonew_ServerClick">
+                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true">                                                       
+                                                        <span>Create Good Receipt</span>
+                                                    </i>
+                                                </button>
+                                            </div>
                                     <div class="row">
                                         <div class="col-lg-9" >
                                                
