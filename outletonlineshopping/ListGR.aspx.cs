@@ -42,9 +42,11 @@ namespace outletonlineshopping
         }
         protected void dgvGR_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            Inventory obj = new Inventory();
             dgvGR.EditIndex = e.NewEditIndex;
             int id = Convert.ToInt32(dgvGR.DataKeys[e.NewEditIndex].Value.ToString());
-            Response.Redirect("PO.aspx?Id=" + id + "");
+            int GRid = obj.GetGRIdfromPOId(id);
+            Response.Redirect("GR.aspx?POID=" + id + "&GR=" + GRid + "");
         }
     }
 }

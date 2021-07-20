@@ -449,6 +449,14 @@ namespace outletonlineshopping
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
+        public int SelectGRId(string Query_, int POID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
         public DataTable GetSOLineItem(string Query_, int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

@@ -128,7 +128,7 @@ namespace outletonlineshopping
                     objinv.Quantity = (int)row["Quantity"];
                     objinv.ChangeQuantityMinus(objinv);
                 }
-                Response.Redirect("GI.aspx?SOID=" + SOID + "&GR=" + GIID + "");
+                Response.Redirect("GI.aspx?SOID=" + SOID + "&GI=" + GIID + "");
             }
             else
             {

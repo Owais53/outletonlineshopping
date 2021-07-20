@@ -61,6 +61,14 @@ namespace outletonlineshopping
             return Soid;
 
         }
+        public int GetGRIdfromPOId(int POID)
+        {
+            OpenConection();
+            int Grid = SelectGRId("select StockMoveID from tblStockMove where POID>0 and POID=@POID",POID);
+            CloseConnection();
+            return Grid;
+
+        }
         public DataTable GetLastGINo()
         {
             OpenConection();
