@@ -26,21 +26,26 @@
                                 </div>
                                 <div class="panel-body" style="position:relative;">
                                      <div class="buttonSo">
-                                                <button id="btnsaletrack" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnsaletrack_ServerClick">
-                                                    <i class="fas fa-shopping-cart" aria-hidden="true">
+                                                <button id="btnsaletrack" type="button" class="btn btn-light" runat="server" onserverclick="btnsaletrack_ServerClick">
+                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true" style="padding-right:30px;">
                                                         <span>1</span>
-                                                        <br />
-                                                        <span>Sales Order</span>
+                                                        <br />                                                       
                                                     </i>
+                                                    <br />
+                                                    Sales Order
+                                                </button>
+                                                <button id="btnGr" type="button" width="10%" class="btn btn-light" runat="server" onserverclick="btnGr_ServerClick">
+                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true" style="padding-right:30px;">
+                                                        <span></span>
+                                                        <br />
+                                                       
+                                                    </i>
+                                                    <br />
+                                                     Create Good Receipt
                                                 </button>
                                             </div>
                                       <div>
-                                                <button id="btnGr" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnGr_ServerClick">
-                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true">
-                                                        
-                                                        <span>Create Good Receipt</span>
-                                                    </i>
-                                                </button>
+                                               
                                             </div>
                                     <div class="row">
                                         <div class="col-lg-9" >

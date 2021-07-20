@@ -1,5 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dashboard.Master" AutoEventWireup="true" CodeBehind="PONew.aspx.cs" Inherits="outletonlineshopping.PONew" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+      <style type="text/css">
+        .buttonGr{
+            position: absolute;
+           top: 0px;
+          right: 0px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div id="page-wrapper">
@@ -15,16 +22,21 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                      View Purchase Order
+                                      Create Purchase Order
                                 </div>
                                 <div class="panel-body" style="position:relative;">
                                       <div class="buttonGr">
-                                                <button id="btnGrinPonew" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnGrinPonew_ServerClick">
-                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true">                                                       
-                                                        <span>Create Good Receipt</span>
+                                                <button id="btnGrinPonew" type="button" class="btn btn-light" runat="server" onserverclick="btnGrinPonew_ServerClick">
+                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true" style="padding-right:30px;">                                                       
+                                                        <span></span>
+                                                        <br />
                                                     </i>
+                                                     <br />
+                                                       Create Good Receipt
                                                 </button>
+                                             
                                             </div>
+                                     
                                     <div class="row">
                                         <div class="col-lg-9" >
                                                
