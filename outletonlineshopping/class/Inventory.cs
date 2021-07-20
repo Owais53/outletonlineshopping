@@ -23,6 +23,8 @@ namespace outletonlineshopping
         public DateTime Createdon { get; set; }
         public decimal Price { get; set; }
         public string Status { get; set; }
+        public int StockMoveID { get; set; }
+        public string StockMoveStatus { get; set; }
 
         public int CreateGR(Inventory obj)
         {
@@ -103,6 +105,13 @@ namespace outletonlineshopping
             DataTable dt =GetPOIfSoExists("select * from tblPO where SOref=@SOID", SOID);
             CloseConnection();
             return dt;
+        }
+        public void CreateStockMoveDet(Inventory obj)
+        {
+            OpenConection();
+            InsertStockMoveDet("Insert into tblStockMoveDetail(StockMoveID,PID,SizeID,Quantity,Status) values(@StockMoveID,@PID,@SizeID,@Qty,@Status)", obj.StockMoveID, obj.PID, obj.SizeID, obj.Quantity, obj.StockMoveStatus);
+            CloseConnection();
+
         }
         public DataTable GetDuplicateGI(int SOID)
         {

@@ -51,10 +51,19 @@ namespace outletonlineshopping
             return dt;
 
         }
-        public DataTable GetPOItemfromSO(int Id)
+        public DataTable GetGRItem(int Id)
         {
             OpenConection();
-            DataTable dt = GetPOLineItem("select pod.PODetID,p.ProductName,s.SizeName,pod.Quantity,pod.Price from tblPODetail pod inner join tblPO po on pod.POID=po.POID inner join tblProduct p on pod.PID=p.ProductId inner join tblSizes s on pod.SizeID=s.SizeID where po.SOref=@POID", Id);
+            DataTable dt = GetPOLineItem("select p.ProductName,s.SizeName,smd.Quantity from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.POID=@POID", Id);
+            CloseConnection();
+            return dt;
+
+        }
+
+        public DataTable GetGIItemfromSO(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetPOLineItem("select p.ProductName,s.SizeName,smd.Quantity from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.SOID=@POID", Id);
             CloseConnection();
             return dt;
 

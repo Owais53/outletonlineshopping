@@ -139,6 +139,9 @@ namespace outletonlineshopping
                     objinv.SizeID = SizeID;
                     objinv.Quantity = Convert.ToInt32(lblQty.Text);
                     objinv.Price = Convert.ToDecimal(lblPrice.Text);
+                    objinv.StockMoveID = GRID;
+                    objinv.StockMoveStatus = "Received";
+                    objinv.CreateStockMoveDet(objinv);
                     objinv.ChangeQuantityPlus(objinv);
                 }
                 Response.Redirect("GR.aspx?POID="+POID+"&GR="+GRID+"");

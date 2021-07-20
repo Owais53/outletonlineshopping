@@ -133,6 +133,9 @@ namespace outletonlineshopping
                     objinv.PID = (int)row["PID"];
                     objinv.SizeID = (int)row["SizeID"];
                     objinv.Quantity = (int)row["Quantity"];
+                    objinv.StockMoveID = GIID;
+                    objinv.StockMoveStatus = "Stock Picking";
+                    objinv.CreateStockMoveDet(objinv);
                     objinv.ChangeQuantityMinus(objinv);
                 }
                 Response.Redirect("GI.aspx?SOID=" + SOID + "&GI=" + GIID + "");

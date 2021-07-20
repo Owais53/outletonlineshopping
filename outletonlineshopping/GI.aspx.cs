@@ -34,7 +34,7 @@ namespace outletonlineshopping
 
             }
             obj.CloseConnection();
-            DataTable dt = obj.GetPOItemfromSO(SOId);
+            DataTable dt = obj.GetGIItemfromSO(SOId);
             if (dt.Rows.Count > 0)
             {
                 dgvGIDet.DataSource = dt;

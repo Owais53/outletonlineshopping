@@ -43,6 +43,7 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
             cmd.ExecuteNonQuery();
         }
+
         public DataTable SelectSignin(string Query_, string UserName, string pass)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -485,13 +486,24 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }
-        public void InsertStockMove(string Query_, string Docno,int SOID,int POID, string MoveType, string Status)
+        public int InsertStockMove(string Query_, string Docno,int SOID,int POID, string MoveType, string Status)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@DocNO", Docno);
             cmd.Parameters.AddWithValue("@SOID", SOID);
             cmd.Parameters.AddWithValue("@POID", POID);
             cmd.Parameters.AddWithValue("@MoveType", MoveType);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            int id = Convert.ToInt32(cmd.ExecuteScalar());
+            return id;
+        }
+        public void InsertStockMoveDet(string Query_, int SID, int PID, int SizeID, int Qty, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@StockMoveID", SID);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }

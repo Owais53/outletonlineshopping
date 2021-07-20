@@ -21,11 +21,19 @@ namespace ecommerceOutletShop
         public int Quantity { get; set; }
         public string MoveType { get; set; }
         public string StockMoveStatus { get; set; }
+        public int StockMoveID { get; set; }
 
-        public void CreateStockMove(Inventory obj)
+        public int CreateStockMove(Inventory obj)
         {
             OpenConection();
-            InsertStockMove("Insert into tblStockMove(DocNo,SOID,POID,MoveType,Status) values(@DocNO,@SOID,@POID,@MoveType,@Status)",obj.DOCNo,obj.SOID,obj.POID,obj.MoveType, obj.StockMoveStatus);
+          int id=InsertStockMove("Insert into tblStockMove(DocNo,SOID,POID,MoveType,Status) values(@DocNO,@SOID,@POID,@MoveType,@Status) SELECT SCOPE_IDENTITY()", obj.DOCNo,obj.SOID,obj.POID,obj.MoveType, obj.StockMoveStatus);
+            CloseConnection();
+            return id;
+        }
+        public void CreateStockMoveDet(Inventory obj)
+        {
+            OpenConection();
+            InsertStockMoveDet("Insert into tblStockMoveDetail(StockMoveID,PID,SizeID,Quantity,Status) values(@StockMoveID,@PID,@SizeID,@Qty,@Status)", obj.StockMoveID, obj.PID, obj.SizeID, obj.Quantity, obj.StockMoveStatus);
             CloseConnection();
 
         }

@@ -32,7 +32,7 @@ namespace outletonlineshopping
 
             }
             obj.CloseConnection();
-            DataTable dt = obj.GetPOItem(POId);
+            DataTable dt = obj.GetGRItem(POId);
             if (dt.Rows.Count > 0)
             {
                 dgvGRDet.DataSource = dt;

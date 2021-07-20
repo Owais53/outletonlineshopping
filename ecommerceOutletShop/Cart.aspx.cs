@@ -622,12 +622,16 @@ namespace ecommerceOutletShop
                                         objinv.POID = 0;
                                         objinv.StockMoveStatus = "Stock Picking";
                                         objinv.MoveType = "Stock Out";
-                                        objinv.CreateStockMove(objinv);
+                                       int id=objinv.CreateStockMove(objinv);
 
                                         objinv.PID = PID;
                                         objinv.SizeID = Size;
                                         objinv.Quantity = Qty;
+                                        objinv.StockMoveID = id;
+                                        objinv.StockMoveStatus = "Stock Picking";
                                         objinv.ChangeQuantityMinus(objinv);
+                                        objinv.CreateStockMoveDet(objinv);
+
                                         if (CustLeadTime > 0)
                                         {
                                             DateTime CurrentDate = DateTime.Now.Date;

@@ -390,6 +390,16 @@ namespace outletonlineshopping
             int poid = Convert.ToInt32(cmd.ExecuteScalar());
             return poid;
         }
+        public void InsertStockMoveDet(string Query_, int SID, int PID, int SizeID, int Qty, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@StockMoveID", SID);
+            cmd.Parameters.AddWithValue("@PID", PID);
+            cmd.Parameters.AddWithValue("@SizeID", SizeID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.ExecuteNonQuery();
+        }
         public void UpdateQuantityPlus(string Query_, int PID, int SizeID, int Qty)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
