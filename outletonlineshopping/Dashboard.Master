@@ -142,6 +142,7 @@
                                    </li>
                                 </ul>
                             </li>
+                              <li><a href="ListGR.aspx"><i class="fa fa-sitemap fa-fw"></i>Goods Receipt<span class="fa arrow"></span></a></li>
                             <li><a href="ListGoodsIssue.aspx"><i class="fa fa-sitemap fa-fw"></i>Goods Issue<span class="fa arrow"></span></a></li>
                         </ul>
                     </li>
@@ -157,7 +158,8 @@
                                    </li>
                                 </ul>
                             </li>
-                             <li><a href="ListPO.aspx"><i class="fa fa-sitemap fa-fw"></i>Purchase Orders<span class="fas fa-money-bill"></span></a></li>
+                             <li><a href="ListPO.aspx"><i class="fa fa-money-bill fa-fw"></i>Purchase Orders<span></span></a></li>
+                           
                         </ul>
                     </li>
                      <li>
@@ -172,7 +174,7 @@
                                    </li>
                                 </ul>
                             </li>
-                            <li><a href="ListSO.aspx"><i class="fa fa-sitemap fa-fw"></i>Sale Orders<span class="fas fa-shopping-cart"></span></a></li>
+                            <li><a href="ListSO.aspx"><i class="fa fa-shopping-cart fa-fw"></i>Sale Orders<span class=""></span></a></li>
                         </ul>
                     </li>
                 </ul>

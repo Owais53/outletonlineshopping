@@ -46,6 +46,13 @@ namespace outletonlineshopping
             CloseConnection();
             return dt;
         }
+        public DataTable CheckGRExists(int POID)
+        {
+            OpenConection();
+            DataTable dt = GetPOLineItem("select * from tblStockMove where POID>0 and POID=@POID", POID);
+            CloseConnection();
+            return dt;
+        }
         public void ChangeQuantityPlus(Inventory obj)
         {
             OpenConection();

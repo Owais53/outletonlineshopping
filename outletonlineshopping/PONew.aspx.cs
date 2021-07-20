@@ -13,6 +13,7 @@ namespace outletonlineshopping
     {
         Purchase obj = new Purchase();
         DataTable dt = new DataTable();
+        Inventory objinv = new Inventory();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,8 +24,14 @@ namespace outletonlineshopping
             }
             if (Request.QueryString["Id"] != null)
             {
-                GetDataToEdit(Convert.ToInt32(Request.QueryString["Id"]));
+                int ID = Convert.ToInt32(Request.QueryString["Id"]);
+                GetDataToEdit(ID);
                 DisableControls();
+                DataTable dtgr = objinv.CheckGRExists(ID);
+                if (dtgr.Rows.Count > 0)
+                {
+                    btnGrinPonew.Visible = false;
+                }
             }
         }
         protected void DisableControls()

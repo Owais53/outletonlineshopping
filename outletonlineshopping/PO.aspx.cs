@@ -12,12 +12,19 @@ namespace outletonlineshopping
 	public partial class PO : System.Web.UI.Page
 	{
         Purchase obj = new Purchase();
+        Inventory objinv = new Inventory();
 		protected void Page_Load(object sender, EventArgs e)
 		{
             if (Request.QueryString["Id"] != null)
             {
-                GetDataToEdit(Convert.ToInt32(Request.QueryString["Id"]));
+                int ID = Convert.ToInt32(Request.QueryString["Id"]);
+                GetDataToEdit(ID);
                 DisableControls(Page, false);
+                DataTable dtgr = objinv.CheckGRExists(ID);
+                if (dtgr.Rows.Count > 0)
+                {
+                    btnGr.Visible = false;
+                }
             }
             
         }

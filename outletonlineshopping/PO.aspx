@@ -34,7 +34,7 @@
                                                     <br />
                                                     Sales Order
                                                 </button>
-                                                <button id="btnGr" type="button" width="10%" class="btn btn-light" runat="server" onserverclick="btnGr_ServerClick">
+                                                <button id="btnGr"  type="button" width="10%" class="btn btn-light" runat="server" onserverclick="btnGr_ServerClick">
                                                     <i class="fa fa-shopping-cart fa-fw" aria-hidden="true" style="padding-right:30px;">
                                                         <span></span>
                                                         <br />
