@@ -460,6 +460,14 @@ namespace outletonlineshopping
             return dataum;
 
         }
+        public void UpdateQuantityMinus(string Query_, int PID, int SizeID, int Qty)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@PId", PID);
+            cmd.Parameters.AddWithValue("@Size", SizeID);
+            cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.ExecuteNonQuery();
+        }
         public DataTable GetPOLineItem(string Query_, int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

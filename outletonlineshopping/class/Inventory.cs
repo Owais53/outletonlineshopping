@@ -53,6 +53,34 @@ namespace outletonlineshopping
             CloseConnection();
             return dt;
         }
+        public int GetLastSmoveSoId()
+        {
+            OpenConection();
+            int Soid = GetLastId("select ISNULL(max(StockMoveID),0) as LastSOID from tblStockMove where SOID >0");
+            CloseConnection();
+            return Soid;
+
+        }
+        public DataTable GetLastGINo()
+        {
+            OpenConection();
+            DataTable dt = GetLastNo("select DocNo from tblStockMove where StockMoveID=(select max(StockMoveID) as LastSOID from tblStockMove where SOID>0)");
+            CloseConnection();
+            return dt;
+        }
+        public void ChangeQuantityMinus(Inventory obj)
+        {
+            OpenConection();
+            UpdateQuantityMinus("Update tblProductSizeQuantity set Quantity=Quantity-@Qty where PID=@PId and SizeID=@Size", obj.PID, obj.SizeID, obj.Quantity);
+            CloseConnection();
+        }
+        public DataTable GetPOItemForIssue(int SOID)
+        {
+            OpenConection();
+            DataTable dt = GetSOLineItem("select podet.PID,podet.SizeID,podet.Quantity from tblSO so inner join tblPO po on so.SOID=po.SOref inner join tblPODetail podet on po.POID=podet.POID where so.SOID=@SOID", SOID);
+            CloseConnection();
+            return dt;
+        }
         public void ChangeQuantityPlus(Inventory obj)
         {
             OpenConection();

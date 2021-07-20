@@ -27,12 +27,20 @@
                                 <div class="panel-body" style="position:relative;">
                                     <div class="buttonPO">
                                                 <button id="btnpotrack" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnpotrack_ServerClick">
-                                                    <i class="fa fa-money-bill-alt fa-fw" aria-hidden="true">
+                                                    <i class="fa fa-money fa-fw" aria-hidden="true">
                                                         <span id="spanCountpo" runat="server"></span>
                                                         <br />                                                       
                                                     </i>
                                                     <br />
                                                      Purchase Order
+                                                </button>
+                                                 <button id="btngi" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btngi_ServerClick">
+                                                    <i class="fa fa-road fa-fw" aria-hidden="true">
+                                                        <span id="span1" runat="server"></span>
+                                                        <br />                                                       
+                                                    </i>
+                                                    <br />
+                                                     Create Goods Issue
                                                 </button>
                                             </div>
                                     <div class="row">

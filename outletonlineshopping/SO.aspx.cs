@@ -73,5 +73,67 @@ namespace outletonlineshopping
             int ID = Convert.ToInt32(Request.QueryString["Id"]);
             Response.Redirect("ListPO.aspx?Id="+ID+"");
         }
+        public string GenerateNoGI(string GIno)
+        {
+            Inventory objinv = new Inventory();
+            string a = "";
+            int SoID = objinv.GetLastSmoveSoId();
+            if (SoID > 0)
+            {
+                DataTable dt = objinv.GetLastGINo();
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        string lastNo = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            lastNo = row["DocNo"].ToString();
+
+                        }
+                        string LastNo = lastNo.Split('-')[1].ToString();
+                        int No = Convert.ToInt32(LastNo);
+                        int Num = No + 1;
+                        a = GIno + "-000" + Num;
+
+                    }
+                }
+            }
+            else
+            {
+                a = GIno + "-0001";
+            }
+            return a;
+
+        }
+        protected void btngi_ServerClick(object sender, EventArgs e)
+        {
+            Inventory objinv = new Inventory();
+            Purchase obj = new Purchase();
+            objinv.DocNo = GenerateNoGI("GI");
+            objinv.POID = 0;
+            objinv.SOID = Convert.ToInt32(Request.QueryString["Id"]);
+            objinv.MoveType = "Stock Out";
+            objinv.Status = "Stock Picking";
+
+            if (Request.QueryString["Id"] != null)
+            {
+                int GIID = objinv.CreateGR(objinv);
+                int SOID = Convert.ToInt32(Request.QueryString["Id"]);
+                DataTable dt = objinv.GetPOItemForIssue(SOID);
+                foreach (DataRow row in dt.Rows)
+                {
+                    objinv.PID = (int)row["PID"];
+                    objinv.SizeID = (int)row["SizeID"];
+                    objinv.Quantity = (int)row["Quantity"];
+                    objinv.ChangeQuantityMinus(objinv);
+                }
+                Response.Redirect("GI.aspx?SOID=" + SOID + "&GR=" + GIID + "");
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Good Receipt can not be created while Creating Purchase Order');", true);
+            }
+        }
     }
 }

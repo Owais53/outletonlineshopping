@@ -31,6 +31,24 @@ namespace outletonlineshopping {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanCountpo;
         
         /// <summary>
+        /// btngi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btngi;
+        
+        /// <summary>
+        /// span1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl span1;
+        
+        /// <summary>
         /// txtSONo control.
         /// </summary>
         /// <remarks>
