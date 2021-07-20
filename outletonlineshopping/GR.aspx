@@ -27,7 +27,7 @@
                                 <div class="panel-body" style="position:relative;">
                                      <div class="buttonPOinGR">
                                                 <button id="btnsaletrack" type="button" class="btn btn-outline-primary" runat="server" >
-                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true">
+                                                    <i class="fa fa-money fa-fw" aria-hidden="true">
                                                         <span>1</span>
                                                         <br />
                                                         <span>View Purchase Order</span>
