@@ -70,7 +70,80 @@ namespace outletonlineshopping
             Response.Redirect("SO.aspx?Id=" + ID + "");
         }
         
+          protected void btnsaletrack_ServerClick(object sender, EventArgs e)
+        {
+            int ID = Convert.ToInt32(hdsoid.Value);
+            Response.Redirect("SO.aspx?Id=" + ID + "");
+        }
+        public string GenerateNoGR(string GRno)
+        {
+            Inventory objinv = new Inventory();
+            string a = "";
+            int SoID = objinv.GetLastSmovePoId();
+            if (SoID > 0)
+            {
+                DataTable dt = objinv.GetLastGRNo();
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        string lastNo = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            lastNo = row["DocNo"].ToString();
 
+                        }
+                        string LastNo = lastNo.Split('-')[1].ToString();
+                        int No = Convert.ToInt32(LastNo);
+                        int Num = No + 1;
+                        a = GRno + "-000" + Num;
+
+                    }
+                }
+            }
+            else
+            {
+                a = GRno + "-0001";
+            }
+            return a;
+
+        }
+        protected void btnGr_ServerClick(object sender, EventArgs e)
+        {
+            Inventory objinv = new Inventory();
+            objinv.DocNo = GenerateNoGR("GR");
+            objinv.SOID = 0;
+            objinv.POID = Convert.ToInt32(Request.QueryString["Id"]);
+            objinv.MoveType = "Stock In";
+            objinv.Status = "Received";
+            int GRID=objinv.CreateGR(objinv);
+            int POID = Convert.ToInt32(Request.QueryString["Id"]);
+            if (Request.QueryString["Id"] != null)
+            {
+
+                foreach(GridViewRow row in dgvPODet.Rows)
+                {
+                    Label lblProd = row.Cells[0].Controls[1] as Label;
+                    Label lblQty = row.Cells[2].Controls[1] as Label;
+                    Label lblPrice = row.Cells[3].Controls[1] as Label;
+                    Label lblSize = row.Cells[1].Controls[1] as Label;
+
+                    int PID = obj.GetProductId(lblProd.Text);
+                    int SizeID = obj.GetSizeId(lblSize.Text);
+                    
+                    objinv.PID = PID;
+                    objinv.SizeID = SizeID;
+                    objinv.Quantity = Convert.ToInt32(lblQty.Text);
+                    objinv.Price = Convert.ToDecimal(lblPrice.Text);
+                    objinv.ChangeQuantityPlus(objinv);
+                }
+                Response.Redirect("GR.aspx?POID="+POID+"&GR="+GRID+"");
+            }
+            else
+            {
+
+            }
+        }
        
        
     }
