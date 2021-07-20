@@ -114,6 +114,24 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.ExecuteNonQuery();
         }
+         public int GetLastId(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            var result = cmd.ExecuteScalar();
+            int SoId = result == DBNull.Value ? 0 : Convert.ToInt32(result);
+            return SoId;
+
+        }
+        public DataTable GetLastNo(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
         public int GetLastPOId()
         {
             OpenConection();
