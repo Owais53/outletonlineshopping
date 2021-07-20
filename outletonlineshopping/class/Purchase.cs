@@ -94,44 +94,7 @@ namespace outletonlineshopping
             CloseConnection();
 
         }
-         public int InsertGR(string Query_, string DocNo, int SOID,int POID, string MoveType,  string Status)
-        {
-
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            cmd.Parameters.AddWithValue("@DocNo", DocNo);
-            cmd.Parameters.AddWithValue("@SOID", SOID);
-            cmd.Parameters.AddWithValue("@POID", POID);
-            cmd.Parameters.AddWithValue("@MoveType", MoveType);
-            cmd.Parameters.AddWithValue("@Status", Status);
-            int poid = Convert.ToInt32(cmd.ExecuteScalar());
-            return poid;
-        }
-        public void UpdateQuantityPlus(string Query_, int PID, int SizeID, int Qty)
-        {
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            cmd.Parameters.AddWithValue("@PId", PID);
-            cmd.Parameters.AddWithValue("@Size", SizeID);
-            cmd.Parameters.AddWithValue("@Qty", Qty);
-            cmd.ExecuteNonQuery();
-        }
-         public int GetLastId(string Query_)
-        {
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            var result = cmd.ExecuteScalar();
-            int SoId = result == DBNull.Value ? 0 : Convert.ToInt32(result);
-            return SoId;
-
-        }
-        public DataTable GetLastNo(string Query_)
-        {
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            SqlDataAdapter dr = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            dr.Fill(ds);
-            DataTable dataum = ds.Tables[0];
-            return dataum;
-
-        }
+       
         public int GetLastPOId()
         {
             OpenConection();
