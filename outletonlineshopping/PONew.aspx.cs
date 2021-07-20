@@ -356,11 +356,11 @@ namespace outletonlineshopping
             objinv.POID = Convert.ToInt32(Request.QueryString["Id"]);
             objinv.MoveType = "Stock In";
             objinv.Status = "Received";
-            int GRID = objinv.CreateGR(objinv);
-            int POID = Convert.ToInt32(Request.QueryString["Id"]);
+           
             if (Request.QueryString["Id"] != null)
             {
-
+                int GRID = objinv.CreateGR(objinv);
+                int POID = Convert.ToInt32(Request.QueryString["Id"]);
                 foreach (GridViewRow row in dgvPODet.Rows)
                 {
                     int PID = obj.GetProductId(row.Cells[0].Text);

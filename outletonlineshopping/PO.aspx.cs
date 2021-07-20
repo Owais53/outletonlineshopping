@@ -70,11 +70,7 @@ namespace outletonlineshopping
             Response.Redirect("SO.aspx?Id=" + ID + "");
         }
         
-          protected void btnsaletrack_ServerClick(object sender, EventArgs e)
-        {
-            int ID = Convert.ToInt32(hdsoid.Value);
-            Response.Redirect("SO.aspx?Id=" + ID + "");
-        }
+       
         public string GenerateNoGR(string GRno)
         {
             Inventory objinv = new Inventory();
@@ -116,12 +112,13 @@ namespace outletonlineshopping
             objinv.POID = Convert.ToInt32(Request.QueryString["Id"]);
             objinv.MoveType = "Stock In";
             objinv.Status = "Received";
-            int GRID=objinv.CreateGR(objinv);
-            int POID = Convert.ToInt32(Request.QueryString["Id"]);
+            
             if (Request.QueryString["Id"] != null)
             {
+                int GRID = objinv.CreateGR(objinv);
+                int POID = Convert.ToInt32(Request.QueryString["Id"]);
 
-                foreach(GridViewRow row in dgvPODet.Rows)
+                foreach (GridViewRow row in dgvPODet.Rows)
                 {
                     Label lblProd = row.Cells[0].Controls[1] as Label;
                     Label lblQty = row.Cells[2].Controls[1] as Label;
