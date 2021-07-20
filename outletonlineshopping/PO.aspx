@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dashboard.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="PO.aspx.cs" Inherits="outletonlineshopping.PO" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .buttonGr{
+        .buttonSo{
             position: absolute;
            top: 0px;
           right: 0px;
@@ -25,12 +25,20 @@
                                       View Purchase Order
                                 </div>
                                 <div class="panel-body" style="position:relative;">
-                                     <div class="buttonGr">
+                                     <div class="buttonSo">
                                                 <button id="btnsaletrack" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnsaletrack_ServerClick">
                                                     <i class="fas fa-shopping-cart" aria-hidden="true">
                                                         <span>1</span>
                                                         <br />
                                                         <span>Sales Order</span>
+                                                    </i>
+                                                </button>
+                                            </div>
+                                      <div>
+                                                <button id="btnGr" type="button" class="btn btn-outline-primary" runat="server" onserverclick="btnGr_ServerClick">
+                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true">
+                                                        
+                                                        <span>Create Good Receipt</span>
                                                     </i>
                                                 </button>
                                             </div>
