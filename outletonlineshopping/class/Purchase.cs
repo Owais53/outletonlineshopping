@@ -43,6 +43,12 @@ namespace outletonlineshopping
             UpdateVendors("Update tblVendor set VendorName=@VName,Email=@Email,ContactNo=@Contact,Address=@Address where VendorID=@VId",obj.VendorID,obj.VendorName, obj.Contact, obj.Address, obj.Email);
             CloseConnection();
         }
+        public void UpdatePoStatus(Purchase obj)
+        {
+            OpenConection();
+            UpdateStatusPo("Update tblPO set Status=@Status where POID=@Id", obj.POID, obj.PurchaseStatus);
+            CloseConnection();
+        }
         public DataTable GetPOItem(int Id)
         {
             OpenConection();

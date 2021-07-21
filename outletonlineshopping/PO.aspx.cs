@@ -119,7 +119,10 @@ namespace outletonlineshopping
             objinv.POID = Convert.ToInt32(Request.QueryString["Id"]);
             objinv.MoveType = "Stock In";
             objinv.Status = "Received";
-            
+            Purchase objpur = new Purchase();
+            objpur.PurchaseStatus = "Received";
+            objpur.POID= Convert.ToInt32(Request.QueryString["Id"]);
+            objpur.UpdatePoStatus(objpur);
             if (Request.QueryString["Id"] != null)
             {
                 int GRID = objinv.CreateGR(objinv);

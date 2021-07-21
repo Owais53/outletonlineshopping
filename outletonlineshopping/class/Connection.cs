@@ -241,6 +241,13 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Code", Code);
             cmd.ExecuteNonQuery();
         }
+        public void UpdateStatusPo(string Query_, int Id,string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.ExecuteNonQuery();
+        }
         public DataTable SelectSignin(string Query_, string UserName, string pass)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -399,6 +406,16 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
+        }
+        public DataTable CheckIfPOReceived(string Query_, int SOID)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            dr.Fill(dt);
+            return dt;
+
         }
         public void UpdateQuantityPlus(string Query_, int PID, int SizeID, int Qty)
         {

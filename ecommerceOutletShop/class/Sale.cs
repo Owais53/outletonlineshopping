@@ -85,7 +85,7 @@ namespace ecommerceOutletShop
         public DataTable GetOrderTrackbyUser(int SOID,int PID,int SizeID)
         {
             OpenConection();
-            DataTable dt = GetProductOrderTrackingStatus("select so.SONo,convert(date,sodet.ScheduledDeliveryDate) as Datee,sodet.Quantity*p.SalesPrice as Price,sodet.SOID,sodet.PID,sodet.SizeID,smd.DocNo,sm.Status,B.Name,B.Extension,p.ProductName from tblSODetail sodet inner join tblStockMove sm on sodet.SOID=sm.SOID inner join tblStockMoveDetail smd on sm.StockMoveID=smd.StockMoveID inner join tblSO so on sodet.SOID=so.SOID inner join tblProduct p on sodet.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId)B where sodet.SOID=@SOID and sodet.PID=@PID and sodet.SizeID=@SID", SOID,PID,SizeID);
+            DataTable dt = GetProductOrderTrackingStatus("select so.SONo,convert(date,sodet.ScheduledDeliveryDate) as Datee,smd.Quantity*p.SalesPrice as Price,sm.SOID,smd.PID,smd.SizeID,sm.DocNo,smd.Status,B.Name,B.Extension,p.ProductName from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblSO so on sm.SOID=so.SOID inner join tblSODetail sodet on so.SOID=sodet.SOID and smd.PID=sodet.PID and smd.SizeID=sodet.SizeID inner join tblProduct p on smd.PID=p.ProductId cross apply(select top 1 * from tblProductImages B where B.PID = p.ProductId) B where sm.SOID=@SOID and smd.PID=@PID and smd.SizeID=@SID", SOID,PID,SizeID);
             CloseConnection();
             return dt;
         }

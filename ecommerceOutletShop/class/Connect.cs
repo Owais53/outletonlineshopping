@@ -186,6 +186,7 @@ namespace ecommerceOutletShop
             return dt;
 
         }
+        
         public DataTable GetProductOrderHistoryStatus(string Query_, int UserID,string Status)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -277,6 +278,13 @@ namespace ecommerceOutletShop
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@ProductId", Id);
             cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.ExecuteNonQuery();
+        }
+        public void Update(string Query_, int Id, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }
         public void UpdateScheduledDeliveryStatus(string Query_, string Scheduleddevdate)

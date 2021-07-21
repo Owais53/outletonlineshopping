@@ -17,5 +17,13 @@ namespace outletonlineshopping
             return dt;
 
         }
+        public DataTable CheckIfPoreceived(int Id)
+        {
+            OpenConection();
+            DataTable dt = CheckIfPOReceived(" select * from tblStockMove sm inner join tblPO po on sm.POID=po.POID where sm.SOID=@SOID", Id);
+            CloseConnection();
+            return dt;
+
+        }
     }
 }
