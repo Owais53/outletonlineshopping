@@ -49,5 +49,20 @@ namespace outletonlineshopping
             return dt;
 
         }
+        public DataTable GetInvoiceDet(int Id)
+        {
+            OpenConection();
+            DataTable dt = SelectInvoiceDet("select p.ProductName,s.SizeName,SalesPrice as Price from tblSODetail sodet inner join tblProduct p on sodet.PID=p.ProductId inner join tblSizes s on sodet.SizeID=s.SizeID where sodet.SOID in (select SOID from tblPay where PaymentId=@Id)", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public int GetSOId(int Id)
+        {
+            OpenConection();
+            int soId = selectId("select SOID from tblPay where PaymentId=@Id",Id);
+            CloseConnection();
+            return soId;
+        }
     }
 }

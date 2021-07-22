@@ -71,6 +71,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\bootstrap.min1.css" />
     <Content Include="css\gridstyle.css" />
+    <Content Include="CustomerInvoice.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="GI.aspx" />
     <Content Include="GR.aspx" />
@@ -81,6 +82,7 @@
     <Content Include="js\bootstrap.min1.js" />
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\sweetalert2.all.js" />
+    <Content Include="ListCustomerInvoice.aspx" />
     <Content Include="ListGoodsIssue.aspx" />
     <Content Include="ListGR.aspx" />
     <Content Include="ListPO.aspx" />
@@ -130,6 +132,13 @@
     <Compile Include="Crm.aspx.designer.cs">
       <DependentUpon>Crm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CustomerInvoice.aspx.cs">
+      <DependentUpon>CustomerInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerInvoice.aspx.designer.cs">
+      <DependentUpon>CustomerInvoice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -157,6 +166,13 @@
     </Compile>
     <Compile Include="GR.aspx.designer.cs">
       <DependentUpon>GR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListCustomerInvoice.aspx.cs">
+      <DependentUpon>ListCustomerInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListCustomerInvoice.aspx.designer.cs">
+      <DependentUpon>ListCustomerInvoice.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListGoodsIssue.aspx.cs">
       <DependentUpon>ListGoodsIssue.aspx</DependentUpon>

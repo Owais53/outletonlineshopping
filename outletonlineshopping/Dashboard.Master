@@ -178,6 +178,7 @@
                                 </ul>
                             </li>
                             <li><a href="ListSO.aspx"><i class="fa fa-shopping-cart fa-fw"></i>Sale Orders<span class=""></span></a></li>
+                              <li><a href="ListCustomerInvoice.aspx"><i class="fa fa-money fa-fw"></i>Customer Invoice<span class=""></span></a></li>
                         </ul>
                     </li>
                 </ul>

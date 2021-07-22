@@ -311,6 +311,17 @@ namespace outletonlineshopping
             return dataum;
 
         }
+        public DataTable SelectInvoiceDet(string Query_, int Id)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
         public DataTable CheckDupBrand(string Query_, string BName)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
