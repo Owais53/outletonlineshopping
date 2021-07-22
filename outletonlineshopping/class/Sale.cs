@@ -12,7 +12,7 @@ namespace outletonlineshopping
         public DataTable GetSOItem(int Id)
         {
             OpenConection();
-            DataTable dt = GetSOLineItem("select sod.SOdetailID,p.ProductName,s.SizeName,sod.Quantity,sod.ScheduledDeliveryDate,sod.DeliveryStatus from tblSODetail sod inner join tblProduct p on sod.PID=p.ProductId inner join tblSizes s on sod.SizeID=s.SizeID where SOID=@SOID", Id);
+            DataTable dt = GetSOLineItem("select sod.SOdetailID,p.ProductName,s.SizeName,sod.Quantity,convert(date,sod.ScheduledDeliveryDate) as Datee,sod.DeliveryStatus from tblSODetail sod inner join tblProduct p on sod.PID=p.ProductId inner join tblSizes s on sod.SizeID=s.SizeID where SOID=@SOID", Id);
             CloseConnection();
             return dt;
 
@@ -21,6 +21,30 @@ namespace outletonlineshopping
         {
             OpenConection();
             DataTable dt = CheckIfPOReceived(" select * from tblStockMove sm inner join tblPO po on sm.POID=po.POID where sm.SOID=@SOID", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public void ChangeDevDate(int Id,string date)
+        {
+            OpenConection();
+            UpdateScheduledDevDate("update tblSODetail set ScheduledDeliveryDate=@DevDate where SOdetailID=@Id", Id,date);
+            CloseConnection();
+            
+
+        }
+        public DataTable GetPoifreceived(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetPOIfSoExists("select * from tblPO where SOref in (select SOID from tblSODetail where SOdetailID=@SOID and DeliveryStatus='Not Delivered') and Status='Received'", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable CheckPoExists(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetPOIfSoExists("select * from tblPO where SOref in (select SOID from tblSODetail where SOdetailID=@SOID)", Id);
             CloseConnection();
             return dt;
 

@@ -67,7 +67,7 @@
                                                   </div>
                                                                                                 
                                           <div class="form-group">
-                              <asp:GridView ID="dgvSODet" runat="server"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="SOdetailID" Width="100%" CssClass="table table-striped table-bordered table-hover">
+                              <asp:GridView ID="dgvSODet" runat="server"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="SOdetailID" Width="100%" CssClass="table table-striped table-bordered table-hover"  OnRowCommand="dgvSODet_RowCommand">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="Product Name">
                                                        <ItemTemplate>
@@ -86,12 +86,17 @@
                                                    </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="Scheduled Delivery Date">
                                                        <ItemTemplate>
-                                                           <asp:Label Text='<%# Eval("ScheduledDeliveryDate") %>' runat="server" />
+                                                           <asp:Label Text='<%# Eval("Datee","{0:dd, MMM yyyy}") %>' runat="server"  />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
                                                    <asp:TemplateField HeaderText="Delivery Status">
                                                        <ItemTemplate>
                                                            <asp:Label Text='<%# Eval("DeliveryStatus") %>' runat="server" />
+                                                       </ItemTemplate>
+                                                   </asp:TemplateField>
+                                                   <asp:TemplateField >
+                                                       <ItemTemplate>
+                                                           <asp:LinkButton  ID="btnEdit" runat="server" CssClass="btn btn-primary" Text="Change Delivery Date" CommandName="Add" CommandArgument='<%# Eval("SOdetailID") %>' />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
                                                                                                        
@@ -115,13 +120,47 @@
                     </div>
                     <!-- /.row -->
                 </div>
+          
                 <!-- /.container-fluid -->
-                            
+                      <div class="modal fade" id="ModalUpdateDate" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <asp:UpdatePanel ID="DateUpdateModal" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+              <ContentTemplate>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><asp:Label ID="lblModalTitle" runat="server" Text="">Change Expected Delivery Date</asp:Label></h4>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Label ID="lblModalBody" runat="server" Text=""></asp:Label>
+                         <div class="form-group">
+                         <span class="add-on">Scheduled Delivery Date</span>
+                         <asp:TextBox ID="txtdateDelivery" Text='' TextMode="Date" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button id="btnqtysave" type="submit" runat="server" Text="Save" CausesValidation="false" class="btn btn-primary" OnClick="btnqtysave_Click" />
+                        <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </ContentTemplate>
+            
+        </asp:UpdatePanel>
+    </div>
+</div>
                     </div>
                   
             
             <!-- /#page-wrapper -->
 <link href="css/gridstyle.css" rel="stylesheet" />
-      
+       <script>
+            function alertdeldate() {
+                Swal.fire(
+                    'Error!',
+                    'You can not change Delivery Date of this Product!',
+                     'error'
+                     )
+                
+            }
+      </script>
     
 </asp:Content>

@@ -20,6 +20,7 @@ namespace outletonlineshopping
                 GetDataToEdit(ID);
                 GetCountPO(ID);
                 DisableControls(Page, false);
+                txtdateDelivery.Enabled = true;
                 DataTable dt = objinv.GetPOIfSorefExist(ID);
                 DataTable dt1 = objinv.GetDuplicateGI(ID);
                 DataTable dt2 = obj.CheckIfPoreceived(ID);
@@ -146,5 +147,55 @@ namespace outletonlineshopping
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Good Receipt can not be created while Creating Purchase Order');", true);
             }
         }
+
+
+        protected void dgvSODet_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            Sale obj = new Sale();
+            if (e.CommandName == "Add")
+            {
+                int Id = Convert.ToInt32(e.CommandArgument);
+                DataTable dt = obj.GetPoifreceived(Id);
+                DataTable dt1 = obj.CheckPoExists(Id);
+                // ViewState["ProductId"] = Id;
+                
+                if (dt.Rows.Count > 0 || dt1.Rows.Count == 0)
+                {
+                    ViewState["SOdetId"] = Id;
+                    GetDataToEditDate(Id);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalUpdateDate", "$('#ModalUpdateDate').modal();", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "randomtext", "alertdeldate()", true);
+                }
+
+            }
+        }
+            public void GetDataToEditDate(int Id)
+        {
+            obj.OpenConection();
+            using (SqlDataReader sdr = obj.DataReaderwithparam("Select ScheduledDeliveryDate from tblSODetail where SOdetailID=@Id", Id))
+            {
+                sdr.Read();
+                DateTime Date = Convert.ToDateTime(sdr["ScheduledDeliveryDate"]);
+                txtdateDelivery.Text = Date.ToString("yyyy-MM-dd");
+
+                txtdateDelivery.Attributes["min"] = Date.ToString("yyyy-MM-dd");
+
+            }
+            obj.CloseConnection();
+
+        }
+
+       
+
+        protected void btnqtysave_Click(object sender, EventArgs e)
+        {
+            Sale obj = new Sale();
+            int Id = (int)ViewState["SOdetId"];
+            obj.ChangeDevDate(Id,txtdateDelivery.Text);
+            ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Scheduled Delivery Date Successfully changed');", true);
+        }
     }
-}
+ }

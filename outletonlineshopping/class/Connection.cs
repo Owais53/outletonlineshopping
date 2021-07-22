@@ -178,6 +178,13 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@BName", BName);
             cmd.ExecuteNonQuery();
         }
+        public void UpdateScheduledDevDate(string Query_, int Id, string SchDevDate)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@DevDate", SchDevDate);
+            cmd.ExecuteNonQuery();
+        }
         public void UpdateCats(string Query_, string CatName, int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

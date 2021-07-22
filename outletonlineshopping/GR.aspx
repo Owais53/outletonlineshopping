@@ -53,7 +53,7 @@
                                                  
                                                                                             
                               <div class="form-group">
-                              <asp:GridView ID="dgvGRDet" runat="server"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="PODetID" Width="100%" CssClass="table table-striped table-bordered table-hover">
+                              <asp:GridView ID="dgvGRDet" runat="server"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true"  Width="100%" CssClass="table table-striped table-bordered table-hover">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="Product Name">
                                                        <ItemTemplate>
@@ -70,11 +70,7 @@
                                                            <asp:Label Text='<%# Eval("Quantity") %>' runat="server" />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
-                                                   <asp:TemplateField HeaderText="Price">
-                                                       <ItemTemplate>
-                                                           <asp:Label Text='<%# Eval("Price") %>' runat="server" />
-                                                       </ItemTemplate>
-                                                   </asp:TemplateField>
+                                                   
                                                                                                        
                                                </Columns>
                                                   <EmptyDataTemplate>No Record Available</EmptyDataTemplate> 
