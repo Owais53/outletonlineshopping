@@ -105,6 +105,7 @@
     <Content Include="resetlink.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="SO.aspx" />
+    <Content Include="StockReport.aspx" />
     <Content Include="Vendor.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -255,6 +256,13 @@
     </Compile>
     <Compile Include="SO.aspx.designer.cs">
       <DependentUpon>SO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StockReport.aspx.cs">
+      <DependentUpon>StockReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StockReport.aspx.designer.cs">
+      <DependentUpon>StockReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vendor.aspx.cs">
       <DependentUpon>Vendor.aspx</DependentUpon>

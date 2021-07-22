@@ -140,6 +140,9 @@
                                      <li>
                                     <a href="Manage.aspx">Manage</a>
                                    </li>
+                                     <li>
+                                    <a href="StockReport.aspx">Stock Report</a>
+                                   </li>
                                 </ul>
                             </li>
                               <li><a href="ListGR.aspx"><i class="fa fa-sitemap fa-fw"></i>Goods Receipt<span class="fa arrow"></span></a></li>
