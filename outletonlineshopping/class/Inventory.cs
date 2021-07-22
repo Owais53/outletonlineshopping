@@ -129,20 +129,48 @@ namespace outletonlineshopping
         public void ChangeStatusgidet(Inventory obj)
         {
             OpenConection();
-            UpdateStatusGidet("Update tblStockMoveDetail set Status=@Status where StockMoveID=@Id", obj.StockMoveID,obj.StockMoveStatus);
+            UpdateStatusGidet("Update tblStockMoveDetail set Status=@Status where Id=@Id", obj.StockMoveID,obj.StockMoveStatus);
             CloseConnection();
         }
         public void ChangeStatussodet(Inventory obj)
         {
             OpenConection();
-            ExecuteUpdateQueries("UPDATE tblSODetail SET DeliveryStatus = 'Delivered' FROM tblSODetail sodet INNER JOIN tblStockMove sm  ON sodet.SOID = sm.SOID INNER JOIN tblStockMoveDetail smd on sm.StockMoveID=smd.StockMoveID and sodet.PID=smd.PID and sodet.SizeID=smd.SizeID WHERE sodet.SOID in (select sm.SOID from tblStockMoveDetail  where StockMoveID=@Id and smd.Status='Delivered')", obj.StockMoveID);
+            ExecuteUpdateQueries("UPDATE tblSODetail SET DeliveryStatus = 'Delivered' FROM tblSODetail sodet INNER JOIN tblStockMove sm  ON sodet.SOID = sm.SOID INNER JOIN tblStockMoveDetail smd on sm.StockMoveID=smd.StockMoveID and sodet.PID=smd.PID and sodet.SizeID=smd.SizeID WHERE sodet.SOID in (select sm.SOID from tblStockMoveDetail  where Id=@Id and smd.Status='Delivered')", obj.StockMoveID);
             CloseConnection();
         }
-        public void ChangeStatusSoHeader()
+        public void ChangeStatusSoHeader(int ID)
         {
             OpenConection();
-            ExecuteQueries("update tblSO set Status='Delivered' from tblSO so inner join tblSODetail sodet on so.SOID=sodet.SOID where sodet.DeliveryStatus='Delivered'");
+            ExecuteUpdateQueries("update tblSO set Status='Delivered' from tblSO where SOID=@Id",ID);
             CloseConnection();
+        }
+        public int GetStockMoveId(int ID)
+        {
+            OpenConection();
+            int Id= selectId("select StockMoveID from tblStockMoveDetail where Id=@Id ",ID);
+            CloseConnection();
+            return Id;
+        }
+        public int GetSOId(int ID)
+        {
+            OpenConection();
+            int Id = selectId("select SOID from tblStockMove where StockMoveID=@Id ", ID);
+            CloseConnection();
+            return Id;
+        }
+        public int GetSOdetCount(int ID)
+        {
+            OpenConection();
+            int Id = selectId("select Count(*) from tblSODetail where SOID=@Id ", ID);
+            CloseConnection();
+            return Id;
+        }
+        public int GetSOdetDevCount(int ID)
+        {
+            OpenConection();
+            int Id = selectId("select Count(*) from tblSODetail where SOID=@Id and DeliveryStatus='Delivered'", ID);
+            CloseConnection();
+            return Id;
         }
     }
 }

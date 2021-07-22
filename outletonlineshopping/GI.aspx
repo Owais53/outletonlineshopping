@@ -54,7 +54,7 @@
                                                  
                                                                                             
                               <div class="form-group">
-                                  <asp:GridView ID="dgvGidet" runat="server" runat="server" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="StockMoveID"   Width="100%" CssClass="table table-striped table-bordered table-hover" OnRowCommand="dgvGidet_RowCommand">
+                                  <asp:GridView ID="dgvGidet" runat="server"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="Id"   Width="100%" CssClass="table table-striped table-bordered table-hover" OnRowCommand="dgvGidet_RowCommand">
                                       <Columns>
                                                    <asp:TemplateField HeaderText="Product Name">
                                                        <ItemTemplate>
@@ -78,7 +78,7 @@
                                                    </asp:TemplateField>
                                                     <asp:TemplateField >
                                                        <ItemTemplate>
-                                                           <asp:LinkButton  ID="btnEdit" runat="server" CssClass="btn btn-primary" Text="Change Status" CommandName="Add" CommandArgument='<%# Eval("StockMoveID") %>' />
+                                                           <asp:LinkButton  ID="btnEdit" runat="server" CssClass="btn btn-primary" Text="Change Status" CommandName="Add" CommandArgument='<%# Eval("Id") %>' />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
                                                    

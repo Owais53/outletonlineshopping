@@ -65,13 +65,22 @@ namespace outletonlineshopping
             else
             {
                 Inventory obj = new Inventory();
-                obj.StockMoveID = (int)ViewState["StockMoveID"];
+                int Id = (int)ViewState["ID"];
+                obj.StockMoveID = Id;
                 obj.StockMoveStatus = ddlStatus.SelectedValue;
                 if (ddlStatus.SelectedValue == "Delivered")
                 {
                     obj.ChangeStatusgidet(obj);
                     obj.ChangeStatussodet(obj);
-                    obj.ChangeStatusSoHeader();
+                    int StockMoveID = obj.GetStockMoveId(Id);
+                    int SOID = obj.GetSOId(StockMoveID);
+                    int Countsodet = obj.GetSOdetCount(SOID);
+                    int CountDeliveredSodetitem = obj.GetSOdetDevCount(SOID);
+                    if (Countsodet == CountDeliveredSodetitem)
+                    {
+                        obj.ChangeStatusSoHeader(SOID);
+                    }
+                    
 
                 }
                 else
@@ -88,7 +97,7 @@ namespace outletonlineshopping
             if (e.CommandName == "Add")
             {
                 int Id = Convert.ToInt32(e.CommandArgument);
-                ViewState["StockMoveID"] = Id;
+                ViewState["ID"] = Id;
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalUpdateStatus", "$('#ModalUpdateStatus').modal();", true);
 
 

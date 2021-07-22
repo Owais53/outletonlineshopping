@@ -391,6 +391,14 @@ namespace outletonlineshopping
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
+        public int selectId(string Query_, int ID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", ID);         
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
         public decimal SelectCostProd(string Query_, int PId,int qty)
         {
 
