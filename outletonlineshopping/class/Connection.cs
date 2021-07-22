@@ -28,6 +28,12 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Id", Id);
             cmd.ExecuteNonQuery();
         }
+        public void ExecuteUpdateQueries(string Query_, int Id)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.ExecuteNonQuery();
+        }
         public void ExecuteQueries(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -246,6 +252,20 @@ namespace outletonlineshopping
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@Code", Code);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateStatusGidet(string Query_,int Id, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateStatussodet(string Query_, int Id, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }
         public void UpdateStatusPo(string Query_, int Id,string Status)

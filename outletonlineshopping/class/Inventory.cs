@@ -126,5 +126,23 @@ namespace outletonlineshopping
             UpdateQuantityPlus("Update tblProductSizeQuantity set Quantity=Quantity+@Qty where PID=@PId and SizeID=@Size", obj.PID, obj.SizeID, obj.Quantity);
             CloseConnection();
         }
+        public void ChangeStatusgidet(Inventory obj)
+        {
+            OpenConection();
+            UpdateStatusGidet("Update tblStockMoveDetail set Status=@Status where StockMoveID=@Id", obj.StockMoveID,obj.StockMoveStatus);
+            CloseConnection();
+        }
+        public void ChangeStatussodet(Inventory obj)
+        {
+            OpenConection();
+            ExecuteUpdateQueries("UPDATE tblSODetail SET DeliveryStatus = 'Delivered' FROM tblSODetail sodet INNER JOIN tblStockMove sm  ON sodet.SOID = sm.SOID INNER JOIN tblStockMoveDetail smd on sm.StockMoveID=smd.StockMoveID and sodet.PID=smd.PID and sodet.SizeID=smd.SizeID WHERE sodet.SOID in (select sm.SOID from tblStockMoveDetail  where StockMoveID=@Id and smd.Status='Delivered')", obj.StockMoveID);
+            CloseConnection();
+        }
+        public void ChangeStatusSoHeader()
+        {
+            OpenConection();
+            ExecuteQueries("update tblSO set Status='Delivered' from tblSO so inner join tblSODetail sodet on so.SOID=sodet.SOID where sodet.DeliveryStatus='Delivered'");
+            CloseConnection();
+        }
     }
 }

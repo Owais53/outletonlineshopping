@@ -69,7 +69,7 @@ namespace outletonlineshopping
         public DataTable GetGIItemfromSO(int Id)
         {
             OpenConection();
-            DataTable dt = GetPOLineItem("select p.ProductName,s.SizeName,smd.Quantity from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.SOID=@POID", Id);
+            DataTable dt = GetPOLineItem("select smd.StockMoveID,p.ProductName,s.SizeName,smd.Quantity,smd.Status from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.SOID=@POID", Id);
             CloseConnection();
             return dt;
 

@@ -18,7 +18,7 @@ namespace outletonlineshopping
             if (Request.QueryString["SOID"] != null && Request.QueryString["GI"] != null)
             {
                 GetData(Convert.ToInt32(Request.QueryString["SOID"]), Convert.ToInt32(Request.QueryString["GI"]));
-                dgvGIDet.Enabled = false;
+               // dgvGIDet.Enabled = false;
               
             }
         }
@@ -37,15 +37,15 @@ namespace outletonlineshopping
             DataTable dt = obj.GetGIItemfromSO(SOId);
             if (dt.Rows.Count > 0)
             {
-                dgvGIDet.DataSource = dt;
-                dgvGIDet.DataBind();
+                dgvGidet.DataSource = dt;
+                dgvGidet.DataBind();
 
             }
             else
             {
                 DataTable dt1 = new DataTable();
-                dgvGIDet.DataSource = dt1;
-                dgvGIDet.DataBind();
+                dgvGidet.DataSource = dt1;
+                dgvGidet.DataBind();
 
             }
         }
@@ -54,6 +54,46 @@ namespace outletonlineshopping
         {
             int ID = Convert.ToInt32(Request.QueryString["SOID"]);
             Response.Redirect("SO.aspx?Id=" + ID + "");
+        }
+
+        protected void btnsavestatus_Click(object sender, EventArgs e)
+        {
+            if (ddlStatus.SelectedIndex == 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Please Select Status');", true);
+            }
+            else
+            {
+                Inventory obj = new Inventory();
+                obj.StockMoveID = (int)ViewState["StockMoveID"];
+                obj.StockMoveStatus = ddlStatus.SelectedValue;
+                if (ddlStatus.SelectedValue == "Delivered")
+                {
+                    obj.ChangeStatusgidet(obj);
+                    obj.ChangeStatussodet(obj);
+                    obj.ChangeStatusSoHeader();
+
+                }
+                else
+                {
+                    obj.ChangeStatusgidet(obj);
+                }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Status Updated');", true);
+            }
+        }
+
+        protected void dgvGidet_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            
+            if (e.CommandName == "Add")
+            {
+                int Id = Convert.ToInt32(e.CommandArgument);
+                ViewState["StockMoveID"] = Id;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalUpdateStatus", "$('#ModalUpdateStatus').modal();", true);
+
+
+            }
+
         }
     }
 }
