@@ -14,13 +14,25 @@ namespace outletonlineshopping
         Crm obj = new Crm();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["Id"] != null)
+            if (!IsPostBack)
             {
-                GetData(Convert.ToInt32(Request.QueryString["Id"]));
-                // dgvGIDet.Enabled = false;
-                txtstartdate.Enabled = false;
-                
+                if (Request.QueryString["Id"] != null)
+                {
+                    GetData(Convert.ToInt32(Request.QueryString["Id"]));
+                    // dgvGIDet.Enabled = false;
+                    txtstartdate.Enabled = false;
+
+                }
+                else
+                {
+                    DateTime Date = DateTime.Now;
+                    txtstartdate.Text = Date.ToString("yyyy-MM-dd");
+                    txtEnddate.Text = Date.ToString("yyyy-MM-dd");
+                    txtstartdate.Attributes["min"] = Date.ToString("yyyy-MM-dd");
+                }
             }
+           
+           
         }
         public void GetData(int CampId)
         {
@@ -28,11 +40,12 @@ namespace outletonlineshopping
             using (SqlDataReader sdr = obj.DataReaderwithparam("select CampaignName,StartDate,EndDate,ExpectedRevenue from tblCampaigns where CampaignId=@Id", CampId))
             {
                 sdr.Read();
-                txtcampname.Text = sdr["DocNo"].ToString();
-                txtstartdate.Text = sdr["StartDate"].ToString();
-                txtEnddate.Text = sdr["EndDate"].ToString();
+                txtcampname.Text = sdr["CampaignName"].ToString();
+                DateTime DateStart = Convert.ToDateTime(sdr["StartDate"]);
+                DateTime EndDate = Convert.ToDateTime(sdr["EndDate"]);
                 txtexpRev.Text = sdr["ExpectedRevenue"].ToString();
-
+                txtstartdate.Text = DateStart.ToString("yyyy-MM-dd");
+                txtEnddate.Text=EndDate.ToString("yyyy-MM-dd");
             }
             obj.CloseConnection();
 
@@ -73,11 +86,23 @@ namespace outletonlineshopping
                 obj.StartDate = txtstartdate.Text;
                 obj.EndDate = txtEnddate.Text;
                 obj.ExpectedRevenue = Convert.ToDecimal(txtexpRev.Text);
-                obj.Status = "Active";
+                string currentdate = DateTime.Now.Date.ToString("yyyy-MM-dd");
+                if (txtstartdate.Text !=currentdate )
+                {
+                    obj.Status = "Not Active";
+                }
+                else
+                {
+                    obj.Status = "Active";
+                }
+                
 
                 if (Request.QueryString["Id"] != null)
                 {
                     obj.CampaignId = Convert.ToInt32(Request.QueryString["Id"]);
+                    obj.CampaignName = txtcampname.Text;
+                    obj.EndDate = txtEnddate.Text;
+                    obj.ExpectedRevenue = Convert.ToDecimal(txtexpRev.Text);
                     obj.UpdateCampaign(obj);
                     ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertcamedit()", true);
                 }

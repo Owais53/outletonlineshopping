@@ -192,6 +192,19 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@status", status);
             cmd.ExecuteNonQuery();
         }
+        public void InsertContacts(string Query_, int LeadId )
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@LeadId", LeadId);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpateLeadStatus(string Query_, int LeadId,string leadStatus )
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@LeadId", LeadId);
+            cmd.Parameters.AddWithValue("@LeadStatus", leadStatus);
+            cmd.ExecuteNonQuery();
+        }
         public void EditCampaign(string Query_, int Id,string Campname, string enddate, decimal ExpRevenue)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -554,6 +567,14 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Pname", Pname);
             int id = Convert.ToInt32(cmd.ExecuteScalar());
             return id;
+        }
+        public string GetEmailfromLead(string Query_, int Id)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            string email = cmd.ExecuteScalar().ToString();
+            return email;
         }
         public int GetProductID(string Query_, string Pname)
         {

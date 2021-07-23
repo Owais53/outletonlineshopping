@@ -108,6 +108,7 @@
     <Content Include="PONew.aspx" />
     <Content Include="Product.aspx" />
     <Content Include="resetlink.aspx" />
+    <Content Include="SendEmail.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="SO.aspx" />
     <Content Include="StockReport.aspx" />
@@ -284,6 +285,13 @@
     </Compile>
     <Compile Include="resetlink.aspx.designer.cs">
       <DependentUpon>resetlink.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendEmail.aspx.cs">
+      <DependentUpon>SendEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendEmail.aspx.designer.cs">
+      <DependentUpon>SendEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>

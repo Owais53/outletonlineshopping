@@ -123,9 +123,22 @@
                     <li>
                         <a href="#" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
-                     <li>
-                        <a href="Crm.aspx"><i class="fa fa-sitemap fa-fw"></i>CRM<span class="fa arrow"></span></a>
-                       
+                      <li>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>Crm<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                           
+                            <li>
+                                <a href="#">Master Data<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                     <li>
+                                    <a href="ListProducts.aspx">Customer</a>
+                                   </li>
+                                </ul>
+                            </li>
+                              <li><a href="ListCampaign.aspx"><i class="fa fa-sitemap fa-fw"></i>Campaign<span class="fa arrow"></span></a></li>
+                            <li><a href="ListLead.aspx"><i class="fa fa-sitemap fa-fw"></i>Lead<span class="fa arrow"></span></a></li>
+                            <li><a href="SendEmail.aspx"><i class="fa fa-sitemap fa-fw"></i>Send Email<span class="fa arrow"></span></a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i>Inventory<span class="fa arrow"></span></a>

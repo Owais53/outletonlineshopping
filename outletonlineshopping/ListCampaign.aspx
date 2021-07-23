@@ -22,18 +22,14 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         
-                                               <asp:GridView ID="dgvcampaign" runat="server" CssClass="display compact"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" ShowFooter="true" DataKeyNames="CampaignId" OnRowEditing="dgvcampaign_RowEditing" OnRowCommand="dgvcampaign_RowCommand">
+                                               <asp:GridView ID="dgvcampaign" runat="server" CssClass="display compact"  AutoGenerateColumns="false" Width="100%" ShowHeaderWhenEmpty="true" ShowFooter="true" DataKeyNames="CampaignId" OnRowEditing="dgvcampaign_RowEditing" OnRowCommand="dgvcampaign_RowCommand">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="Campaign Name">
                                                        <ItemTemplate>
                                                            <asp:Label Text='<%# Eval("CampaignName") %>' runat="server" />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Campaign Type">
-                                                       <ItemTemplate>
-                                                           <asp:Label Text='<%# Eval("CampaignType") %>' runat="server" />
-                                                       </ItemTemplate>
-                                                   </asp:TemplateField>
+                                                   
                                                     <asp:TemplateField HeaderText="Start Date">
                                                        <ItemTemplate>
                                                            <asp:Label Text='<%# Eval("StartDate") %>' runat="server" />
@@ -51,11 +47,11 @@
                                                    </asp:TemplateField>
                                                    <asp:TemplateField>
                                                        <ItemTemplate>
-                                                           <asp:ImageButton ImageUrl="~/img/edit.png" runat="server" CommandName="Edit" ToolTip="Edit" width="20px" Height="20px" />                                                     
+                                                           <asp:ImageButton ImageUrl="~/img/edit.png" runat="server" CommandName="Edit" ToolTip="Edit" width="20px" Height="20px" />  
+                                                           <asp:ImageButton ImageUrl="~/img/Quantity.png" runat="server" CommandName="Add" CommandArgument='<%# Eval("CampaignId") %>' ToolTip="Add" Toolwidth="20px" Height="20px"/>                                                                                                                                    
                                                         </ItemTemplate>
-                                                       <FooterTemplate>
-                                                            <asp:ImageButton ImageUrl="~/img/Quantity.png" runat="server" CommandName="Add" CommandArgument='<%# Eval("CampaignId") %>' ToolTip="Add" Toolwidth="20px" Height="20px"/>                                                     
-                                                       </FooterTemplate>
+                              
+                                                           
 
                                                    </asp:TemplateField>
                                                </Columns>
@@ -92,7 +88,7 @@
                              <span class="add-on">Email</span>
                              <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" TextMode="Email"></asp:TextBox>
                               <span class="add-on">Contact No</span>
-                             <asp:TextBox ID="txtcontact" runat="server" CssClass="form-control" TextMode="Email"></asp:TextBox>
+                             <asp:TextBox ID="txtcontact" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
                     </div>
                     <div class="modal-footer">
                         <asp:Button id="btnsavelead" type="submit" runat="server" Text="Save" CausesValidation="false" class="btn btn-primary" OnClick="btnsavelead_Click" />
@@ -128,7 +124,7 @@
             function alerterrornotactive() {
                 Swal.fire(
                     'Error!',
-                    'Campaign is Expired',
+                    'Campaign is Not Active',
                      'error'
                      )
                 

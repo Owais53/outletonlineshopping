@@ -6,23 +6,22 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Campaign</h1>
+                            <h1 class="page-header">Leads</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <a class="btn btn-primary" href="Campaign.aspx">Add New</a>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Campaign List
+                                    Leads List
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         
-                                               <asp:GridView ID="dgvLead" runat="server" CssClass="display compact"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" ShowFooter="true" DataKeyNames="LeadId">
+                                               <asp:GridView ID="dgvLead" runat="server" CssClass="display compact" Width="100%"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" ShowFooter="true" DataKeyNames="LeadId" OnRowEditing="dgvLead_RowEditing" OnRowCommand="dgvLead_RowCommand">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="Campaign Name">
                                                        <ItemTemplate>
@@ -62,10 +61,12 @@
                                                    <asp:TemplateField>
                                                        <ItemTemplate>
                                                            <asp:Button  runat="server" CommandName="Edit" CssClass="btn btn-primary" Text="Convert to Contacts" />                                                     
-                                                        </ItemTemplate>
-                                                       <FooterTemplate>
-                                                            <asp:Button runat="server" CommandName="Add" CommandArgument='<%# Eval("LeadId") %>' Text="Add to Junk"/>                                                     
-                                                       </FooterTemplate>
+                                                        <asp:Button runat="server" CommandName="Add" CommandArgument='<%# Eval("LeadId") %>' CssClass="btn btn-danger" Text="Add to Junk"/>                                                     
+                                                         <asp:Button runat="server" CommandName="SendEmail" CommandArgument='<%# Eval("LeadId") %>' CssClass="btn btn-success" Text="Send Email"/>                                                     
+                                                     
+                                                       </ItemTemplate>
+                                                       
+                                                            
 
                                                    </asp:TemplateField>
                                                </Columns>
@@ -93,7 +94,7 @@
 
     <script type="text/javascript">
     $(function () {
-        $("[id*=dgvcampaign]").DataTable(
+        $("[id*=dgvLead]").DataTable(
         {
             bLengthChange: true,
             lengthMenu: [[5, 10, -1], [5, 10, "All"]],
@@ -109,6 +110,36 @@
                     'Error!',
                     'Campaign is Expired',
                      'error'
+                     )
+                
+            }
+      </script>
+     <script>
+            function alertContactDup() {
+                Swal.fire(
+                    'Error!',
+                    'Contact Already Made',
+                     'error'
+                     )
+                
+            }
+      </script>
+     <script>
+            function alertcontactcreate() {
+                Swal.fire(
+                    'Success!',
+                    'Contact Created',
+                     'success'
+                     )
+                
+            }
+      </script>
+    <script>
+            function alertLeadtojunk() {
+                Swal.fire(
+                    'Success!',
+                    'Added to Junk',
+                     'success'
                      )
                 
             }
