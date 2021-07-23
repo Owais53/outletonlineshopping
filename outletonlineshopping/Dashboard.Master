@@ -162,7 +162,7 @@
                                 </ul>
                             </li>
                              <li><a href="ListPO.aspx"><i class="fa fa-money-bill fa-fw"></i>Purchase Orders<span></span></a></li>
-                           
+                              <li><a href="ListVendorBill.aspx"><i class="fa fa-money-bill fa-fw"></i>Vendor Bill<span></span></a></li>
                         </ul>
                     </li>
                      <li>

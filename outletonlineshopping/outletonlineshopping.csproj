@@ -88,6 +88,7 @@
     <Content Include="ListPO.aspx" />
     <Content Include="ListProducts.aspx" />
     <Content Include="ListSO.aspx" />
+    <Content Include="ListVendorBill.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Manage.aspx" />
@@ -109,6 +110,7 @@
     <Content Include="SO.aspx" />
     <Content Include="StockReport.aspx" />
     <Content Include="Vendor.aspx" />
+    <Content Include="VendorBill.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +211,13 @@
     <Compile Include="ListSO.aspx.designer.cs">
       <DependentUpon>ListSO.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ListVendorBill.aspx.cs">
+      <DependentUpon>ListVendorBill.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListVendorBill.aspx.designer.cs">
+      <DependentUpon>ListVendorBill.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,6 +295,13 @@
     </Compile>
     <Compile Include="Vendor.aspx.designer.cs">
       <DependentUpon>Vendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VendorBill.aspx.cs">
+      <DependentUpon>VendorBill.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VendorBill.aspx.designer.cs">
+      <DependentUpon>VendorBill.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

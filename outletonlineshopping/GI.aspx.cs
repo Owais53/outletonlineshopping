@@ -35,21 +35,39 @@ namespace outletonlineshopping
             }
             obj.CloseConnection();
             DataTable dt = obj.GetGIItemfromSO(SOId);
-            if (dt.Rows.Count > 0)
+            DataTable dt1 = obj.GetPOItemfromSO(SOId);
+          //  int MinGiId = obj.GetMinGIID(SOId);
+            if (dt1.Rows.Count>0)
+            {    
+               
+                dgvGidet.DataSource = getFilteredDataForGIGrid(dt,dt1);
+                dgvGidet.DataBind();
+
+            }
+            else if(dt.Rows.Count>0)
             {
+                DataTable dt2 = new DataTable();
                 dgvGidet.DataSource = dt;
                 dgvGidet.DataBind();
 
             }
             else
             {
-                DataTable dt1 = new DataTable();
-                dgvGidet.DataSource = dt1;
+                DataTable dt2 = new DataTable();
+                dgvGidet.DataSource = dt2;
                 dgvGidet.DataBind();
-
             }
         }
-
+        public DataTable getFilteredDataForGIGrid(DataTable dt1, DataTable dt2)
+        {
+            DataTable dtMerged =  (from a in dt1.AsEnumerable()
+                                join b in dt2.AsEnumerable()                    
+                                on new { A = a.Field<string>("ProductName"), B = a.Field<string>("SizeName") } equals new { A = b.Field<string>("ProductName"), B = b.Field<string>("SizeName") }
+                                  into g
+                                   where g.Count() > 0
+                                   select a).CopyToDataTable();
+            return dtMerged;
+        }
         protected void btnsaletrack_ServerClick(object sender, EventArgs e)
         {
             int ID = Convert.ToInt32(Request.QueryString["SOID"]);

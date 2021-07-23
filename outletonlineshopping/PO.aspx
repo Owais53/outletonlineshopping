@@ -43,11 +43,20 @@
                                                     <br />
                                                      Create Good Receipt
                                                 </button>
+                                          <button id="btnvb"  type="button" width="10%" class="btn btn-light" runat="server" onserverclick="btnvb_ServerClick">
+                                                    <i class="fa fa-shopping-cart fa-fw" aria-hidden="true" style="padding-right:30px;">
+                                                        <span></span>
+                                                        <br />
+                                                       
+                                                    </i>
+                                                    <br />
+                                                     Create Vendor Bill
+                                                </button>
                                             </div>
                                       <div>
                                                
                                             </div>
-                                    <div class="row">
+                                    <div class="row" style="margin-top:50px;">
                                         <div class="col-lg-9" >
                                                 <asp:HiddenField ID="hdsoid" runat="server" />
                                                 <div class="form-group">

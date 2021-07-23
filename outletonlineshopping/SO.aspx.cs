@@ -24,7 +24,7 @@ namespace outletonlineshopping
                 DataTable dt = objinv.GetPOIfSorefExist(ID);
                 DataTable dt1 = objinv.GetDuplicateGI(ID);
                 DataTable dt2 = obj.CheckIfPoreceived(ID);
-                if (dt.Rows.Count == 0 || dt1.Rows.Count >= 2||dt2.Rows.Count==0)
+                if (dt.Rows.Count == 0 || dt1.Rows.Count >= 2)
                 {
                     btngi.Visible = false;
                 }

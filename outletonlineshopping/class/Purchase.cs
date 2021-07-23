@@ -22,6 +22,7 @@ namespace outletonlineshopping
         public DateTime Createdon { get; set; }
         public decimal Price { get; set; }
         public string PurchaseStatus { get; set; }
+        public decimal TotalAmt { get; set; }
 
         public DataTable CheckDuplicateVendor(string Vendor)
         {
@@ -65,11 +66,33 @@ namespace outletonlineshopping
             return dt;
 
         }
+        public DataTable GetVendorBillDet(int Id)
+        {
+            OpenConection();
+            DataTable dt = SelectInvoiceDet("select p.ProductName,s.SizeName,Price from tblPODetail sodet inner join tblProduct p on sodet.PID=p.ProductId inner join tblSizes s on sodet.SizeID=s.SizeID where sodet.POID in (select POID from tblVendorBill where Id=@Id)", Id);
+            CloseConnection();
+            return dt;
 
+        }
+        public int GetPOId(int Id)
+        {
+            OpenConection();
+            int soId = selectId("select POID from tblVendorBill where Id=@Id", Id);
+            CloseConnection();
+            return soId;
+        }
         public DataTable GetGIItemfromSO(int Id)
         {
             OpenConection();
             DataTable dt = GetPOLineItem("select smd.Id,p.ProductName,s.SizeName,smd.Quantity,smd.Status from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.SOID=@POID", Id);
+            CloseConnection();
+            return dt;
+
+        }
+        public DataTable GetPOItemfromSO(int Id)
+        {
+            OpenConection();
+            DataTable dt = GetPOLineItem("select p.ProductName,s.SizeName from tblPODetail podet inner join tblPo po on podet.POID=po.POID inner join tblProduct p on podet.PID=p.ProductId inner join tblSizes s on podet.SizeID=s.SizeID where po.SOref=@POID", Id);
             CloseConnection();
             return dt;
 
@@ -89,6 +112,13 @@ namespace outletonlineshopping
             CloseConnection();
             return ID;
         }
+        public int GetMinGIID(int SOID)
+        {
+            OpenConection();
+            int ID = selectId("select min(StockMoveID) as Id from tblStockMove where SOref=@Id", SOID);
+            CloseConnection();
+            return ID;
+        }
         public int GetVendorProduct(string PName)
         {
             OpenConection();
@@ -100,6 +130,13 @@ namespace outletonlineshopping
         {
             OpenConection();
             decimal price = SelectCostProd("select Cost*@Qty as Price from tblProduct where ProductId=@PId", PId,Qty);
+            CloseConnection();
+            return price;
+        }
+        public decimal GetTotalAmt(int POId)
+        {
+            OpenConection();
+            decimal price = SelectTotalAmt("select SUM(Price) as TotalAmt from tblPODetail where POID=@POId", POId);
             CloseConnection();
             return price;
         }
@@ -117,7 +154,15 @@ namespace outletonlineshopping
             CloseConnection();
 
         }
-       
+        public int CreateVendorBill(Purchase obj)
+        {
+            OpenConection();
+            int Id=InsertVendorBill("insert into tblVendorBill(POID,TotalAmount) values(@POID,@Price) SELECT SCOPE_IDENTITY()", obj.POID,  obj.TotalAmt);
+            CloseConnection();
+            return Id;
+
+        }
+
         public int GetLastPOId()
         {
             OpenConection();

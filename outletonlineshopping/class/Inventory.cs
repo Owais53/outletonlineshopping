@@ -55,6 +55,13 @@ namespace outletonlineshopping
             CloseConnection();
             return dt;
         }
+        public DataTable CheckVBExists(int POID)
+        {
+            OpenConection();
+            DataTable dt = GetPOLineItem("select * from tblVendorBill where POID=@POID", POID);
+            CloseConnection();
+            return dt;
+        }
         public int GetLastSmoveSoId()
         {
             OpenConection();

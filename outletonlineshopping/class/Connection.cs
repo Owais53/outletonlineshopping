@@ -419,6 +419,14 @@ namespace outletonlineshopping
             decimal price = Convert.ToDecimal(cmd.ExecuteScalar());
             return price;
         }
+        public decimal SelectTotalAmt(string Query_, int POId)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POId", POId);
+            decimal price = Convert.ToDecimal(cmd.ExecuteScalar());
+            return price;
+        }
         public int InsertPO(string Query_, int SOref, string PONO, DateTime Createdon, int VendorID, string Status)
         {
 
@@ -498,6 +506,14 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Qty", Qty);
             cmd.Parameters.AddWithValue("@Price", price);
             cmd.ExecuteNonQuery();
+        }
+        public int InsertVendorBill(string Query_, int POID, decimal totalprice)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            cmd.Parameters.AddWithValue("@Price", totalprice);
+            int Id =Convert.ToInt32(cmd.ExecuteScalar());
+            return Id;
         }
         public int GetVendorPro(string Query_, string Pname)
         {

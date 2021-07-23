@@ -21,9 +21,14 @@ namespace outletonlineshopping
                 GetDataToEdit(ID);
                 DisableControls(Page, false);
                 DataTable dtgr = objinv.CheckGRExists(ID);
+                DataTable dtvb = objinv.CheckVBExists(ID);
                 if (dtgr.Rows.Count > 0)
                 {
                     btnGr.Visible = false;
+                }
+                if (dtvb.Rows.Count > 0)
+                {
+                    btnvb.Visible = false;
                 }
             }
             
@@ -154,7 +159,16 @@ namespace outletonlineshopping
 
             }
         }
-       
-       
+
+        protected void btnvb_ServerClick(object sender, EventArgs e)
+        {
+            Purchase obj = new Purchase();
+            int id= Convert.ToInt32(Request.QueryString["Id"]);
+            obj.POID = id;
+            decimal TotalAmt = obj.GetTotalAmt(id);
+            obj.TotalAmt = TotalAmt;
+            int Id=obj.CreateVendorBill(obj);
+            Response.Redirect("VendorBill.aspx?Id="+Id+"");
+        }
     }
 }
