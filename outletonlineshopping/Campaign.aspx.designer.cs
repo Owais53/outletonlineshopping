@@ -10,60 +10,51 @@
 namespace outletonlineshopping {
     
     
-    public partial class Crm {
+    public partial class Campaign {
         
         /// <summary>
-        /// dgvcampaign control.
+        /// txtcampname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvcampaign;
+        protected global::System.Web.UI.WebControls.TextBox txtcampname;
         
         /// <summary>
-        /// qtyModal control.
+        /// txtstartdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel qtyModal;
+        protected global::System.Web.UI.WebControls.TextBox txtstartdate;
         
         /// <summary>
-        /// lblModalTitle control.
+        /// txtEnddate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalTitle;
+        protected global::System.Web.UI.WebControls.TextBox txtEnddate;
         
         /// <summary>
-        /// lblModalBody control.
+        /// txtexpRev control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalBody;
+        protected global::System.Web.UI.WebControls.TextBox txtexpRev;
         
         /// <summary>
-        /// txtqty control.
+        /// btnAddCamp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtqty;
-        
-        /// <summary>
-        /// btnqtysave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnqtysave;
+        protected global::System.Web.UI.WebControls.Button btnAddCamp;
     }
 }

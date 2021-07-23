@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Brands.aspx" />
-    <Content Include="Crm.aspx" />
+    <Content Include="Campaign.aspx" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\bootstrap.min1.css" />
     <Content Include="css\gridstyle.css" />
@@ -82,9 +82,11 @@
     <Content Include="js\bootstrap.min1.js" />
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\sweetalert2.all.js" />
+    <Content Include="ListCampaign.aspx" />
     <Content Include="ListCustomerInvoice.aspx" />
     <Content Include="ListGoodsIssue.aspx" />
     <Content Include="ListGR.aspx" />
+    <Content Include="ListLead.aspx" />
     <Content Include="ListPO.aspx" />
     <Content Include="ListProducts.aspx" />
     <Content Include="ListSO.aspx" />
@@ -121,19 +123,20 @@
     <Compile Include="Brands.aspx.designer.cs">
       <DependentUpon>Brands.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Campaign.aspx.cs">
+      <DependentUpon>Campaign.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Campaign.aspx.designer.cs">
+      <DependentUpon>Campaign.aspx</DependentUpon>
+    </Compile>
     <Compile Include="class\Connection.cs" />
+    <Compile Include="class\Crm.cs" />
     <Compile Include="class\Inventory.cs" />
     <Compile Include="class\Products.cs" />
     <Compile Include="class\Purchase.cs" />
     <Compile Include="class\Sale.cs" />
     <Compile Include="class\User.cs" />
-    <Compile Include="Crm.aspx.cs">
-      <DependentUpon>Crm.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Crm.aspx.designer.cs">
-      <DependentUpon>Crm.aspx</DependentUpon>
-    </Compile>
     <Compile Include="CustomerInvoice.aspx.cs">
       <DependentUpon>CustomerInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -169,6 +172,13 @@
     <Compile Include="GR.aspx.designer.cs">
       <DependentUpon>GR.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ListCampaign.aspx.cs">
+      <DependentUpon>ListCampaign.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListCampaign.aspx.designer.cs">
+      <DependentUpon>ListCampaign.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ListCustomerInvoice.aspx.cs">
       <DependentUpon>ListCustomerInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,6 +199,13 @@
     </Compile>
     <Compile Include="ListGR.aspx.designer.cs">
       <DependentUpon>ListGR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListLead.aspx.cs">
+      <DependentUpon>ListLead.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListLead.aspx.designer.cs">
+      <DependentUpon>ListLead.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListPO.aspx.cs">
       <DependentUpon>ListPO.aspx</DependentUpon>

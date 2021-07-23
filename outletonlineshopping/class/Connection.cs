@@ -169,6 +169,38 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@Cst", CstLeadtime);
             cmd.ExecuteNonQuery();
         }
+        public void InsertCampaign(string Query_, string Campname, string strtdaate, string enddate, decimal ExpRevenue, string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Campaignname", Campname);
+            cmd.Parameters.AddWithValue("@strtdate", strtdaate);
+            cmd.Parameters.AddWithValue("@enddate", enddate);
+            cmd.Parameters.AddWithValue("@ExpRev", ExpRevenue);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.ExecuteNonQuery();
+        }
+        public void InsertLead(string Query_, int CampId, int UserId, string name, string address, string email,string leadsource,string contact,string status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Campid", CampId);
+            cmd.Parameters.AddWithValue("@UserId", UserId);
+            cmd.Parameters.AddWithValue("@Name", name);
+            cmd.Parameters.AddWithValue("@Address", address);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Leadsource", leadsource);
+            cmd.Parameters.AddWithValue("@contact", contact);
+            cmd.Parameters.AddWithValue("@status", status);
+            cmd.ExecuteNonQuery();
+        }
+        public void EditCampaign(string Query_, int Id,string Campname, string enddate, decimal ExpRevenue)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@Campaignname", Campname);
+            cmd.Parameters.AddWithValue("@enddate", enddate);
+            cmd.Parameters.AddWithValue("@ExpRev", ExpRevenue);
+            cmd.ExecuteNonQuery();
+        }
         public void UpdateUnits(string Query_, string UnitName,int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
