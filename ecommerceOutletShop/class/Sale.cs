@@ -23,6 +23,7 @@ namespace ecommerceOutletShop
         public int POref { get; set; }
         public string Status { get; set; }
         public string CustomerType { get; set; }
+        public int LeadId { get; set; }
         public int PID { get; set; }
         public int SizeID { get; set; }
         public int Quantity { get; set; }
@@ -245,6 +246,12 @@ namespace ecommerceOutletShop
             int CampId = selectId("select CampaignId from tblCampaigns where Status='Active'");
             CloseConnection();
             return CampId;
+        }
+        public void ChangeLeadStatus(Sale obj)
+        {
+            OpenConection();
+            UpateLeadStatus("Update tblLeads set Status=@LeadStatus where LeadId=@LeadId", obj.LeadId, obj.LeadStatus);
+            CloseConnection();
         }
         public void CreateContact(int LeadId)
         {

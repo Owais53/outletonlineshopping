@@ -33,6 +33,13 @@ namespace ecommerceOutletShop
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.ExecuteNonQuery();
         }
+        public void UpateLeadStatus(string Query_, int LeadId, string leadStatus)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@LeadId", LeadId);
+            cmd.Parameters.AddWithValue("@LeadStatus", leadStatus);
+            cmd.ExecuteNonQuery();
+        }
         public void InsertContacts(string Query_, int LeadId)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

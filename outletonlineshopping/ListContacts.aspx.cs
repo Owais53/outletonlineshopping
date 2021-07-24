@@ -51,6 +51,7 @@ namespace outletonlineshopping
              obj.LeadId = id;
              obj.DeleteContactfromContactId(obj);
              ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertdeletecont()", true);
+            Response.Redirect("ListContacts.aspx");
             
         }
     }

@@ -838,7 +838,7 @@ namespace ecommerceOutletShop
 
                             objsale.PayStatus = "Paid";
                             objsale.CreatePay(objsale);
-                            int userId =(int)Session["UserId"];
+                            int userId =Convert.ToInt32(Session["UserId"]);
                             int CustomerId = objsale.GetCustomerExistfromUserId(userId);
                             if (CustomerId == 0)
                             {

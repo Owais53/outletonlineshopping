@@ -83,7 +83,7 @@ namespace ecommerceOutletShop
             Sale objsale = new Sale();
             string SelectedSize = string.Empty;
             string SelectedQty = string.Empty;
-            int UserId = (int)Session["UserId"];
+            int UserId = Convert.ToInt32(Session["UserId"]);
             int LeadId = objsale.GetLeadIdfromUserId(UserId);
             if (LeadId > 0)
             {
@@ -91,6 +91,9 @@ namespace ecommerceOutletShop
                 if (ContactId == 0)
                 {
                     objsale.CreateContact(LeadId);
+                    objsale.LeadId = LeadId;
+                    objsale.LeadStatus = "Qualified";
+                    objsale.ChangeLeadStatus(objsale);
                 }
             }
            

@@ -49,7 +49,7 @@ namespace outletonlineshopping
         public void DeleteContactfromContactId(Crm obj)
         {
             OpenConection();
-            ExecuteDeleteQueries("delete from tblContacts where ContactId=@Id)", obj.LeadId);
+            ExecuteDeleteQueries("delete from tblContacts where ContactId=@Id", obj.LeadId);
             CloseConnection();
         }
         public void UpdateCampaign(Crm obj)

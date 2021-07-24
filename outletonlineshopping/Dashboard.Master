@@ -138,7 +138,7 @@
                               <li><a href="ListCampaign.aspx">Campaign</a></li>
                             <li><a href="ListLead.aspx">Lead</a></li>
                             <li><a href="SendEmail.aspx">Send Email</a></li>
-                            <li><a href="ListContacts.aspx">Send Email</a></li>
+                            <li><a href="ListContacts.aspx">Contacts</a></li>
                         </ul>
                     </li>
                     <li>
@@ -164,7 +164,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-money-bill fa-fw"></i>Purchase<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-money fa-fw"></i>Purchase<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                            
                             <li>
