@@ -85,6 +85,7 @@
     <Content Include="ListCampaign.aspx" />
     <Content Include="ListContacts.aspx" />
     <Content Include="ListCustomerInvoice.aspx" />
+    <Content Include="ListCustomers.aspx" />
     <Content Include="ListGoodsIssue.aspx" />
     <Content Include="ListGR.aspx" />
     <Content Include="ListLead.aspx" />
@@ -194,6 +195,13 @@
     </Compile>
     <Compile Include="ListCustomerInvoice.aspx.designer.cs">
       <DependentUpon>ListCustomerInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListCustomers.aspx.cs">
+      <DependentUpon>ListCustomers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListCustomers.aspx.designer.cs">
+      <DependentUpon>ListCustomers.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListGoodsIssue.aspx.cs">
       <DependentUpon>ListGoodsIssue.aspx</DependentUpon>
