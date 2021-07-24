@@ -64,12 +64,60 @@ namespace outletonlineshopping
             UpateLeadStatus("Update tblLeads set Status=@LeadStatus where LeadId=@LeadId", obj.LeadId,obj.LeadStatus);
             CloseConnection();
         }
+        public void ChangeCampStatus(Crm obj)
+        {
+            OpenConection();
+            UpdateCampStatus("Update tblCampaigns set Status=@Status where CampaignId=@CampId", obj.CampaignId, obj.Status);
+            CloseConnection();
+        }
         public int CheckDupLeadinContact(Crm obj)
         {
             OpenConection();
             int Id=selectId("Select LeadId from tblContacts where LeadId=@Id", obj.LeadId);
             CloseConnection();
             return Id;
+        }
+        public string GetCampaignStartDate()
+        {
+            OpenConection();
+            string Date = GetDate("Select StartDate from tblCampaigns where Status='Not Active'");
+            CloseConnection();
+            return Date;
+        }
+        public string GetCampaignEndDate(int Id)
+        {
+            OpenConection();
+            string Date = GetDatewithparam("Select EndDate from tblCampaigns where CampaignId=@CampId", Id);
+            CloseConnection();
+            return Date;
+        }
+        public decimal GetExpRevenue(int Id)
+        {
+            OpenConection();
+            decimal ExpRev = GetExpRevenuewithparam("Select ExpectedRevenue from tblCampaigns where CampaignId=@CampId", Id);
+            CloseConnection();
+            return ExpRev;
+        }
+        public decimal GetSalesRevenue(int Id)
+        {
+            OpenConection();
+            decimal ExpRev = GetExpRevenuewithparam("select SUM(TotalAmount) as TotalAmt from tblPay p inner join tblSO so on p.SOID=so.SOID inner join tblLeads ld on so.UserID=ld.UserId inner join tblCampaigns camp on ld.CampaignId=camp.CampaignId where ld.CampaignId=@CampId and camp.Status='Active'", Id);
+            CloseConnection();
+            return ExpRev;
+        }
+        public int GetCampIdActive()
+        {
+            OpenConection();
+            int campid = GetLastId("Select CampaignId from tblCampaigns where Status='Active'");
+            CloseConnection();
+            return campid;
+        }
+        public int GetCampIdNotActive()
+        {
+            OpenConection();
+            int campid = GetLastId("Select CampaignId from tblCampaigns where Status='Not Active'");
+            CloseConnection();
+            return campid;
         }
         public string GetLeadEmail(Crm obj)
         {

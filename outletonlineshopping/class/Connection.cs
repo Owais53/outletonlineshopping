@@ -532,6 +532,32 @@ namespace outletonlineshopping
             return SoId;
 
         }
+        public string GetDate(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            var result = cmd.ExecuteScalar();
+            string Date = result == null ? null : result.ToString();
+            return Date;
+
+        }
+        public string GetDatewithparam(string Query_,int campid)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@CampId", campid);
+            var result = cmd.ExecuteScalar();
+            string Date = result == null ? null : result.ToString();
+            return Date;
+
+        }
+        public decimal GetExpRevenuewithparam(string Query_, int campid)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@CampId", campid);
+            var result = cmd.ExecuteScalar();
+            decimal rev = result == null ? 0 : Convert.ToDecimal(result);
+            return rev;
+
+        }
         public DataTable GetLastNo(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -635,6 +661,13 @@ namespace outletonlineshopping
             cmd.Parameters.AddWithValue("@PId", PID);
             cmd.Parameters.AddWithValue("@Size", SizeID);
             cmd.Parameters.AddWithValue("@Qty", Qty);
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateCampStatus(string Query_, int CampId,string Status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@CampId", CampId);
+            cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }
         public DataTable GetPOLineItem(string Query_, int Id)

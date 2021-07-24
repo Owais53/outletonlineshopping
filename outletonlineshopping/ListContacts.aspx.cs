@@ -49,7 +49,9 @@ namespace outletonlineshopping
             int id = Convert.ToInt32(dgvContacts.DataKeys[e.NewEditIndex].Value.ToString());
 
              obj.LeadId = id;
+             obj.LeadStatus = "Junk";
              obj.DeleteContactfromContactId(obj);
+             obj.ChangeLeadStatus(obj);
              ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertdeletecont()", true);
             Response.Redirect("ListContacts.aspx");
             
