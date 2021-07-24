@@ -33,12 +33,25 @@ namespace ecommerceOutletShop
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.ExecuteNonQuery();
         }
+        public void InsertContacts(string Query_, int LeadId)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@LeadId", LeadId);
+            cmd.ExecuteNonQuery();
+        }
+        public void InsertCustomer(string Query_, int UserId)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@UserId", UserId);
+            cmd.ExecuteNonQuery();
+        }
         public int selectIdwithparam(string Query_, int ID)
         {
 
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@Id", ID);
-            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            var result = cmd.ExecuteScalar();
+            int count =result==DBNull.Value? 0:Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
         public int selectId(string Query_)

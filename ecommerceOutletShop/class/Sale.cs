@@ -233,12 +233,45 @@ namespace ecommerceOutletShop
             InsertLead("Insert into tblLeads values(@Campid,@UserId,@Name,@Address,@Email,@Leadsource,@contact,@status)", obj.CampaignId, obj.UserID, obj.Name, obj.Address, obj.Email, obj.LeadSource, obj.Contact, obj.LeadStatus);
             CloseConnection();
         }
+        public void CreateCustomer(int UserId)
+        {
+            OpenConection();
+            InsertCustomer("Insert into tblCustomer values(@UserId)", UserId);
+            CloseConnection();
+        }
         public int GetActiveCampId()
         {
             OpenConection();
             int CampId = selectId("select CampaignId from tblCampaigns where Status='Active'");
             CloseConnection();
             return CampId;
+        }
+        public void CreateContact(int LeadId)
+        {
+            OpenConection();
+            InsertContacts("Insert into tblContacts values(@LeadId)", LeadId);
+            CloseConnection();
+        }
+        public int GetLeadIdfromUserId(int UserId)
+        {
+            OpenConection();
+            int LeadId = selectIdwithparam("select LeadId from tblLeads where UserId=@Id",UserId);
+            CloseConnection();
+            return LeadId;
+        }
+        public int GetContactIdfromLeadId(int LeadId)
+        {
+            OpenConection();
+            int ContactId = selectIdwithparam("select ContactId from tblContacts where LeadId=@Id", LeadId);
+            CloseConnection();
+            return ContactId;
+        }
+        public int GetCustomerExistfromUserId(int UserId)
+        {
+            OpenConection();
+            int CustomerId = selectIdwithparam("select CustomerId from tblCustomer where UserId=@Id", UserId);
+            CloseConnection();
+            return CustomerId;
         }
         public string CheckEmailfromLead(string Email)
         {

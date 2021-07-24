@@ -838,7 +838,12 @@ namespace ecommerceOutletShop
 
                             objsale.PayStatus = "Paid";
                             objsale.CreatePay(objsale);
-                            
+                            int userId =(int)Session["UserId"];
+                            int CustomerId = objsale.GetCustomerExistfromUserId(userId);
+                            if (CustomerId == 0)
+                            {
+                                objsale.CreateCustomer(userId);
+                            }
                         }
                         ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertpaysave()", true);
                         Response.Redirect("~/Cart.aspx");

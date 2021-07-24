@@ -80,9 +80,21 @@ namespace ecommerceOutletShop
 
         protected void btnAddtoCart_Click(object sender, EventArgs e)
         {
+            Sale objsale = new Sale();
             string SelectedSize = string.Empty;
             string SelectedQty = string.Empty;
-            foreach(RepeaterItem item in rptrProdInfo.Items)
+            int UserId = (int)Session["UserId"];
+            int LeadId = objsale.GetLeadIdfromUserId(UserId);
+            if (LeadId > 0)
+            {
+                int ContactId = objsale.GetContactIdfromLeadId(LeadId);
+                if (ContactId == 0)
+                {
+                    objsale.CreateContact(LeadId);
+                }
+            }
+           
+            foreach (RepeaterItem item in rptrProdInfo.Items)
             {
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
