@@ -124,7 +124,7 @@
                         <a href="#" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                       <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>Crm<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-credit-card fa-fw"></i>Crm<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                            
                             <li>
@@ -135,9 +135,10 @@
                                    </li>
                                 </ul>
                             </li>
-                              <li><a href="ListCampaign.aspx"><i class="fa fa-sitemap fa-fw"></i>Campaign<span class="fa arrow"></span></a></li>
-                            <li><a href="ListLead.aspx"><i class="fa fa-sitemap fa-fw"></i>Lead<span class="fa arrow"></span></a></li>
-                            <li><a href="SendEmail.aspx"><i class="fa fa-sitemap fa-fw"></i>Send Email<span class="fa arrow"></span></a></li>
+                              <li><a href="ListCampaign.aspx">Campaign</a></li>
+                            <li><a href="ListLead.aspx">Lead</a></li>
+                            <li><a href="SendEmail.aspx">Send Email</a></li>
+                            <li><a href="ListContacts.aspx">Send Email</a></li>
                         </ul>
                     </li>
                     <li>
@@ -158,12 +159,12 @@
                                    </li>
                                 </ul>
                             </li>
-                              <li><a href="ListGR.aspx"><i class="fa fa-sitemap fa-fw"></i>Goods Receipt<span class="fa arrow"></span></a></li>
-                            <li><a href="ListGoodsIssue.aspx"><i class="fa fa-sitemap fa-fw"></i>Goods Issue<span class="fa arrow"></span></a></li>
+                              <li><a href="ListGR.aspx">Goods Receipt</a></li>
+                            <li><a href="ListGoodsIssue.aspx">Goods Issue</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>Purchase<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-money-bill fa-fw"></i>Purchase<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                            
                             <li>
@@ -174,12 +175,12 @@
                                    </li>
                                 </ul>
                             </li>
-                             <li><a href="ListPO.aspx"><i class="fa fa-money-bill fa-fw"></i>Purchase Orders<span></span></a></li>
-                              <li><a href="ListVendorBill.aspx"><i class="fa fa-money-bill fa-fw"></i>Vendor Bill<span></span></a></li>
+                             <li><a href="ListPO.aspx">Purchase Orders</a></li>
+                              <li><a href="ListVendorBill.aspx">Vendor Bill</a></li>
                         </ul>
                     </li>
                      <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>Sales<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-shopping-cart fa-fw"></i>Sales<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                            
                             <li>
@@ -190,8 +191,8 @@
                                    </li>
                                 </ul>
                             </li>
-                            <li><a href="ListSO.aspx"><i class="fa fa-shopping-cart fa-fw"></i>Sale Orders<span class=""></span></a></li>
-                              <li><a href="ListCustomerInvoice.aspx"><i class="fa fa-money fa-fw"></i>Customer Invoice<span class=""></span></a></li>
+                            <li><a href="ListSO.aspx">Sale Orders</a></li>
+                              <li><a href="ListCustomerInvoice.aspx">Customer Invoice</a></li>
                         </ul>
                     </li>
                 </ul>

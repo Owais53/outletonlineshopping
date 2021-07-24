@@ -83,6 +83,7 @@
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\sweetalert2.all.js" />
     <Content Include="ListCampaign.aspx" />
+    <Content Include="ListContacts.aspx" />
     <Content Include="ListCustomerInvoice.aspx" />
     <Content Include="ListGoodsIssue.aspx" />
     <Content Include="ListGR.aspx" />
@@ -179,6 +180,13 @@
     </Compile>
     <Compile Include="ListCampaign.aspx.designer.cs">
       <DependentUpon>ListCampaign.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListContacts.aspx.cs">
+      <DependentUpon>ListContacts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListContacts.aspx.designer.cs">
+      <DependentUpon>ListContacts.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListCustomerInvoice.aspx.cs">
       <DependentUpon>ListCustomerInvoice.aspx</DependentUpon>
