@@ -93,6 +93,14 @@
             <div class="col-xs-11">
                  <asp:TextBox Id="txtemail" runat="server" Class="form-control" placeholder="Enter your Email"></asp:TextBox>
             </div>
+            <label class="col-xs-11">Contact No:</label>
+            <div class="col-xs-11">
+                 <asp:TextBox Id="txtcontact" runat="server" Class="form-control" placeholder="Enter your Contact No"></asp:TextBox>
+            </div>
+             <label class="col-xs-11">Address:</label>
+            <div class="col-xs-11">
+                 <asp:TextBox Id="txtaddress" runat="server" TextMode="MultiLine" Class="form-control" placeholder="Enter your Address"></asp:TextBox>
+            </div>
              <label class="col-xs-11"></label>
             <div class="col-xs-11">
                 <div style="margin-right:10px;">
@@ -111,12 +119,7 @@
             </div>
             
          </div>  
-        <footer class="footer-pos">
-            <div class="container">
-                <p class="pull-right"><a href="#">Back to top</a></p>
-                <p>&copy;2021 Outlet Shopping.pk &middot; <a href="Default.aspx">Home</a>&middot;<a href="#">About</a>&middot;<a href="#">Contact</a>&middot;<a href="#">Products</a></p>
-            </div>
-        </footer>
+       
         
     </div>
     </form>

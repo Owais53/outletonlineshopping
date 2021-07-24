@@ -13,10 +13,7 @@ namespace ecommerceOutletShop
         Ecomm obj = new Ecomm();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                
-            }
+            
         }
         private bool isformvalid()
         {
@@ -97,7 +94,36 @@ namespace ecommerceOutletShop
                     DataTable dt = obj.CheckUser(obj);
                     if (dt.Rows.Count == 0)
                     {
-                        obj.CreateSignUp(obj);
+                       int UserId= obj.CreateSignUp(obj);
+                        
+                        Sale objsale = new Sale();
+                        if (chkadm.Checked != true)
+                        {
+                            string Email = txtemail.Text;
+                            string LeadEmail = objsale.CheckEmailfromLead(Email);
+                            if (LeadEmail == null)
+                            {
+                                int ActiveCampId = objsale.GetActiveCampId();
+                                if (ActiveCampId > 0)
+                                {
+                                    objsale.CampaignId = ActiveCampId;
+                                    objsale.UserID = UserId;
+                                    objsale.Name = txtfname.Text;
+                                    objsale.Email = txtemail.Text;
+                                    objsale.LeadSource = "Website";
+                                    objsale.LeadStatus = "Pending";
+                                    objsale.Contact = txtcontact.Text;
+                                    objsale.Address = txtaddress.Text;
+                                    objsale.CreateLead(objsale);
+                                }
+                            }
+                            else
+                            {
+
+                                objsale.UpdateLeadUserIDbyEmail(LeadEmail, UserId);
+                            }
+                        }
+
                         clr();
                         ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertsignup()", true);
                         txtcode.Text = string.Empty;
@@ -108,6 +134,7 @@ namespace ecommerceOutletShop
                         txtUname.Text = string.Empty;
                         ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertcheckuser()", true);
                     }
+                   
 
                 }
 

@@ -52,6 +52,7 @@ namespace outletonlineshopping
         }
         private bool isformvalidCampaign()
         {
+            string currentdate = DateTime.Now.Date.ToString("yyyy-MM-dd");
             if (txtcampname.Text == "")
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Campaign Name is not valid');", true);
@@ -64,7 +65,7 @@ namespace outletonlineshopping
                 txtcampname.Focus();
                 return false;
             }
-            else if (txtEnddate.Text == "" || txtEnddate.Text == DateTime.Now.Date.ToString())
+            else if (txtEnddate.Text == "" || txtEnddate.Text == currentdate)
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('End Date is not valid');", true);
                 txtEnddate.Focus();
@@ -108,8 +109,18 @@ namespace outletonlineshopping
                 }
                 else
                 {
-                    obj.CreateCampaign(obj);
-                    ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertcam()", true);
+                    int CampIDExp = obj.GetCampId();
+                    if (CampIDExp > 0)
+                    {
+                        obj.CreateCampaign(obj);
+                        ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertcam()", true);
+                    }
+                    else
+                    {
+
+                        ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertcamexists()", true);
+                    }
+                    
                 }
             }
            

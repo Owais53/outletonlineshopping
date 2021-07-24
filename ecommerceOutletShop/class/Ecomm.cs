@@ -21,11 +21,12 @@ namespace ecommerceOutletShop
         public int SubCatID { get; set; }
         public int GenderID { get; set; }
 
-        public void CreateSignUp(Ecomm obj)
+        public int CreateSignUp(Ecomm obj)
         {
             OpenConection();
-            InsertSignUP("Insert into tblecommLogin(UserName,Password,Email,FullName,isAdmin) values(@Name,@pass,@email,@fullname,@isAdmin)", obj.Username, obj.Password, obj.Email,obj.FullName,obj.isAdmin);
+           int Id= InsertSignUP("Insert into tblecommLogin(UserName,Password,Email,FullName,isAdmin) values(@Name,@pass,@email,@fullname,@isAdmin) SELECT SCOPE_IDENTITY()", obj.Username, obj.Password, obj.Email,obj.FullName,obj.isAdmin);
             CloseConnection();
+            return Id;
         }
         public DataTable SignIn(Ecomm obj)
         {

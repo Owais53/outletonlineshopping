@@ -33,7 +33,35 @@ namespace ecommerceOutletShop
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.ExecuteNonQuery();
         }
-        public void InsertSignUP(string Query_, string UserName, string pass, string email, string fullname,bool isAdmin)
+        public int selectIdwithparam(string Query_, int ID)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", ID);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
+        public int selectId(string Query_)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count;
+        }
+        public void InsertLead(string Query_, int CampId, int UserId, string name, string address, string email, string leadsource, string contact, string status)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Campid", CampId);
+            cmd.Parameters.AddWithValue("@UserId", UserId);
+            cmd.Parameters.AddWithValue("@Name", name);
+            cmd.Parameters.AddWithValue("@Address", address);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Leadsource", leadsource);
+            cmd.Parameters.AddWithValue("@contact", contact);
+            cmd.Parameters.AddWithValue("@status", status);
+            cmd.ExecuteNonQuery();
+        }
+        public int InsertSignUP(string Query_, string UserName, string pass, string email, string fullname,bool isAdmin)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@Name", UserName);
@@ -41,7 +69,8 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@fullname", fullname);
             cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
-            cmd.ExecuteNonQuery();
+           int Id= Convert.ToInt32(cmd.ExecuteScalar());
+            return Id;
         }
 
         public DataTable SelectSignin(string Query_, string UserName, string pass)
@@ -263,6 +292,13 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Pass", Password);
             cmd.ExecuteNonQuery();
         }
+        public void UpdateLeadUserId(string Query_, string Email, int userId)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Email", Email);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.ExecuteNonQuery();
+        }
         public void UpdateProducts(string Query_, string ProductName, int uom, decimal price, decimal cost, int Id)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -400,6 +436,15 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@POID", POID);
             string Poid = cmd.ExecuteScalar().ToString();
             return Poid;
+        }
+        public string SelectEmailifExits(string Query_, string Email)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Email", Email);
+            var result = cmd.ExecuteScalar();
+            string email = result == null ? null: result.ToString();
+            return email;
         }
         public string SelectVendorEmail(string Query_, int POID)
         {

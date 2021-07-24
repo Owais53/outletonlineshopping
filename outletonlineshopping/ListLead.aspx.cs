@@ -72,6 +72,11 @@ namespace outletonlineshopping
                 
                 int Id = Convert.ToInt32(e.CommandArgument);
                 obj.LeadId = Id;
+                int LeadId = obj.CheckDupLeadinContact(obj);
+                if (LeadId > 0)
+                {
+                    obj.DeleteContact(obj);
+                }
                 obj.LeadStatus = "Junk";
                 obj.ChangeLeadStatus(obj);
                 ClientScript.RegisterStartupScript(GetType(), "randomtext", "alertLeadtojunk()", true);
@@ -79,6 +84,7 @@ namespace outletonlineshopping
             if (e.CommandName == "SendEmail")
             {
                 int Id = Convert.ToInt32(e.CommandArgument);
+
                 Response.Redirect("SendEmail.aspx?Id="+Id+"");
             }
         }

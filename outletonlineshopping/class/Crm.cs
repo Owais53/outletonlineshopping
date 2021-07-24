@@ -40,6 +40,12 @@ namespace outletonlineshopping
             InsertContacts("Insert into tblContacts values(@LeadId)", obj.LeadId);
             CloseConnection();
         }
+        public void DeleteContact(Crm obj)
+        {
+            OpenConection();
+            ExecuteDeleteQueries("delete from tblContacts where LeadId=@Id)", obj.LeadId);
+            CloseConnection();
+        }
         public void UpdateCampaign(Crm obj)
         {
             OpenConection();
@@ -49,7 +55,7 @@ namespace outletonlineshopping
         public void ChangeLeadStatus(Crm obj)
         {
             OpenConection();
-            UpateLeadStatus("Update tblLeads set Status=@LeadStatus where LeadId=@Id", obj.LeadId,obj.LeadStatus);
+            UpateLeadStatus("Update tblLeads set Status=@LeadStatus where LeadId=@LeadId", obj.LeadId,obj.LeadStatus);
             CloseConnection();
         }
         public int CheckDupLeadinContact(Crm obj)
@@ -70,6 +76,13 @@ namespace outletonlineshopping
         {
             OpenConection();
             int CampId=selectId("select CampaignId from tblCampaigns where CampaignId=@Id and Status='Active'", Id);
+            CloseConnection();
+            return CampId;
+        }
+        public int GetCampId()
+        {
+            OpenConection();
+            int CampId = GetLastId("select CampaignId from tblCampaigns where Status='Successfull' OR Status='UnSuccesfull'");
             CloseConnection();
             return CampId;
         }

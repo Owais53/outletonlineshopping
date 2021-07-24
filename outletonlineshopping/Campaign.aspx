@@ -89,4 +89,14 @@
                 
             }
       </script>
+    <script>
+            function alertcamexists() {
+                Swal.fire(
+                    'Error!',
+                    'One Campaign is already Running.You can Create new Campaign when its Ended',
+                     'Error'
+                     )
+                
+            }
+      </script>
 </asp:Content>

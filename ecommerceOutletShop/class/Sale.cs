@@ -12,6 +12,13 @@ namespace ecommerceOutletShop
         public int SOID { get; set; }
         public string SONo { get; set; }
         public int UserID { get; set; }
+        public int CampaignId { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string LeadSource { get; set; }
+        public string Contact { get; set; }
+        public string LeadStatus { get; set; }
         public DateTime Createdon { get; set; }
         public int POref { get; set; }
         public string Status { get; set; }
@@ -213,6 +220,32 @@ namespace ecommerceOutletShop
             OpenConection();
             UpdateScheduledDeliveryStatus("update tblSODetail set DeliveryStatus='Delivered' where SOID IN(select SOID from tblSO) and Convert(date,ScheduledDeliveryDate)=@schdevdate", date);
             CloseConnection();
+        }
+        public void UpdateLeadUserIDbyEmail(string Email,int UserID)
+        {
+            OpenConection();
+            UpdateLeadUserId("update tblLeads set UserId=@UserId where Email=@Email", Email,UserID);
+            CloseConnection();
+        }
+        public void CreateLead(Sale obj)
+        {
+            OpenConection();
+            InsertLead("Insert into tblLeads values(@Campid,@UserId,@Name,@Address,@Email,@Leadsource,@contact,@status)", obj.CampaignId, obj.UserID, obj.Name, obj.Address, obj.Email, obj.LeadSource, obj.Contact, obj.LeadStatus);
+            CloseConnection();
+        }
+        public int GetActiveCampId()
+        {
+            OpenConection();
+            int CampId = selectId("select CampaignId from tblCampaigns where Status='Active'");
+            CloseConnection();
+            return CampId;
+        }
+        public string CheckEmailfromLead(string Email)
+        {
+            OpenConection();
+           string email= SelectEmailifExits("select Email from tblLeads where Email=@Email", Email);
+            CloseConnection();
+            return email;
         }
         public int CheckQuantity(int PID,int SizeID,int Qty)
         {
