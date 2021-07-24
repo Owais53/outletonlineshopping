@@ -49,6 +49,14 @@ namespace outletonlineshopping
                     }
                     
                 }
+                int ContactCount = obj.GetCountContacts();
+                int LeadCount = obj.GetCountLeads();
+                int CustCount = obj.GetCountCustomers();
+                int ProdCount = obj.GetCountProducts();
+                divcontact.InnerText = ContactCount.ToString();
+                divleads.InnerText = LeadCount.ToString();
+                divcust.InnerText = CustCount.ToString();
+                divprod.InnerText = ProdCount.ToString();
             }
         }
     }

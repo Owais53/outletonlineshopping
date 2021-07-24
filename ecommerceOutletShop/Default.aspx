@@ -39,13 +39,13 @@
                            <ul class="dropdown-menu">
                                <li><a href="SignIn.aspx">All Products</a></li>
                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header"><a href="#">Men</a></li>
+                                <li class="dropdown-header"><a href="SignIn.aspx">Men</a></li>
                                  <li role="separator" class="divider"></li>
-                                 <li><a href="#">Shirts</a></li>
-                                 <li><a href="#">Pants</a></li>
-                                <li class="dropdown-header"><a href="#">Women</a></li>
+                                 <li><a href="SignIn.aspx">Shirts</a></li>
+                                 <li><a href="SignIn.aspx">Pants</a></li>
+                                <li class="dropdown-header"><a href="SignIn.aspx">Women</a></li>
                                  <li role="separator" class="divider"></li>
-                                  <li><a href="#">Shirts</a></li>
+                                  <li><a href="SignIn.aspx">Shirts</a></li>
                            </ul>
                        </li>
                        <li><a href="SignIn.aspx">SignIn</a></li>
@@ -95,19 +95,19 @@
                     <img class="img-circle" src="Img/T-shirtmain.jpg" alt="thumb" width="140" height="140" />
                     <h2>T-Shirts</h2>
                     <p>Great collection of T-Shirts Available</p>
-                    <p><a class="btn btn-default" href="#" role="button">View More &raquo;</a></p>
+                    <p><a class="btn btn-default" href="SignIn.aspx" role="button">View More &raquo;</a></p>
                 </div>
                 <div class="col-lg-4">
                     <img class="img-circle" src="Img/Shirtmain.jpg" alt="thumb" width="140" height="140" />
                     <h2>Shirts</h2>
                     <p>Branded Shirts from all over Pakistan</p>
-                    <p><a class="btn btn-default" href="#" role="button">View More &raquo;</a></p>
+                    <p><a class="btn btn-default" href="SignIn.aspx" role="button">View More &raquo;</a></p>
                 </div>
                 <div class="col-lg-4">
                     <img class="img-circle" src="Img/womenshirt.jpg" alt="thumb" width="140" height="140" />
                     <h2>Women Wears</h2>
                     <p>Collection of Women Wears</p>
-                    <p><a class="btn btn-default" href="#" role="button">View More &raquo;</a></p>
+                    <p><a class="btn btn-default" href="SignIn.aspx" role="button">View More &raquo;</a></p>
                 </div>
             </div>
         </div>

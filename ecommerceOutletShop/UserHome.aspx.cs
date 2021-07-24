@@ -20,7 +20,7 @@ namespace ecommerceOutletShop
                 Sale objsale = new Sale();
                 string date = DateTime.Now.Date.ToString("yyyy-MM-dd");
                 objsale.UpdateStatusProductSale(date);
-                objsale.UpdateStatusStocktoship(date);
+              //  objsale.UpdateStatusStocktoship(date);
                 SqlDataReader dr = objsale.GetSOCount();
                 SqlDataReader dr1=objsale.GetDeliveredProCount();
                 while(dr.Read() && dr1.Read())
@@ -56,12 +56,12 @@ namespace ecommerceOutletShop
 
                 if (Session["Username"] != null)
                 {
-                    //lblname.Text = Session["Username"].ToString();
+                   // lblname.Text = Session["Username"].ToString();
                 }
-                // else
-                // {
-                //     Response.Redirect("~/SignIn.aspx");
-                // }
+                else
+                 {
+                    Response.Redirect("~/SignIn.aspx");
+                 }
                // BindCartNumber();
                
             }

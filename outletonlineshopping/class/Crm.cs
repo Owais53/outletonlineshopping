@@ -112,6 +112,34 @@ namespace outletonlineshopping
             CloseConnection();
             return campid;
         }
+        public int GetCountContacts()
+        {
+            OpenConection();
+            int campid = GetLastId("Select Count(*) as Countact from tblContacts");
+            CloseConnection();
+            return campid;
+        }
+        public int GetCountLeads()
+        {
+            OpenConection();
+            int campid = GetLastId("Select Count(*) as Lead from tblLeads ld inner join tblCampaigns c on ld.CampaignId=c.CampaignId where c.Status='Active'");
+            CloseConnection();
+            return campid;
+        }
+        public int GetCountCustomers()
+        {
+            OpenConection();
+            int campid = GetLastId("Select Count(*) as Customer from tblCustomer");
+            CloseConnection();
+            return campid;
+        }
+        public int GetCountProducts()
+        {
+            OpenConection();
+            int campid = GetLastId("Select Count(*) as Product from tblProduct");
+            CloseConnection();
+            return campid;
+        }
         public int GetCampIdNotActive()
         {
             OpenConection();
