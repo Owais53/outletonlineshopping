@@ -12,6 +12,7 @@ namespace ecommerceOutletShop
         public string SONo { get; set; }
         public string DOCNo { get; set; }
         public int UserID { get; set; }
+        public int GiCount { get; set; }
         public DateTime Createdon { get; set; }
         public int POref { get; set; }
         public string Status { get; set; }
@@ -26,7 +27,7 @@ namespace ecommerceOutletShop
         public int CreateStockMove(Inventory obj)
         {
             OpenConection();
-          int id=InsertStockMove("Insert into tblStockMove(DocNo,SOID,POID,MoveType,Status) values(@DocNO,@SOID,@POID,@MoveType,@Status) SELECT SCOPE_IDENTITY()", obj.DOCNo,obj.SOID,obj.POID,obj.MoveType, obj.StockMoveStatus);
+          int id=InsertStockMove("Insert into tblStockMove(DocNo,SOID,POID,MoveType,Status,GiCount) values(@DocNO,@SOID,@POID,@MoveType,@Status,@GiCount) SELECT SCOPE_IDENTITY()", obj.DOCNo,obj.SOID,obj.POID,obj.MoveType, obj.StockMoveStatus,obj.GiCount);
             CloseConnection();
             return id;
         }

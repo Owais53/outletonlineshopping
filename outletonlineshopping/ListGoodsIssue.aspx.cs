@@ -22,7 +22,7 @@ namespace outletonlineshopping
         Inventory obj = new Inventory();
         public void BindGIList()
         {
-            DataTable data = obj.ShowDataInGridView("select sm.SOID,so.SONo,DocNo,MoveType,sm.Status from tblStockMove sm inner join tblSO so on sm.SOID=so.SOID where sm.SOID >0");
+            DataTable data = obj.ShowDataInGridView("select sm.SOID,sm.GiCount,so.SONo,DocNo,MoveType,sm.Status from tblStockMove sm inner join tblSO so on sm.SOID=so.SOID where sm.SOID >0");
 
 
             if (data.Rows.Count > 0)
@@ -47,10 +47,11 @@ namespace outletonlineshopping
         protected void dgvGI_RowEditing(object sender, GridViewEditEventArgs e)
         {
             Inventory objinv = new Inventory();
-            dgvGI.EditIndex = e.NewEditIndex;
-            int id = Convert.ToInt32(dgvGI.DataKeys[e.NewEditIndex].Value.ToString());
+            dgvGI.EditIndex =e.NewEditIndex;
+            int id = Convert.ToInt32(dgvGI.DataKeys[e.NewEditIndex].Values[0].ToString());
+            int GiCount = Convert.ToInt32(dgvGI.DataKeys[e.NewEditIndex].Values["GiCount"].ToString());
             int GIid = objinv.GetGIIdfromSOId(id);
-            Response.Redirect("GI.aspx?SOID=" + id + "&GI=" + GIid + "");
+            Response.Redirect("GI.aspx?SOID=" + id + "&GI=" + GIid + "&GiCount="+GiCount+"");
         }
     }
 }

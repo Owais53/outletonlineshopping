@@ -19,6 +19,7 @@ namespace outletonlineshopping
         public int SizeID { get; set; }
         public int Quantity { get; set; }
         public int SOID { get; set; }
+        public int GiCount { get; set; }
         public string MoveType { get; set; }
         public DateTime Createdon { get; set; }
         public decimal Price { get; set; }
@@ -26,6 +27,13 @@ namespace outletonlineshopping
         public int StockMoveID { get; set; }
         public string StockMoveStatus { get; set; }
 
+        public int CreateGI(Inventory obj)
+        {
+            OpenConection();
+            int Grid = InsertGI("Insert into tblStockMove(DocNo,SOID,POID,MoveType,Status,GiCount) values(@DocNo,@SOID,@POID,@MoveType,@Status,@GiCount) SELECT SCOPE_IDENTITY()", obj.DocNo, obj.SOID, obj.POID, obj.MoveType, obj.Status,obj.GiCount);
+            CloseConnection();
+            return Grid;
+        }
         public int CreateGR(Inventory obj)
         {
             OpenConection();
@@ -39,6 +47,14 @@ namespace outletonlineshopping
             int Soid = GetLastId("select ISNULL(max(StockMoveID),0) as LastSOID from tblStockMove where POID >0");
             CloseConnection();
             return Soid;
+
+        }
+        public int GetGiCount(int SoId)
+        {
+            OpenConection();
+            int GiCount = GetGiCount("select GiCount from tblStockMove where SOID=@Id",SoId);
+            CloseConnection();
+            return GiCount;
 
         }
         public DataTable GetLastGRNo()
@@ -82,6 +98,14 @@ namespace outletonlineshopping
         {
             OpenConection();
             int Grid = SelectGIId("select StockMoveID from tblStockMove where SOID>0 and SOID=@SOID", SOID);
+            CloseConnection();
+            return Grid;
+
+        }
+        public int GetGICountfromGiId(int GiID)
+        {
+            OpenConection();
+            int Grid = SelectGIId("select GiCount from tblStockMove where StockMoveID=@SOID", GiID);
             CloseConnection();
             return Grid;
 

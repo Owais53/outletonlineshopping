@@ -559,7 +559,7 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@Status", Status);
             cmd.ExecuteNonQuery();
         }
-        public int InsertStockMove(string Query_, string Docno,int SOID,int POID, string MoveType, string Status)
+        public int InsertStockMove(string Query_, string Docno,int SOID,int POID, string MoveType, string Status,int GiCount)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@DocNO", Docno);
@@ -567,6 +567,7 @@ namespace ecommerceOutletShop
             cmd.Parameters.AddWithValue("@POID", POID);
             cmd.Parameters.AddWithValue("@MoveType", MoveType);
             cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.Parameters.AddWithValue("@GiCount", GiCount);
             int id = Convert.ToInt32(cmd.ExecuteScalar());
             return id;
         }

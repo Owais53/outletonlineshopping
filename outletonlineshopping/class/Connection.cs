@@ -455,6 +455,7 @@ namespace outletonlineshopping
             int count = Convert.ToInt32(cmd.ExecuteScalar());
             return count;
         }
+
         public decimal SelectCostProd(string Query_, int PId,int qty)
         {
 
@@ -496,6 +497,19 @@ namespace outletonlineshopping
             int poid = Convert.ToInt32(cmd.ExecuteScalar());
             return poid;
         }
+        public int InsertGI(string Query_, string DocNo, int SOID, int POID, string MoveType, string Status,int Gicount)
+        {
+
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@DocNo", DocNo);
+            cmd.Parameters.AddWithValue("@SOID", SOID);
+            cmd.Parameters.AddWithValue("@POID", POID);
+            cmd.Parameters.AddWithValue("@MoveType", MoveType);
+            cmd.Parameters.AddWithValue("@Status", Status);
+            cmd.Parameters.AddWithValue("@GiCount", Gicount);
+            int poid = Convert.ToInt32(cmd.ExecuteScalar());
+            return poid;
+        }
         public void InsertStockMoveDet(string Query_, int SID, int PID, int SizeID, int Qty, string Status)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -532,6 +546,15 @@ namespace outletonlineshopping
             return SoId;
 
         }
+        public int GetGiCount(string Query_,int Id)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            var result = cmd.ExecuteScalar();
+            int GiCount = result == DBNull.Value ? 0 : Convert.ToInt32(result);
+            return GiCount;
+
+        }
         public string GetDate(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -554,7 +577,7 @@ namespace outletonlineshopping
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@CampId", campid);
             var result = cmd.ExecuteScalar();
-            decimal rev = result == null ? 0 : Convert.ToDecimal(result);
+            decimal rev = result == DBNull.Value ? 0 : Convert.ToDecimal(result);
             return rev;
 
         }
@@ -674,6 +697,18 @@ namespace outletonlineshopping
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.Parameters.AddWithValue("@POID", Id);
+            SqlDataAdapter dr = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dr.Fill(ds);
+            DataTable dataum = ds.Tables[0];
+            return dataum;
+
+        }
+        public DataTable GetGiLineItem(string Query_, int Id,int GiCount)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            cmd.Parameters.AddWithValue("@SOID", Id);
+            cmd.Parameters.AddWithValue("@GiCount", GiCount);
             SqlDataAdapter dr = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             dr.Fill(ds);

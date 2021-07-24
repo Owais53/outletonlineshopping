@@ -124,10 +124,19 @@ namespace outletonlineshopping
             objinv.SOID = Convert.ToInt32(Request.QueryString["Id"]);
             objinv.MoveType = "Stock Out";
             objinv.Status = "Stock Picking";
-
+            int GiCount = objinv.GetGiCount(Convert.ToInt32(Request.QueryString["Id"]));
+            if (GiCount == 0)
+            {
+                objinv.GiCount = 1;
+            }
+            else
+            {
+                objinv.GiCount = 2;
+            }
             if (Request.QueryString["Id"] != null)
             {
-                int GIID = objinv.CreateGR(objinv);
+                int GIID = objinv.CreateGI(objinv);
+                int GiCountfromGi = objinv.GetGICountfromGiId(GIID);
                 int SOID = Convert.ToInt32(Request.QueryString["Id"]);
                 DataTable dt = objinv.GetPOItemForIssue(SOID);
                 foreach (DataRow row in dt.Rows)
@@ -140,7 +149,8 @@ namespace outletonlineshopping
                     objinv.CreateStockMoveDet(objinv);
                     objinv.ChangeQuantityMinus(objinv);
                 }
-                Response.Redirect("GI.aspx?SOID=" + SOID + "&GI=" + GIID + "");
+
+                Response.Redirect("GI.aspx?SOID=" + SOID + "&GI=" + GIID + "&GiCount="+GiCountfromGi+"");
             }
             else
             {

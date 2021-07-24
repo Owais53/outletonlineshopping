@@ -81,10 +81,10 @@ namespace outletonlineshopping
             CloseConnection();
             return soId;
         }
-        public DataTable GetGIItemfromSO(int Id)
+        public DataTable GetGIItemfromSO(int Id,int Gicount)
         {
             OpenConection();
-            DataTable dt = GetPOLineItem("select smd.Id,p.ProductName,s.SizeName,smd.Quantity,smd.Status from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.SOID=@POID", Id);
+            DataTable dt = GetGiLineItem("select smd.Id,sm.GiCount,p.ProductName,s.SizeName,smd.Quantity,smd.Status from tblStockMoveDetail smd inner join tblStockMove sm on smd.StockMoveID=sm.StockMoveID inner join tblProduct p on smd.PID=p.ProductId inner join tblSizes s on smd.SizeID=s.SizeID where sm.SOID=@SOID and sm.GiCount=@GiCount", Id,Gicount);
             CloseConnection();
             return dt;
 

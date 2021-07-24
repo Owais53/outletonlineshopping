@@ -22,7 +22,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         
-                                           <asp:GridView ID="dgvGI" runat="server" CssClass="display compact"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="SOID" OnRowEditing="dgvGI_RowEditing">
+                                           <asp:GridView ID="dgvGI" runat="server" CssClass="display compact"  AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" DataKeyNames="SOID,GiCount" OnRowEditing="dgvGI_RowEditing">
                                                <Columns>
                                                    <asp:TemplateField HeaderText="Sale Order Reference">
                                                        <ItemTemplate>
@@ -39,7 +39,7 @@
                                                            <asp:Label Text='<%# Eval("MoveType") %>' runat="server" />
                                                        </ItemTemplate>
                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Status">
+                                                    <asp:TemplateField HeaderText="Status" Visible="false">
                                                        <ItemTemplate>
                                                            <asp:Label Text='<%# Eval("Status") %>' runat="server" />
                                                        </ItemTemplate>

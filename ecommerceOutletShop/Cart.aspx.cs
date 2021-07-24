@@ -622,6 +622,7 @@ namespace ecommerceOutletShop
                                         objinv.POID = 0;
                                         objinv.StockMoveStatus = "Stock Picking";
                                         objinv.MoveType = "Stock Out";
+                                        objinv.GiCount = 1;
                                        int id=objinv.CreateStockMove(objinv);
 
                                         objinv.PID = PID;
